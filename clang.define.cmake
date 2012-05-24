@@ -1,5 +1,13 @@
 set(LLVM_TOP_DIR /opt/llvm)
 include_directories(${LLVM_TOP_DIR}/include)
+
+configure_file(
+  ${CMAKE_SOURCE_DIR}/Config/config.h.cmake
+  ${CMAKE_BINARY_DIR}/include/clang/Config/config.h
+)
+include_directories(${CMAKE_BINARY_DIR}/include)
+
+
 add_definitions(
 	-D__STDC_LIMIT_MACROS
 	-D__STDC_CONSTANT_MACROS
@@ -29,10 +37,17 @@ LLVMPTXInfo LLVMSparcInfo LLVMX86AsmPrinter LLVMX86Info LLVMMCParser
 LLVMCodeGen LLVMXCoreInfo LLVMBitReader LLVMX86Utils LLVMScalarOpts 
 LLVMInstCombine LLVMTransformUtils LLVMipa LLVMAnalysis LLVMTarget 
 LLVMCore LLVMMC LLVMObject LLVMSupport clangRewrite clangFrontend 
-clangDriver clangSerialization clangParse clangSema clangAnalysis clangEdit 
+##
+xClangDriver
+##
+clangSerialization clangParse clangSema clangAnalysis clangEdit 
 clangAST clangLex clangBasic LLVMMC LLVMObject LLVMSupport
 pthread
    )
   set_target_properties(${name} PROPERTIES FOLDER "Xclang executables")
 endmacro(add_xclang_executable)
 
+
+macro(add_xclang_library name)
+  add_library( ${name} ${ARGN} )
+endmacro(add_xclang_library)
