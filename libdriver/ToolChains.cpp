@@ -59,11 +59,6 @@ Darwin::Darwin(const Driver &D, const llvm::Triple& Triple)
   DarwinVersion[0] = Minor + 4;
   DarwinVersion[1] = Micro;
   DarwinVersion[2] = 0;
-
-  // Compute the initial iOS version from the triple
-  Triple.getiOSVersion(Major, Minor, Micro);
-  llvm::raw_string_ostream(iOSVersionMin)
-    << Major << '.' << Minor << '.' << Micro;
 }
 
 types::ID Darwin::LookupTypeForExtension(const char *Ext) const {
@@ -290,6 +285,76 @@ void DarwinClang::AddGCCLibexecPath(unsigned darwinVersion) {
   Path = "/usr/llvm-gcc-4.2/libexec/gcc/";
   Path += ToolChainDir;
   getProgramPaths().push_back(Path);
+}
+
+void DarwinClang::AddLinkSearchPathArgs(const ArgList &Args,
+                                       ArgStringList &CmdArgs) const {
+  // The Clang toolchain uses explicit paths for internal libraries.
+
+  // Unfortunately, we still might depend on a few of the libraries that are
+  // only available in the gcc library directory (in particular
+  // libstdc++.dylib). For now, hardcode the path to the known install location.
+  // FIXME: This should get ripped out someday.  However, when building on
+  // 10.6 (darwin10), we're still relying on this to find libstdc++.dylib.
+  llvm::sys::Path P(getDriver().Dir);
+  P.eraseComponent(); // .../usr/bin -> ../usr
+  P.appendComponent("llvm-gcc-4.2");
+  P.appendComponent("lib");
+  P.appendComponent("gcc");
+  switch (getTriple().getArch()) {
+  default:
+    llvm_unreachable("Invalid Darwin arch!");
+  case llvm::Triple::x86:
+  case llvm::Triple::x86_64:
+    P.appendComponent("i686-apple-darwin10");
+    break;
+  case llvm::Triple::arm:
+  case llvm::Triple::thumb:
+    P.appendComponent("arm-apple-darwin10");
+    break;
+  case llvm::Triple::ppc:
+  case llvm::Triple::ppc64:
+    P.appendComponent("powerpc-apple-darwin10");
+    break;
+  }
+  P.appendComponent("4.2.1");
+
+  // Determine the arch specific GCC subdirectory.
+  const char *ArchSpecificDir = 0;
+  switch (getTriple().getArch()) {
+  default:
+    break;
+  case llvm::Triple::arm:
+  case llvm::Triple::thumb: {
+    std::string Triple = ComputeLLVMTriple(Args);
+    StringRef TripleStr = Triple;
+    if (TripleStr.startswith("armv5") || TripleStr.startswith("thumbv5"))
+      ArchSpecificDir = "v5";
+    else if (TripleStr.startswith("armv6") || TripleStr.startswith("thumbv6"))
+      ArchSpecificDir = "v6";
+    else if (TripleStr.startswith("armv7") || TripleStr.startswith("thumbv7"))
+      ArchSpecificDir = "v7";
+    break;
+  }
+  case llvm::Triple::ppc64:
+    ArchSpecificDir = "ppc64";
+    break;
+  case llvm::Triple::x86_64:
+    ArchSpecificDir = "x86_64";
+    break;
+  }
+
+  if (ArchSpecificDir) {
+    P.appendComponent(ArchSpecificDir);
+    bool Exists;
+    if (!llvm::sys::fs::exists(P.str(), Exists) && Exists)
+      CmdArgs.push_back(Args.MakeArgString("-L" + P.str()));
+    P.eraseComponent();
+  }
+
+  bool Exists;
+  if (!llvm::sys::fs::exists(P.str(), Exists) && Exists)
+    CmdArgs.push_back(Args.MakeArgString("-L" + P.str()));
 }
 
 void DarwinClang::AddLinkARCArgs(const ArgList &Args,
@@ -528,9 +593,9 @@ void Darwin::AddDeploymentTarget(DerivedArgList &Args) const {
 
     // If no OSX or iOS target has been specified and we're compiling for armv7,
     // go ahead as assume we're targeting iOS.
-    if (OSXTarget.empty() && iOSTarget.empty() &&
-        getDarwinArchName(Args) == "armv7")
-        iOSTarget = iOSVersionMin;
+    if (OSXTarget.empty() && iOSTarget.empty())
+      if (getDarwinArchName(Args) == "armv7")
+        iOSTarget = "0.0";
 
     // Handle conflicting deployment targets
     //
@@ -891,8 +956,7 @@ DerivedArgList *Darwin::TranslateArgs(const DerivedArgList &Args,
   // Add an explicit version min argument for the deployment target. We do this
   // after argument translation because -Xarch_ arguments may add a version min
   // argument.
-  if (BoundArch)
-    AddDeploymentTarget(*DAL);
+  AddDeploymentTarget(*DAL);
 
   // Validate the C++ standard library choice.
   CXXStdlibType Type = GetCXXStdlibType(*DAL);
@@ -1146,8 +1210,7 @@ Generic_GCC::GCCInstallationDetector::GCCInstallationDetector(
     "i586-redhat-linux",
     "i386-redhat-linux",
     "i586-suse-linux",
-    "i486-slackware-linux",
-    "i686-montavista-linux"
+    "i486-slackware-linux"
   };
 
   static const char *const MIPSLibDirs[] = { "/lib" };
@@ -1155,17 +1218,11 @@ Generic_GCC::GCCInstallationDetector::GCCInstallationDetector(
   static const char *const MIPSELLibDirs[] = { "/lib" };
   static const char *const MIPSELTriples[] = { "mipsel-linux-gnu" };
 
-  static const char *const MIPS64LibDirs[] = { "/lib64", "/lib" };
-  static const char *const MIPS64Triples[] = { "mips64-linux-gnu" };
-  static const char *const MIPS64ELLibDirs[] = { "/lib64", "/lib" };
-  static const char *const MIPS64ELTriples[] = { "mips64el-linux-gnu" };
-
   static const char *const PPCLibDirs[] = { "/lib32", "/lib" };
   static const char *const PPCTriples[] = {
     "powerpc-linux-gnu",
     "powerpc-unknown-linux-gnu",
-    "powerpc-suse-linux",
-    "powerpc-montavista-linuxspe"
+    "powerpc-suse-linux"
   };
   static const char *const PPC64LibDirs[] = { "/lib64", "/lib" };
   static const char *const PPC64Triples[] = {
@@ -1206,39 +1263,11 @@ Generic_GCC::GCCInstallationDetector::GCCInstallationDetector(
       MIPSLibDirs, MIPSLibDirs + llvm::array_lengthof(MIPSLibDirs));
     TripleAliases.append(
       MIPSTriples, MIPSTriples + llvm::array_lengthof(MIPSTriples));
-    MultiarchLibDirs.append(
-      MIPS64LibDirs, MIPS64LibDirs + llvm::array_lengthof(MIPS64LibDirs));
-    MultiarchTripleAliases.append(
-      MIPS64Triples, MIPS64Triples + llvm::array_lengthof(MIPS64Triples));
     break;
   case llvm::Triple::mipsel:
     LibDirs.append(
       MIPSELLibDirs, MIPSELLibDirs + llvm::array_lengthof(MIPSELLibDirs));
     TripleAliases.append(
-      MIPSELTriples, MIPSELTriples + llvm::array_lengthof(MIPSELTriples));
-    MultiarchLibDirs.append(
-      MIPS64ELLibDirs, MIPS64ELLibDirs + llvm::array_lengthof(MIPS64ELLibDirs));
-    MultiarchTripleAliases.append(
-      MIPS64ELTriples, MIPS64ELTriples + llvm::array_lengthof(MIPS64ELTriples));
-    break;
-  case llvm::Triple::mips64:
-    LibDirs.append(
-      MIPS64LibDirs, MIPS64LibDirs + llvm::array_lengthof(MIPS64LibDirs));
-    TripleAliases.append(
-      MIPS64Triples, MIPS64Triples + llvm::array_lengthof(MIPS64Triples));
-    MultiarchLibDirs.append(
-      MIPSLibDirs, MIPSLibDirs + llvm::array_lengthof(MIPSLibDirs));
-    MultiarchTripleAliases.append(
-      MIPSTriples, MIPSTriples + llvm::array_lengthof(MIPSTriples));
-    break;
-  case llvm::Triple::mips64el:
-    LibDirs.append(
-      MIPS64ELLibDirs, MIPS64ELLibDirs + llvm::array_lengthof(MIPS64ELLibDirs));
-    TripleAliases.append(
-      MIPS64ELTriples, MIPS64ELTriples + llvm::array_lengthof(MIPS64ELTriples));
-    MultiarchLibDirs.append(
-      MIPSELLibDirs, MIPSELLibDirs + llvm::array_lengthof(MIPSELLibDirs));
-    MultiarchTripleAliases.append(
       MIPSELTriples, MIPSELTriples + llvm::array_lengthof(MIPSELTriples));
     break;
   case llvm::Triple::ppc:
@@ -1321,9 +1350,7 @@ void Generic_GCC::GCCInstallationDetector::ScanLibDirForGCCTriple(
       // crtbegin.o without the subdirectory.
       StringRef MultiarchSuffix
         = (TargetArch == llvm::Triple::x86_64 ||
-           TargetArch == llvm::Triple::ppc64 ||
-           TargetArch == llvm::Triple::mips64 ||
-           TargetArch == llvm::Triple::mips64el) ? "/64" : "/32";
+           TargetArch == llvm::Triple::ppc64) ? "/64" : "/32";
       if (llvm::sys::fs::exists(LI->path() + MultiarchSuffix + "/crtbegin.o")) {
         GCCMultiarchSuffix = MultiarchSuffix.str();
       } else {
