@@ -341,6 +341,8 @@ static void ParseProgName(SmallVectorImpl<const char *> &ArgVector,
 }
 
 const std::string strConstXClangOptPrefix("--xclang");
+std::vector<std::string> globalXClangArgv;
+
 int main(int argc_, const char **argv_) {
 // xclang options begin
   int argc__ =  argc_;
@@ -348,10 +350,8 @@ int main(int argc_, const char **argv_) {
   for(int i = 0; i < argc_ ;i++ )
   {
 	  std::string strArgv(argv_[i],strConstXClangOptPrefix.size());
-//	  printf("option<%s>\n",argv_[i]);
 	  if(strConstXClangOptPrefix == strArgv )
 	  {
-//		  printf("xclang option<%s>\n",argv_[i]);
 		  argc__ --;
 		  if ( argc_ > i+1)
 		  {
@@ -361,6 +361,7 @@ int main(int argc_, const char **argv_) {
 		  {
 			  argv_new[i] = NULL;
 		  }
+		  globalXClangArgv.push_back(argv_[i]);
 	  }
 	  else
 	  {
@@ -368,8 +369,6 @@ int main(int argc_, const char **argv_) {
 	  }
   }
   const char **argv__ = ( const char **)argv_new;
-//  printf("argc_<%d>\n",argc_);
-//  printf("argc__<%d>\n",argc__);
 // xclang options end
 
   llvm::sys::PrintStackTraceOnErrorSignal();
