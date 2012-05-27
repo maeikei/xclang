@@ -340,14 +340,45 @@ static void ParseProgName(SmallVectorImpl<const char *> &ArgVector,
   }
 }
 
+const std::string strConstXClangOptPrefix("--xclang");
 int main(int argc_, const char **argv_) {
+// xclang options begin
+  int argc__ =  argc_;
+  char **argv_new = new char* [argc_];
+  for(int i = 0; i < argc_ ;i++ )
+  {
+	  std::string strArgv(argv_[i],strConstXClangOptPrefix.size());
+//	  printf("option<%s>\n",argv_[i]);
+	  if(strConstXClangOptPrefix == strArgv )
+	  {
+//		  printf("xclang option<%s>\n",argv_[i]);
+		  argc__ --;
+		  if ( argc_ > i+1)
+		  {
+			  argv_new[i] = (char*)argv_[i+1];
+		  }
+		  else
+		  {
+			  argv_new[i] = NULL;
+		  }
+	  }
+	  else
+	  {
+		  argv_new[i] = (char*)argv_[i];	  
+	  }
+  }
+  const char **argv__ = ( const char **)argv_new;
+//  printf("argc_<%d>\n",argc_);
+//  printf("argc__<%d>\n",argc__);
+// xclang options end
+
   llvm::sys::PrintStackTraceOnErrorSignal();
-  llvm::PrettyStackTraceProgram X(argc_, argv_);
+  llvm::PrettyStackTraceProgram X(argc__, argv__);
 
   std::set<std::string> SavedStrings;
   SmallVector<const char*, 256> argv;
 
-  ExpandArgv(argc_, argv_, argv, SavedStrings);
+  ExpandArgv(argc__, argv__, argv, SavedStrings);
 
   // Handle -cc1 integrated tools.
   if (argv.size() > 1 && StringRef(argv[1]).startswith("-cc1")) {
@@ -485,6 +516,7 @@ int main(int argc_, const char **argv_) {
   llvm::TimerGroup::printAll(llvm::errs());
   
   llvm::llvm_shutdown();
-
+	
+  delete [] argv__;
   return Res;
 }
