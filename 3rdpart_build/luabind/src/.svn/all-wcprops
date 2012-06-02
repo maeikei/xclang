@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/src
+END
+open.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/src/open.cpp
+END
+class.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/src/class.cpp
+END
+scope.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/src/scope.cpp
+END
+wrapper_base.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/wrapper_base.cpp
+END
+class_rep.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/src/class_rep.cpp
+END
+object_rep.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/object_rep.cpp
+END
+class_info.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/class_info.cpp
+END
+weak_ref.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/src/weak_ref.cpp
+END
+function.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/function.cpp
+END
+link_compatibility.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/link_compatibility.cpp
+END
+create_class.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/create_class.cpp
+END
+stack_content_by_name.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/stack_content_by_name.cpp
+END
+inheritance.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/src/inheritance.cpp
+END
+error.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/error.cpp
+END
+pcall.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/pcall.cpp
+END
+exception_handler.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/exception_handler.cpp
+END
+class_registry.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/src/class_registry.cpp
+END

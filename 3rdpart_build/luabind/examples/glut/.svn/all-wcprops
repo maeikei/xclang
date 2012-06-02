@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/examples/glut
+END
+Jamfile
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/examples/glut/Jamfile
+END
+glut_bind.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/examples/glut/glut_bind.cpp
+END
+glut_bindings.lua
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/examples/glut/glut_bindings.lua
+END

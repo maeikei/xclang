@@ -1,0 +1,49 @@
+10
+
+dir
+1419
+http://ttcode.ddo.jp/svn/taotie/xclang/trunk/3rdpart_build/luabind/examples
+http://ttcode.ddo.jp/svn/taotie
+
+
+
+2011-04-17T01:43:09.871672Z
+881
+ma
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+da88ffe5-c910-478a-bd03-9399911422ed
+
+filesystem
+dir
+
+hello_world
+dir
+
+regexp
+dir
+
+glut
+dir
+
+cln
+dir
+
+intrusive_ptr
+dir
+
+any_converter
+dir
+

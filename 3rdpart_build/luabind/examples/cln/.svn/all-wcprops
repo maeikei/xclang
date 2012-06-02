@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/examples/cln
+END
+cln_test.lua
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/examples/cln/cln_test.lua
+END
+cln_test.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/examples/cln/cln_test.cpp
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/examples/cln/README
+END

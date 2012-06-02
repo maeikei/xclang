@@ -1,0 +1,233 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/taotie/!svn/ver/1061/xclang/trunk/3rdpart_build/luabind/luabind
+END
+copy_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/copy_policy.hpp
+END
+error.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/error.hpp
+END
+prefix.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/prefix.hpp
+END
+dependency_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/dependency_policy.hpp
+END
+container_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/container_policy.hpp
+END
+get_main_thread.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/get_main_thread.hpp
+END
+wrapper_base.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/wrapper_base.hpp
+END
+return_reference_to_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/return_reference_to_policy.hpp
+END
+back_reference.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/back_reference.hpp
+END
+get_pointer.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/get_pointer.hpp
+END
+class_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/class_info.hpp
+END
+out_value_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/out_value_policy.hpp
+END
+nil.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/nil.hpp
+END
+version.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/version.hpp
+END
+yield_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/yield_policy.hpp
+END
+adopt_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/adopt_policy.hpp
+END
+operator.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/luabind/operator.hpp
+END
+handle.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/luabind/handle.hpp
+END
+exception_handler.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/exception_handler.hpp
+END
+typeid.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/typeid.hpp
+END
+open.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/open.hpp
+END
+class.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/taotie/!svn/ver/1060/xclang/trunk/3rdpart_build/luabind/luabind/class.hpp
+END
+config.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/config.hpp
+END
+object.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/luabind/object.hpp
+END
+raw_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/raw_policy.hpp
+END
+iterator_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/iterator_policy.hpp
+END
+scope.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/luabind/scope.hpp
+END
+value_wrapper.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/value_wrapper.hpp
+END
+luabind.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/luabind.hpp
+END
+back_reference_fwd.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/back_reference_fwd.hpp
+END
+tag_function.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/tag_function.hpp
+END
+shared_ptr_converter.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/luabind/shared_ptr_converter.hpp
+END
+make_function.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/taotie/!svn/ver/1060/xclang/trunk/3rdpart_build/luabind/luabind/make_function.hpp
+END
+weak_ref.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/luabind/weak_ref.hpp
+END
+lua_include.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/taotie/!svn/ver/881/xclang/trunk/3rdpart_build/luabind/luabind/lua_include.hpp
+END
+function.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/taotie/!svn/ver/1060/xclang/trunk/3rdpart_build/luabind/luabind/function.hpp
+END
+discard_result_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/discard_result_policy.hpp
+END
+from_stack.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/taotie/!svn/ver/865/xclang/trunk/3rdpart_build/luabind/luabind/from_stack.hpp
+END
