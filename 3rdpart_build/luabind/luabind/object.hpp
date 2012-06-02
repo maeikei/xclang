@@ -523,7 +523,8 @@ namespace detail
           detail::stack_pop pop(m_interpreter, 2);
           m_key.push(m_interpreter);
           other.m_key.push(m_interpreter);
-          return lua_equal(m_interpreter, -2, -1) != 0;
+//          return lua_equal(m_interpreter, -2, -1) != 0;
+		  return lua_compare(m_interpreter, -2, -1,LUA_OPEQ) != 0;
       }
 
       adl::iterator_proxy<AccessPolicy> dereference() const 

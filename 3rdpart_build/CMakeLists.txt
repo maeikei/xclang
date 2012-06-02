@@ -1,2 +1,2 @@
 add_subdirectory(lua)
-add_subdirectory(luabind)
+#add_subdirectory(luabind)
