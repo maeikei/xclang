@@ -115,8 +115,22 @@ static int cc1_test(DiagnosticsEngine &Diags,
   return 0;
 }
 
+extern std::vector<std::string> globalXClangArgv;
+
+#define __XCLANG_LOG
 int cc1_main(const char **ArgBegin, const char **ArgEnd,
              const char *Argv0, void *MainAddr) {
+#ifdef __XCLANG_LOG
+	for(auto prt  = ArgBegin; prt < ArgEnd ;prt++ )
+	{
+		printf("prt=<%s>\n",*prt);
+	}
+	for(auto it  = globalXClangArgv.begin(); it != globalXClangArgv.end() ;it++ )
+	{
+		printf("it=<%s>\n",it->c_str());
+	}
+#endif
+	
   OwningPtr<CompilerInstance> Clang(new CompilerInstance());
   IntrusiveRefCntPtr<DiagnosticIDs> DiagID(new DiagnosticIDs());
 

@@ -341,7 +341,8 @@ static void ParseProgName(SmallVectorImpl<const char *> &ArgVector,
 }
 
 const std::string strConstXClangOptPrefix("--xclang");
-std::vector<std::string> globalXClangArgv;
+std::vector<const char*> globalXClangArgv;
+#define __XCLANG_LOG
 
 int main(int argc_, const char **argv_) {
 // xclang options begin
@@ -501,12 +502,18 @@ int main(int argc_, const char **argv_) {
 
     argv.insert(&argv[1], ExtraArgs.begin(), ExtraArgs.end());
   }
+	
 
   OwningPtr<Compilation> C(TheDriver.BuildCompilation(argv));
   int Res = 0;
   const Command *FailingCommand = 0;
   if (C.get())
-    Res = TheDriver.ExecuteCompilation(*C, FailingCommand);
+  {
+#ifdef __XCLANG_LOG
+	  printf("%s\n","ExecuteCompilation");
+#endif
+	  Res = TheDriver.ExecuteCompilation(*C, FailingCommand);
+  }
 
   // If result status is < 0, then the driver command signalled an error.
   // In this case, generate additional diagnostic information if possible.
