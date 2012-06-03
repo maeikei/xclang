@@ -345,30 +345,33 @@ std::vector<std::string> globalXClangArgv;
 
 int main(int argc_, const char **argv_) {
 // xclang options begin
-  int argc__ =  argc_;
+  int argc__ =  0;
   char **argv_new = new char* [argc_];
   for(int i = 0; i < argc_ ;i++ )
   {
 	  std::string strArgv(argv_[i],strConstXClangOptPrefix.size());
 	  if(strConstXClangOptPrefix == strArgv )
 	  {
-		  argc__ --;
-		  if ( argc_ > i+1)
-		  {
-			  argv_new[i] = (char*)argv_[i+1];
-		  }
-		  else
-		  {
-			  argv_new[i] = NULL;
-		  }
 		  globalXClangArgv.push_back(argv_[i]);
 	  }
 	  else
 	  {
-		  argv_new[i] = (char*)argv_[i];	  
+		  argv_new[argc__++] = (char*)argv_[i];	  
 	  }
   }
   const char **argv__ = ( const char **)argv_new;
+	
+#ifdef __XCLANG_LOG
+  printf("_argc=<%d>,__argc=<%d>\n",argc_,argc__);
+  for(int i = 0; i < argc_ ;i++ )
+  {
+	  printf("argv_[i]=<%s>\n",argv_[i]);
+  }
+  for(int i = 0; i < argc__ ;i++ )
+  {
+		printf("argv__[i]=<%s>\n",argv__[i]);
+  }
+#endif
 // xclang options end
 
   llvm::sys::PrintStackTraceOnErrorSignal();
@@ -516,6 +519,8 @@ int main(int argc_, const char **argv_) {
   
   llvm::llvm_shutdown();
 	
+// xclang options begin
   delete [] argv__;
+// xclang options end
   return Res;
 }

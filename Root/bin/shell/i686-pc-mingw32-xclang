@@ -1,3 +1,3 @@
 #!/bin/bash
 xclang_path=`echo $0 | sed -e "s/i686-pc-mingw32-//"`-engine
-${xclang_path}-engine --xclang_triple=i686-pc-mingw32 --xclang_lang=c $*
+${xclang_path} --xclang_triple=i686-pc-mingw32 --xclang_lang=c $*

@@ -3,4 +3,5 @@ add_xclang_executable(xclang-engine
   cc1_main.cpp
   cc1as_main.cpp
   )
+target_link_libraries( xclang-engine lua)
 install(TARGETS xclang-engine DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/bin)
