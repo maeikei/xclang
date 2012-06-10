@@ -22,6 +22,7 @@ static const OptTable::Info CC1InfoTable[] = {
     OPT_##GROUP, OPT_##ALIAS },
 #include "clang/Driver/CC1Options.inc"
 #include "XClangOptions.inc"
+
 };
 
 namespace {

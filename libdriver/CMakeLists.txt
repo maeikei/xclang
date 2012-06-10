@@ -16,4 +16,5 @@ add_xclang_library(xClangDriver
   WindowsToolChain.cpp
   Tools.cpp
   Types.cpp
+  XClangOptions.inc
   )
