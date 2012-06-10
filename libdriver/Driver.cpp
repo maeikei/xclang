@@ -17,7 +17,7 @@
 #include "clang/Driver/Job.h"
 #include "clang/Driver/OptTable.h"
 #include "clang/Driver/Option.h"
-#include "clang/Driver/Options.h"
+#include "XClangOptions.h"
 #include "clang/Driver/Tool.h"
 #include "clang/Driver/ToolChain.h"
 
@@ -109,6 +109,7 @@ InputArgList *Driver::ParseArgStrings(ArrayRef<const char *> ArgList) {
   for (ArgList::const_iterator it = Args->begin(), ie = Args->end();
        it != ie; ++it) {
     Arg *A = *it;
+	  printf("%s",A->getAsString(*Args).c_str() );
     if (A->getOption().isUnsupported()) {
       Diag(clang::diag::err_drv_unsupported_opt) << A->getAsString(*Args);
       continue;

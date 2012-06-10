@@ -15,7 +15,7 @@
 #include "clang/Driver/Driver.h"
 #include "clang/Driver/DriverDiagnostic.h"
 #include "clang/Driver/ObjCRuntime.h"
-#include "clang/Driver/Options.h"
+#include "XClangOptions.h"
 #include "llvm/ADT/StringSwitch.h"
 #include "llvm/Support/ErrorHandling.h"
 using namespace clang::driver;

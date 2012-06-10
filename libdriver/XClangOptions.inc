@@ -10,6 +10,7 @@
 #error "Define OPTION prior to including this file!"
 #endif
 
-
-OPTION("--xclang_triple=", xclang_triple_constraints_EQ, Joined, INVALID, xclang_triple_constraints, 0, 0, 0, 0)
-OPTION("--xclang_lang=", analyzer_constraints_EQ, Joined, INVALID, xclang_lang_constraints, 0, 0, 0, 0)
+OPTION("--xclang-triple=", xclang_triple, Joined, INVALID, xclang_triple, 0, 0, 0, 0)
+OPTION("--xclang-triple", _xclang_triple, Joined, INVALID, xclang_triple, 0, 0, 0, 0)
+OPTION("--xclang-lang=", xclang_lang, Joined, INVALID, xclang_lang, 0, 0, 0, 0)
+OPTION("--xclang-lang", _xclang_lang, Joined, INVALID, xclang_lang, 0, 0, 0, 0)

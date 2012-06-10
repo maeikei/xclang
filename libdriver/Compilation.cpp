@@ -13,7 +13,7 @@
 #include "clang/Driver/ArgList.h"
 #include "clang/Driver/Driver.h"
 #include "clang/Driver/DriverDiagnostic.h"
-#include "clang/Driver/Options.h"
+#include "XClangOptions.h"
 #include "clang/Driver/ToolChain.h"
 
 #include "llvm/ADT/STLExtras.h"
@@ -136,28 +136,14 @@ bool Compilation::CleanupFileList(const ArgStringList &Files,
 
   return Success;
 }
-// xclang options begin
-extern std::vector<const char*> globalXClangArgv;
-
-//{
-//	argv.insert(&argv[1], globalXClangArgv.begin(), globalXClangArgv.end());
-//}
-// xclang options end
 
 int Compilation::ExecuteCommand(const Command &C,
                                 const Command *&FailingCommand) const {
   llvm::sys::Path Prog(C.getExecutable());
-  const char **Argv = new const char*[C.getArguments().size() + globalXClangArgv.size() + 2];
+  const char **Argv = new const char*[C.getArguments().size() + 2];
   Argv[0] = C.getExecutable();
   std::copy(C.getArguments().begin(), C.getArguments().end(), Argv+1);
-	// xclang options begin
-	for (int i = 0; i < globalXClangArgv.size(); i++)
-	{
-		Argv[C.getArguments().size() +1 + i] = globalXClangArgv[i];
-	}
-	// xclang options end
-	
-  Argv[C.getArguments().size() +  globalXClangArgv.size() + 1] = 0;
+  Argv[C.getArguments().size() + 1] = 0;
 
   if ((getDriver().CCCEcho || getDriver().CCPrintOptions ||
        getArgs().hasArg(options::OPT_v)) && !getDriver().CCGenDiagnostics) {
@@ -187,7 +173,7 @@ int Compilation::ExecuteCommand(const Command &C,
     if (OS != &llvm::errs())
       delete OS;
   }
-	
+
   std::string Error;
   int Res =
     llvm::sys::Program::ExecuteAndWait(Prog, Argv,

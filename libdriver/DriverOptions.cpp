@@ -7,7 +7,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "clang/Driver/Options.h"
+#include "XClangOptions.h"
 #include "clang/Driver/OptTable.h"
 #include "clang/Driver/Option.h"
 
@@ -20,6 +20,7 @@ static const OptTable::Info InfoTable[] = {
   { NAME, HELPTEXT, METAVAR, Option::KIND##Class, PARAM, FLAGS, \
     OPT_##GROUP, OPT_##ALIAS },
 #include "clang/Driver/Options.inc"
+#include "XClangOptions.inc"
 };
 
 namespace {

@@ -17,7 +17,7 @@
 #include "clang/Driver/ObjCRuntime.h"
 #include "clang/Driver/OptTable.h"
 #include "clang/Driver/Option.h"
-#include "clang/Driver/Options.h"
+#include "XClangOptions.h"
 #include "clang/Basic/Version.h"
 
 #include "llvm/ADT/SmallString.h"

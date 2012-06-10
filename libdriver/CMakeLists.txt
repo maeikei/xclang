@@ -3,6 +3,7 @@ add_xclang_library(xClangDriver
   Arg.cpp
   ArgList.cpp
   CC1AsOptions.cpp
+  CC1Options.cpp
   Compilation.cpp
   Driver.cpp
   DriverOptions.cpp

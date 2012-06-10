@@ -18,7 +18,7 @@
 #include "clang/Driver/DriverDiagnostic.h"
 #include "clang/Driver/CC1AsOptions.h"
 #include "clang/Driver/OptTable.h"
-#include "clang/Driver/Options.h"
+#include "XClangOptions.h"
 #include "clang/Frontend/DiagnosticOptions.h"
 #include "clang/Frontend/FrontendDiagnostic.h"
 #include "clang/Frontend/TextDiagnosticPrinter.h"

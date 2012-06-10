@@ -17,8 +17,11 @@ macro(add_xclang_executable name)
   add_executable( ${name} ${ARGN} )
   target_link_libraries( ${name}
 ## llvm clang --libs
+##
+xClangDriver
+##
 clangFrontendTool clangAST clangAnalysis clangBasic clangCodeGen 
-clangDriver clangEdit clangFrontend clangLex clangParse clangEdit 
+clangEdit clangFrontend clangLex clangParse clangEdit 
 clangARCMigrate clangRewrite clangSema clangSerialization clangStaticAnalyzerFrontend 
 clangStaticAnalyzerCheckers clangStaticAnalyzerCore LLVMARMCodeGen LLVMARMAsmParser 
 LLVMARMDisassembler LLVMCellSPUCodeGen LLVMCppBackendCodeGen LLVMHexagonCodeGen 
@@ -45,9 +48,6 @@ LLVMPTXInfo LLVMSparcInfo LLVMX86AsmPrinter LLVMX86Info LLVMMCParser
 LLVMCodeGen LLVMXCoreInfo LLVMBitReader LLVMX86Utils LLVMScalarOpts 
 LLVMInstCombine LLVMTransformUtils LLVMipa LLVMAnalysis LLVMTarget 
 LLVMCore LLVMMC LLVMObject LLVMSupport clangRewrite clangFrontend 
-##
-xClangDriver
-##
 clangSerialization clangParse clangSema clangAnalysis clangEdit 
 clangAST clangLex clangBasic LLVMMC LLVMObject LLVMSupport
 pthread

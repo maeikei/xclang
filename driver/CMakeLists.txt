@@ -1,3 +1,4 @@
+include_directories(${PROJECT_SOURCE_DIR}/libdriver)
 add_xclang_executable(xclang-engine
   driver.cpp
   cc1_main.cpp
