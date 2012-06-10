@@ -1,0 +1,9 @@
+.\bjam --prefix=C:/xclang-dev/xclang-obj/3rdpart link=static toolset=msvc-10.0 install
+./bjam --prefix=/Volumes/DataHD/workspace/xclang-dev/obj/3rdpart link=static install
+
+
+export PATH=/opt/llvm/bin:$PATH
+./bjam --prefix=/Volumes/DataHD/workspace/xclang-dev/obj/3rdpart link=static toolset=clang install
+
+
+
