@@ -340,48 +340,14 @@ static void ParseProgName(SmallVectorImpl<const char *> &ArgVector,
   }
 }
 
-const std::string strConstXClangOptPrefix("--xclang");
-std::vector<const char*> globalXClangArgv;
-#define __XCLANG_LOG
-
 int main(int argc_, const char **argv_) {
-// xclang options begin
-  int argc__ =  0;
-  char **argv_new = new char* [argc_];
-  for(int i = 0; i < argc_ ;i++ )
-  {
-	  std::string strArgv(argv_[i],strConstXClangOptPrefix.size());
-	  if(strConstXClangOptPrefix == strArgv )
-	  {
-		  globalXClangArgv.push_back(argv_[i]);
-	  }
-	  else
-	  {
-		  argv_new[argc__++] = (char*)argv_[i];	  
-	  }
-  }
-  const char **argv__ = ( const char **)argv_new;
-	
-#ifdef __XCLANG_LOG
-  printf("_argc=<%d>,__argc=<%d>\n",argc_,argc__);
-  for(int i = 0; i < argc_ ;i++ )
-  {
-	  printf("argv_[i]=<%s>\n",argv_[i]);
-  }
-  for(int i = 0; i < argc__ ;i++ )
-  {
-		printf("argv__[i]=<%s>\n",argv__[i]);
-  }
-#endif
-// xclang options end
-
   llvm::sys::PrintStackTraceOnErrorSignal();
-  llvm::PrettyStackTraceProgram X(argc__, argv__);
+  llvm::PrettyStackTraceProgram X(argc_, argv_);
 
   std::set<std::string> SavedStrings;
   SmallVector<const char*, 256> argv;
 
-  ExpandArgv(argc__, argv__, argv, SavedStrings);
+  ExpandArgv(argc_, argv_, argv, SavedStrings);
 
   // Handle -cc1 integrated tools.
   if (argv.size() > 1 && StringRef(argv[1]).startswith("-cc1")) {
@@ -502,18 +468,12 @@ int main(int argc_, const char **argv_) {
 
     argv.insert(&argv[1], ExtraArgs.begin(), ExtraArgs.end());
   }
-	
 
   OwningPtr<Compilation> C(TheDriver.BuildCompilation(argv));
   int Res = 0;
   const Command *FailingCommand = 0;
   if (C.get())
-  {
-#ifdef __XCLANG_LOG
-	  printf("%s\n","ExecuteCompilation");
-#endif
-	  Res = TheDriver.ExecuteCompilation(*C, FailingCommand);
-  }
+    Res = TheDriver.ExecuteCompilation(*C, FailingCommand);
 
   // If result status is < 0, then the driver command signalled an error.
   // In this case, generate additional diagnostic information if possible.
@@ -525,9 +485,6 @@ int main(int argc_, const char **argv_) {
   llvm::TimerGroup::printAll(llvm::errs());
   
   llvm::llvm_shutdown();
-	
-// xclang options begin
-  delete [] argv__;
-// xclang options end
+
   return Res;
 }
