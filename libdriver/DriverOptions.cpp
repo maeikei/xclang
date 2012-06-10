@@ -19,8 +19,8 @@ static const OptTable::Info InfoTable[] = {
                HELPTEXT, METAVAR)   \
   { NAME, HELPTEXT, METAVAR, Option::KIND##Class, PARAM, FLAGS, \
     OPT_##GROUP, OPT_##ALIAS },
-#include "clang/Driver/Options.inc"
 #include "XClangOptions.inc"
+#include "clang/Driver/Options.inc"
 };
 
 namespace {

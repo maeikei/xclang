@@ -109,8 +109,8 @@ InputArgList *Driver::ParseArgStrings(ArrayRef<const char *> ArgList) {
   for (ArgList::const_iterator it = Args->begin(), ie = Args->end();
        it != ie; ++it) {
     Arg *A = *it;
-	  printf("%s",A->getAsString(*Args).c_str() );
     if (A->getOption().isUnsupported()) {
+		A->getOption().dump();
       Diag(clang::diag::err_drv_unsupported_opt) << A->getAsString(*Args);
       continue;
     }
