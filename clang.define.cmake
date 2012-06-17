@@ -56,6 +56,12 @@ clangSerialization clangParse clangSema clangAnalysis clangEdit
 clangAST clangLex clangBasic LLVMMC LLVMObject LLVMSupport
 pthread
    )
+   
+  if(WIN32)
+    target_link_libraries( ${name}
+      -limagehlp -lpsapi -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+    )
+  endif(WIN32)
   set_target_properties(${name} PROPERTIES FOLDER "Xclang executables")
 endmacro(add_xclang_executable)
 
