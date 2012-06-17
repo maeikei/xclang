@@ -1,4 +1,8 @@
+if(WIN32)
+set(LLVM_TOP_DIR E:/develop/llvm-dev/install)
+else(WIN32)
 set(LLVM_TOP_DIR /opt/llvm)
+endif(WIN32)
 include_directories(${LLVM_TOP_DIR}/include)
 
 configure_file(
