@@ -4,6 +4,7 @@ CXX = $(XCLANG_PATH)/i686-pc-mingw32-xclang++
 all:
 	$(CC) --help > xclang.help
 #	$(CC) -v main.c
+	$(CC) main.c -c -o C:/Users/ma/AppData/Local/Temp/main.c.o
 	$(CC) main.c -o C:/Users/ma/AppData/Local/Temp/main.exe
 #	$(CC) main.c 
 #	$(CXX) main.cpp -o ./main.cpp.o

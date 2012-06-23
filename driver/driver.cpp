@@ -349,6 +349,9 @@ static void ParseProgName(SmallVectorImpl<const char *> &ArgVector,
 std::vector<std::string> globalXClangArgv;
 const std::string constGlobalXClangPrefix("--xclang-");
 
+#define XCLANG_PRINTF(...)
+//#define XCLANG_PRINTF printf
+
 int main(int argc_, const char **argv_) {
 
   std::vector<std::string> origClangArgv;
@@ -356,7 +359,7 @@ int main(int argc_, const char **argv_) {
   {
   	std::string arvStr(argv_[i]);
   	const int compare = arvStr.compare(0,constGlobalXClangPrefix.size(),constGlobalXClangPrefix);
-	printf("argv_[%d]=<%s>,compare=<%d>\n",i,argv_[i],compare);
+	XCLANG_PRINTF("argv_[%d]=<%s>,compare=<%d>\n",i,argv_[i],compare);
   	if( compare == 0  )
   	{
   		globalXClangArgv.push_back(arvStr);
@@ -522,7 +525,7 @@ int main(int argc_, const char **argv_) {
   	}
     Res = TheDriver.ExecuteCompilation(*C, FailingCommand);
   }
-  printf("isLinkJob = <%d>\n",isLinkJob);
+  XCLANG_PRINTF("isLinkJob = <%d>\n",isLinkJob);
 
   // If result status is < 0, then the driver command signalled an error.
   // In this case, generate additional diagnostic information if possible.
