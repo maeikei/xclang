@@ -2,5 +2,8 @@ XCLANG_PATH = E:/develop/xclang-dev/obj/InstallRoot/bin
 CC = $(XCLANG_PATH)/i686-pc-mingw32-xclang
 CXX = $(XCLANG_PATH)/i686-pc-mingw32-xclang++
 all:
-	$(CC) -v main.c -o /tmp/main.c.o
-#	$(CXX) -v main.cpp -o /tmp/main.cpp.o
+	$(CC) --help > xclang.help
+#	$(CC) -v main.c
+	$(CC) main.c -o C:/Users/ma/AppData/Local/Temp/main.exe
+#	$(CC) main.c 
+#	$(CXX) main.cpp -o ./main.cpp.o

@@ -43,6 +43,11 @@
 #include "llvm/Support/TargetSelect.h"
 #include "llvm/Support/system_error.h"
 #include <cctype>
+
+
+#include "clang/Driver/Action.h"
+#include <stdio.h>
+
 using namespace clang;
 using namespace clang::driver;
 
@@ -340,14 +345,45 @@ static void ParseProgName(SmallVectorImpl<const char *> &ArgVector,
   }
 }
 
+
+std::vector<std::string> globalXClangArgv;
+const std::string constGlobalXClangPrefix("--xclang-");
+
 int main(int argc_, const char **argv_) {
+
+  std::vector<std::string> origClangArgv;
+  for(int i = 0 ;i < argc_ ;i++)
+  {
+  	std::string arvStr(argv_[i]);
+  	const int compare = arvStr.compare(0,constGlobalXClangPrefix.size(),constGlobalXClangPrefix);
+	printf("argv_[%d]=<%s>,compare=<%d>\n",i,argv_[i],compare);
+  	if( compare == 0  )
+  	{
+  		globalXClangArgv.push_back(arvStr);
+  		origClangArgv.push_back("-Xlinker");
+  		origClangArgv.push_back(arvStr);
+  	}
+  	else
+  	{
+ 		origClangArgv.push_back(arvStr);
+  	}
+  }
+  
+  int argc_new =  origClangArgv.size();
+  char **argv__new = new char* [origClangArgv.size() +1];
+  for(int i = 0 ;i < origClangArgv.size() ;i++)
+  {
+  	argv__new[i] = (char*)origClangArgv[i].c_str();
+  }
+
+
   llvm::sys::PrintStackTraceOnErrorSignal();
-  llvm::PrettyStackTraceProgram X(argc_, argv_);
+  llvm::PrettyStackTraceProgram X(argc_new, argv__new);
 
   std::set<std::string> SavedStrings;
   SmallVector<const char*, 256> argv;
 
-  ExpandArgv(argc_, argv_, argv, SavedStrings);
+  ExpandArgv(argc_new, (const char**)argv__new, argv, SavedStrings);
 
   // Handle -cc1 integrated tools.
   if (argv.size() > 1 && StringRef(argv[1]).startswith("-cc1")) {
@@ -471,9 +507,22 @@ int main(int argc_, const char **argv_) {
 
   OwningPtr<Compilation> C(TheDriver.BuildCompilation(argv));
   int Res = 0;
+  bool isLinkJob = false;
   const Command *FailingCommand = 0;
   if (C.get())
+  {
+	for (ActionList::const_iterator it = C->getActions().begin(),
+	     ie = C->getActions().end(); it != ie; ++it)
+  	{
+  		
+  		if( Action::LinkJobClass == (*it)->getKind())
+  		{
+  			isLinkJob = true;
+  		}
+  	}
     Res = TheDriver.ExecuteCompilation(*C, FailingCommand);
+  }
+  printf("isLinkJob = <%d>\n",isLinkJob);
 
   // If result status is < 0, then the driver command signalled an error.
   // In this case, generate additional diagnostic information if possible.

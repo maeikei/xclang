@@ -20,7 +20,7 @@ namespace options {
 #define OPTION(NAME, ID, KIND, GROUP, ALIAS, FLAGS, PARAM, \
                HELPTEXT, METAVAR) OPT_##ID,
 #include "clang/Driver/Options.inc"
-#include "XClangOptions.inc"
+//#include "XClangOptions.inc"
     LastOption
 #undef OPTION
   };

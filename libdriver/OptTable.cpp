@@ -96,6 +96,8 @@ OptTable::OptTable(const Info *_OptionInfos, unsigned _NumOptionInfos)
       assert(!TheUnknownOption && "Cannot have multiple input options!");
       TheUnknownOption = getOption(i + 1);
     } else if (Kind != Option::GroupClass) {
+//      getOption(i)->dump();
+//      getOption(i+1)->dump();
       FirstSearchableIndex = i;
       break;
     }
@@ -115,8 +117,8 @@ OptTable::OptTable(const Info *_OptionInfos, unsigned _NumOptionInfos)
   // Check that options are in order.
   for (unsigned i = FirstSearchableIndex+1, e = getNumOptions(); i != e; ++i) {
     if (!(getInfo(i) < getInfo(i + 1))) {
-      getOption(i)->dump();
-      getOption(i + 1)->dump();
+//      getOption(i)->dump();
+//      getOption(i + 1)->dump();
       llvm_unreachable("Options are not in order!");
     }
   }
