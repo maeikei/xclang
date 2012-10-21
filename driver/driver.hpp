@@ -9,9 +9,13 @@ class XClangDriver
         int exce(void);
     private:
         XClangDriver();
+        void calcNewOptionLength(void);
+        void adjustClangOptions(void);
     private:
         const int m_OrigArgc;
         const char **m_OrigArgv;
+        int m_NewArgc;
+        char **m_NewArgv;
     };
 }
 #endif // __DRIVER_HPP_
