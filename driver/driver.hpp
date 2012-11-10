@@ -7,6 +7,7 @@ extern "C"
 }
 #include <string>
 #include <list>
+#include <vector>
 using namespace std;
 namespace xclang
 {
@@ -31,11 +32,15 @@ class XClangDriver
         list<string> m_Argv;
         lua_State *m_LuaState;
         bool m_CXX ;
-        
+
+#if 0 // not suported
         const list<string> m_XClangArgV =
         {
-//            string("-stdinc"),
+            "-stdinc",
+            ""
         };
+#endif 
+
     };
 }
 #endif // __DRIVER_HPP_
