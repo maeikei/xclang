@@ -16,6 +16,7 @@ XClangDriver::XClangDriver(const int argc,const char *argv[])
 ,m_Argv()
 ,m_LuaState(nullptr)
 ,m_CXX(false)
+,m_Program(argv[0])
 {
     for (int i = 1; i < m_OrigArgc; i++) {
         m_Argv.push_back(string(m_OrigArgv[i]));
@@ -29,6 +30,7 @@ XClangDriver::~XClangDriver()
 
 int XClangDriver::exce(void)
 {
+    m_Program.parse();
     this->calcTarget();
     this->adjustClangOptions();
     string cmdline ;
@@ -75,6 +77,6 @@ string XClangDriver::findProgramName(const string &name)
 }
 void XClangDriver::calcTarget(void)
 {
-    cout << "m_OrigArgv[0]=" << m_OrigArgv[0] << endl;    
+//    cout << "m_OrigArgv[0]=" << m_OrigArgv[0] << endl;
 }
 

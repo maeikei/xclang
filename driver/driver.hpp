@@ -9,6 +9,7 @@ extern "C"
 #include <list>
 #include <vector>
 using namespace std;
+#include "programs.hpp"
 namespace xclang
 {
 class XClangDriver
@@ -32,6 +33,7 @@ class XClangDriver
         list<string> m_Argv;
         lua_State *m_LuaState;
         bool m_CXX ;
+        XClangPrograms m_Program;
 
 #if 0 // not suported
         const list<string> m_XClangArgV =
