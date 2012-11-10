@@ -1,24 +1,40 @@
-#include "driver.hpp"
 #include <cstdlib>
 #include <string>
-
-using namespace xclang;
+#include <iostream>
 using namespace std;
+#include "driver.hpp"
+using namespace xclang;
+
+#include "boost/filesystem.hpp"
+
+
 XClangDriver::XClangDriver(const int argc,const char *argv[])
 :m_OrigArgc(argc)
 ,m_OrigArgv(argv)
 ,m_NewArgc(0)
-,m_NewArgv(NULL)
+,m_NewArgv(nullptr)
+,m_Argv()
+,m_LuaState(nullptr)
+,m_CXX(false)
 {
+    for (int i = 1; i < m_OrigArgc; i++) {
+        m_Argv.push_back(string(m_OrigArgv[i]));
+    }
+    m_LuaState = luaL_newstate();
+}
+XClangDriver::~XClangDriver()
+{
+    lua_close(m_LuaState);
 }
 
 int XClangDriver::exce(void)
 {
+    this->calcTarget();
     this->adjustClangOptions();
     string cmdline ;
-    for(int i = 0; i < m_NewArgc  ;i++ )
+    for(auto it = m_Argv.begin(); it != m_Argv.end()  ;it++ )
     {
-        cmdline += string(m_NewArgv[i]) + " " ;
+        cmdline += *it + " " ;
     }
     system(cmdline.c_str());
     return 0;
@@ -32,11 +48,33 @@ void XClangDriver::calcNewOptionLength(void)
 
 void XClangDriver::adjustClangOptions(void)
 {
+#if 0
     this->calcNewOptionLength();
     m_NewArgv = new char *[m_NewArgc];
+    cout << "m_OrigArgv[0]=" << m_OrigArgv[0] << endl;
 //    m_NewArgv[0] = "clang";
     for (int i = 1; i < m_OrigArgc; i++) {
         m_NewArgv[i] = const_cast<char *>(m_OrigArgv[i]);
     }
+#endif
+#if 1 // will change to a const list
+    m_Argv.push_back("-nostdinc");
+    m_Argv.push_back("-nostdlib");
+    if (m_CXX)
+    {
+        m_Argv.push_back("-nostdincxx");
+    }
+#endif
+
+    m_Argv.push_front(findProgramName("clang"));
+}
+string XClangDriver::findProgramName(const string &name)
+{
+    string ret(name);
+    return ret;
+}
+void XClangDriver::calcTarget(void)
+{
+    cout << "m_OrigArgv[0]=" << m_OrigArgv[0] << endl;    
 }
 

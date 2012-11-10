@@ -46,9 +46,9 @@ src/ltable.h
 src/ltablib.c
 src/ltm.c
 src/ltm.h
-src/lua.c
+#src/lua.c
 src/lua.h
-src/luac.c
+#src/luac.c
 src/luaconf.h
 src/lualib.h
 src/lundump.c
