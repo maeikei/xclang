@@ -20,14 +20,34 @@ XClangPrograms::XClangPrograms(const string &argv0)
     try
     {
         fs::path xclangpath(m_argv0);
+        if(not xclangpath.has_parent_path())
+        {
+            string path_env(getenv("PATH"));
+            boost::regex re3(string("[:|;]"));
+            boost::sregex_token_iterator i(path_env.begin(),path_env.end(), re3, -1);
+            boost::sregex_token_iterator j;
+            do
+            {
+                fs::path temp_search(*i + "/" + m_argv0);
+                if ( fs::exists(temp_search) )
+                {
+                    xclangpath = temp_search;
+                    break;
+                }
+            }while (i++ != j);
+        }
         xclangpath = fs::absolute(xclangpath);
         xclangpath = fs::canonical(xclangpath);
         m_fullpath = xclangpath.string();
         m_home = xclangpath.parent_path().parent_path().string();
         boost::regex re(string("-xclang*"));
         m_target = boost::regex_replace(xclangpath.filename().string(),re,"");
+        
+        fs::path xclangpath_orig(m_argv0);
+        string filename = xclangpath_orig.filename().string();
+        cout << "filename=<" << filename << ">" << endl;
         boost::regex re2(string("-xclang"));
-        boost::sregex_token_iterator i(argv0.begin(),argv0.end(), re2, -1);
+        boost::sregex_token_iterator i(filename.begin(),filename.end(), re2, -1);
         boost::sregex_token_iterator j;
         if (++i != j)
         {
