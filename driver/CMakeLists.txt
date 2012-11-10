@@ -3,4 +3,6 @@ add_library(driver
   driver.hpp
   programs.cpp
   programs.hpp
+  configreader.cpp
+  configreader.hpp
   )

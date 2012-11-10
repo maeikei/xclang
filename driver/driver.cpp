@@ -31,6 +31,8 @@ XClangDriver::~XClangDriver()
 int XClangDriver::exce(void)
 {
     m_Program.parse();
+    string home = m_Program.gethome();
+    
     this->calcTarget();
     this->adjustClangOptions();
     string cmdline ;
