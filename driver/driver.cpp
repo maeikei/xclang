@@ -21,7 +21,7 @@ XClangDriver::XClangDriver(const int argc,const char *argv[])
     for (int i = 1; i < m_OrigArgc; i++) {
         m_Argv.push_back(string(m_OrigArgv[i]));
     }
-    m_config = new ConfigReader(m_program.gethome());
+    m_config = new ConfigReader(m_program.gethome(),m_program);
 }
 XClangDriver::~XClangDriver()
 {

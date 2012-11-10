@@ -8,18 +8,21 @@ extern "C"
 
 #include <string>
 using namespace std;
+#include "programs.hpp"
 namespace xclang
 {
 class ConfigReader
     {
     public:
-        ConfigReader(const string &home);
+        ConfigReader(const string &home,const XClangPrograms &p);
         ~ConfigReader();
     private:
         ConfigReader();
     private:
         string m_home;
+        const XClangPrograms &m_program;
         lua_State *m_LuaState;
+        string m_runscript;
     };
 }
 #endif // __CONFIG_READER_HPP_
