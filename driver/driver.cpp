@@ -40,23 +40,8 @@ int XClangDriver::exce(void)
     return 0;
 }
 
-void XClangDriver::calcNewOptionLength(void)
-{
-    m_NewArgc = m_OrigArgc;
-    
-}
-
 void XClangDriver::adjustClangOptions(void)
 {
-#if 0
-    this->calcNewOptionLength();
-    m_NewArgv = new char *[m_NewArgc];
-    cout << "m_OrigArgv[0]=" << m_OrigArgv[0] << endl;
-//    m_NewArgv[0] = "clang";
-    for (int i = 1; i < m_OrigArgc; i++) {
-        m_NewArgv[i] = const_cast<char *>(m_OrigArgv[i]);
-    }
-#endif
 #if 1 // will change to a const list
     m_Argv.push_back("-nostdinc");
     m_Argv.push_back("-nostdlib");
@@ -75,6 +60,6 @@ string XClangDriver::findProgramName(const string &name)
 }
 void XClangDriver::calcTarget(void)
 {
-//    cout << "m_OrigArgv[0]=" << m_OrigArgv[0] << endl;
+    m_Argv.push_back("-target " + m_program.gettarget() );
 }
 

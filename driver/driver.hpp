@@ -17,7 +17,6 @@ class XClangDriver
         ~XClangDriver();
     private:
         XClangDriver();
-        void calcNewOptionLength(void);
         void adjustClangOptions(void);
         string findProgramName(const string &name );
         int execProgram(const string &name );

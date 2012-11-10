@@ -45,7 +45,7 @@ XClangPrograms::XClangPrograms(const string &argv0)
         
         fs::path xclangpath_orig(m_argv0);
         string filename = xclangpath_orig.filename().string();
-        cout << "filename=<" << filename << ">" << endl;
+//        cout << "filename=<" << filename << ">" << endl;
         boost::regex re2(string("-xclang"));
         boost::sregex_token_iterator i(filename.begin(),filename.end(), re2, -1);
         boost::sregex_token_iterator j;
