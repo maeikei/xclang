@@ -1,4 +1,4 @@
-set(SRC
+set( SRC
 src/lapi.c
 src/lapi.h
 src/lauxlib.c
@@ -48,6 +48,7 @@ src/ltm.c
 src/ltm.h
 #src/lua.c
 src/lua.h
+src/lua.hpp
 #src/luac.c
 src/luaconf.h
 src/lualib.h
@@ -56,6 +57,6 @@ src/lundump.h
 src/lvm.c
 src/lvm.h
 src/lzio.c
-src/lzio.h
-	)
-add_library( lua ${SRC} )
+src/lzio.h 
+)
+add_library(lua ${SRC})

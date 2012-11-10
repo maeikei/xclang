@@ -4,10 +4,7 @@
 using namespace std;
 #include "configreader.hpp"
 using namespace xclang;
-extern "C"
-{
-#include "lualib.h"
-}
+#include "lua.hpp"
 
 ConfigReader::ConfigReader(const string &home,const XClangPrograms &p)
 :m_home(home + "/luaScript")
