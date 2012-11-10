@@ -1,26 +1,25 @@
-#ifndef __PROGRAMS_HPP_
-#define __PROGRAMS_HPP_
+#ifndef __CONFIG_READER_HPP_
+#define __CONFIG_READER_HPP_
+
+extern "C"
+{
+#include "lauxlib.h"
+}
 
 #include <string>
 using namespace std;
 namespace xclang
 {
-class XClangPrograms
+class ConfigReader
     {
     public:
-        XClangPrograms(const string &argv0);
-        ~XClangPrograms();
-        void parse(void);
-        string gethome(void) const
-        {
-            return m_xclanghome;
-        }
+        ConfigReader(const string &home);
+        ~ConfigReader();
     private:
-        XClangPrograms();
+        ConfigReader();
     private:
-        const string m_argv0;
-        string m_fullpath;
-        string m_xclanghome;
+        string m_home;
+        lua_State *m_LuaState;
     };
 }
-#endif // __PROGRAMS_HPP_
+#endif // __CONFIG_READER_HPP_

@@ -14,25 +14,21 @@ XClangDriver::XClangDriver(const int argc,const char *argv[])
 ,m_NewArgc(0)
 ,m_NewArgv(nullptr)
 ,m_Argv()
-,m_LuaState(nullptr)
 ,m_CXX(false)
-,m_Program(argv[0])
+,m_program(argv[0])
+,m_config(nullptr)
 {
     for (int i = 1; i < m_OrigArgc; i++) {
         m_Argv.push_back(string(m_OrigArgv[i]));
     }
-    m_LuaState = luaL_newstate();
+    m_config = new ConfigReader(m_program.gethome());
 }
 XClangDriver::~XClangDriver()
 {
-    lua_close(m_LuaState);
 }
 
 int XClangDriver::exce(void)
-{
-    m_Program.parse();
-    string home = m_Program.gethome();
-    
+{    
     this->calcTarget();
     this->adjustClangOptions();
     string cmdline ;

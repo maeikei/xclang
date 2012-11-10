@@ -11,13 +11,7 @@ namespace fs = boost::filesystem;
 XClangPrograms::XClangPrograms(const string &argv0)
 :m_argv0(argv0)
 ,m_fullpath("")
-,m_xclanghome("")
-{
-}
-XClangPrograms::~XClangPrograms()
-{
-}
-void XClangPrograms::parse(void)
+,m_home("")
 {
     try
     {
@@ -25,15 +19,14 @@ void XClangPrograms::parse(void)
         xclangpath = fs::absolute(xclangpath);
         xclangpath = fs::canonical(xclangpath);
         m_fullpath = xclangpath.string();
-        m_xclanghome = xclangpath.parent_path().parent_path().string();
+        m_home = xclangpath.parent_path().parent_path().string();
     }
     catch (...)
     {
     }
-    
-    
-    
-    
     cout << "m_fullpath=<" << m_fullpath << ">" << endl;
-    cout << "m_xclanghome=<" << m_xclanghome << ">" << endl;
+    cout << "m_home=<" << m_home << ">" << endl;
+}
+XClangPrograms::~XClangPrograms()
+{
 }

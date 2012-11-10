@@ -10,17 +10,16 @@ class XClangPrograms
     public:
         XClangPrograms(const string &argv0);
         ~XClangPrograms();
-        void parse(void);
         string gethome(void) const
         {
-            return m_xclanghome;
+            return m_home;
         }
     private:
         XClangPrograms();
     private:
         const string m_argv0;
         string m_fullpath;
-        string m_xclanghome;
+        string m_home;
     };
 }
 #endif // __PROGRAMS_HPP_

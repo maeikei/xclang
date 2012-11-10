@@ -1,15 +1,12 @@
 #ifndef __DRIVER_HPP_
 #define __DRIVER_HPP_
 
-extern "C"
-{
-#include "lauxlib.h"
-}
 #include <string>
 #include <list>
 #include <vector>
 using namespace std;
 #include "programs.hpp"
+#include "configreader.hpp"
 namespace xclang
 {
 class XClangDriver
@@ -31,9 +28,9 @@ class XClangDriver
         int m_NewArgc;
         char **m_NewArgv;
         list<string> m_Argv;
-        lua_State *m_LuaState;
         bool m_CXX ;
-        XClangPrograms m_Program;
+        XClangPrograms m_program;
+        ConfigReader *m_config;
 
 #if 0 // not suported
         const list<string> m_XClangArgV =
