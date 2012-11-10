@@ -21,7 +21,7 @@ class ConfigReader
     private:
         string m_home;
         const XClangPrograms &m_program;
-        lua_State *m_LuaState;
+        lua_State *m_L;
         string m_runscript;
     };
 }
