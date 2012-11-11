@@ -22,6 +22,7 @@ XClangDriver::XClangDriver(const int argc,const char *argv[])
         m_Argv.push_back(string(m_OrigArgv[i]));
     }
     m_config = new ConfigReader(m_program.gethome(),m_program);
+    m_CXX = m_program.iscxx();
 }
 XClangDriver::~XClangDriver()
 {
@@ -42,6 +43,7 @@ int XClangDriver::exce(void)
 
 void XClangDriver::adjustClangOptions(void)
 {
+    m_Argv.push_front(findProgramName("clang"));
 #if 1 // will change to a const list
     m_Argv.push_back("-nostdinc");
     m_Argv.push_back("-nostdlib");
@@ -50,8 +52,6 @@ void XClangDriver::adjustClangOptions(void)
         m_Argv.push_back("-nostdincxx");
     }
 #endif
-
-    m_Argv.push_front(findProgramName("clang"));
 }
 string XClangDriver::findProgramName(const string &name)
 {

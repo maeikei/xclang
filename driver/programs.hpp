@@ -18,6 +18,10 @@ class XClangPrograms
         {
             return m_target;
         }
+        bool iscxx(void) const
+        {
+            return m_suffix == "++";
+        }
     private:
         XClangPrograms();
     private:
