@@ -1,6 +1,6 @@
 # install lua script.
-FILE(GLOB LUA_SCRIPT luaScript/*.lua)
-install(FILES ${LUA_SCRIPT} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/luaScript)
+FILE(GLOB LUA_SCRIPT share/*.lua)
+install(FILES ${LUA_SCRIPT} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/share)
 
 
 # install prebuild file.
