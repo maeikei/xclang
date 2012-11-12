@@ -1,6 +1,6 @@
 OVERVIEW: clang "gcc-compatible" driver
 
-USAGE: xclang-engine [options] <inputs>
+USAGE: clang [options] <inputs>
 
 OPTIONS:
   -###                    Print the commands to run for this compilation
@@ -46,7 +46,6 @@ OPTIONS:
   -print-libgcc-file-name Print the library path for "libgcc.a"
   -print-prog-name=<name> Print the full program path of <name>
   -print-search-dirs      Print the paths used for finding libraries and programs
-  -rewrite-legacy-objc    Rewrite Legacy Objective-C source to C++
   -rewrite-objc           Rewrite Objective-C source to C++
   -save-temps             Save intermediate compilation results
   -target <value>         Generate code for the given target
@@ -56,4 +55,3 @@ OPTIONS:
   -working-directory <value>
                           Resolve file paths relative to the specified directory
   -x <language>           Treat subsequent input files as having type <language>
-请按任意键继续. . . 
