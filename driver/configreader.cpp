@@ -7,7 +7,7 @@ using namespace xclang;
 #include "lua.hpp"
 
 ConfigReader::ConfigReader(const string &home,const XClangPrograms &p)
-:m_home(home + "/luaScript")
+:m_home(home + "/share")
 ,m_program(p)
 ,m_L(nullptr)
 ,m_runscript("\n")
