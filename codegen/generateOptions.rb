@@ -9,7 +9,7 @@ $all_options_arranged = []
 def parsetext(help)
     one_opt = []
     startsave = false
-    help.each do |line|
+    help.split(/\n/).each do |line|
         if line =~ /^  -/ then
             if startsave then
                 $all_options << one_opt
@@ -48,27 +48,27 @@ $all_options.each do |opt|
     end
     attr =[]
     if optname =~ /=<[\w]+>/ then
-        #            p short_opt
+        attr << "=<>"
     end
     if optname =~ /,<[\w]+>/ then
-        #            p short_opt
+        attr << ",<>"
     end
-    if short_opt =~ /-<[\w]+>/ then
-        #            p short_opt
+    if optname =~ /-<[\w]+>/ then
         attr << "-<>"
     end
     if optname =~ /^--/ then
         attr << "--"
     end
+    arranged << optname
     arranged << get_real_opt(optname)
-    
+    arranged << attr
     
     arranged << remain
     len = arranged.length
     arranged << opt[1..len]
     $all_options_arranged << arranged
 end
-#p $all_options_arranged
+p $all_options_arranged
 
 
 def add_options(out)
