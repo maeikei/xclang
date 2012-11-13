@@ -3,7 +3,7 @@ $all_options = []
 def parsetext(help)
     one_opt = []
     startsave = false
-    help.each do |line|
+    help.split(/\n/).each do |line|
         if line =~ /^  -/ then
             if startsave then
                 $all_options << one_opt
