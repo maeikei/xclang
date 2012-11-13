@@ -39,13 +39,6 @@ $all_options.each do |opt|
     # option names.
     arranged = []
     optname = opt[0].split(/ /)[2]
-    remain = opt[0].gsub("#{optname}","")
-    remain_values = remain.scan(/<[\w]+>/)
-    if not remain_values.empty? then
-        arranged << remain_values
-    else
-        arranged << ""
-    end
     attr =[]
     if optname =~ /=<[\w]+>/ then
         attr << "=<>"
@@ -63,6 +56,14 @@ $all_options.each do |opt|
     arranged << get_real_opt(optname)
     arranged << attr
     
+    remain = opt[0].gsub("#{optname}","")
+    remain_values = remain.scan(/<[\w]+>/)
+    if not remain_values.empty? then
+        arranged << remain_values
+        else
+        arranged << ""
+    end
+    
     arranged << remain
     len = arranged.length
     arranged << opt[1..len]
@@ -77,10 +78,12 @@ def add_options(out)
     out << "#{$TAB}#{$TAB}desc.add_options()\n"
     out << "#{$TAB}#{$TAB}(\"xclang-target\",value(&m_xclang_target) ,\"xclang target \")\n"
     $all_options_arranged.each do |opt|
-        short_opt = opt[0].gsub(/^-/,"").gsub(/\n/,"")
-        real_opt = get_real_opt(short_opt)
         out_opt = ""
-        out_opt <<"#{real_opt}\""
+        if opt[2].include? '--' then
+            out_opt <<"\"#{opt[1]},#{opt[1]}\""
+        else
+            out_opt <<"\",#{opt[1]}\""
+        end
         out << "#{$TAB}#{$TAB}(#{out_opt})\n"
     end
     out << "#{$TAB}#{$TAB};\n"
