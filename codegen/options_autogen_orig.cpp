@@ -11,7 +11,7 @@ void XClangOptions::parseArgs(void)
         po::options_description desc("Allowed options");
         desc.add_options()
             ("xclang-target",value(&m_xclang_target) ,"xclang target ")
-            #{option_desc}
+            repleace_option_desc
         ;
         variables_map vm;
         store(parse_command_line(argc, argv, desc), vm);
@@ -19,7 +19,7 @@ void XClangOptions::parseArgs(void)
             cout << desc << "\n";
             return;
         }
-        #{vm_count}
+        repleace_vm_count
     }//try
     catch(exception& e) {
         cerr << "error: " << e.what() << "\n";

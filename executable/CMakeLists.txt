@@ -4,6 +4,6 @@ set(XCLANG ${XCLANG_PREFIX}xclang)
 add_executable(${XCLANG}
   main.cpp
   )
-target_link_libraries( ${XCLANG} lua driver)
+target_link_libraries( ${XCLANG} lua driver codegen)
 target_link_libraries( ${XCLANG} boost_filesystem boost_system boost_regex)
 install(TARGETS ${XCLANG} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/bin)

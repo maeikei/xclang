@@ -153,7 +153,36 @@ end
 
 add_options
 
-print $out_option_desc
-print $out_vm_count
-print $out_header_members
-print $out_header_methods
+#print $out_option_desc
+#print $out_vm_count
+#print $out_header_members
+#print $out_header_methods
+$header_file = ""
+File.open("options_autogen_orig.hpp").each do |line|
+    if line =~ /replace_header_members/ then
+        $header_file << $out_header_members
+    elsif line =~ /replace_header_methods/ then
+        $header_file << $out_header_methods
+    else
+        $header_file << line
+    end
+end
+File.open("options.hpp", 'w') do|f|
+    f.write($header_file)
+end
+
+$source_file = ""
+File.open("options_autogen_orig.cpp").each do |line|
+    if line =~ /repleace_option_desc/ then
+        $source_file << $out_option_desc
+    elsif line =~ /repleace_vm_count/ then
+        $source_file << $out_vm_count
+    else
+        $source_file << line
+    end
+end
+File.open("optionsautogen.cpp", 'w') do|f|
+    f.write($source_file)
+end
+
+

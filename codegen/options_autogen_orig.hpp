@@ -16,9 +16,9 @@ namespace xclang
         const int m_argc;
         const char** m_argv;
     public:
-        #{header_members}
+        replace_header_members
     private:
-        #{header_methods}
+        replace_header_methods
     };
 }
 #endif // __OPTIONS_HPP_
