@@ -12,9 +12,11 @@ namespace xclang
         ~XClangOptions();
     private:
         XClangOptions();
+        void parseArgs(void);
     private:
         const int m_argc;
         const char** m_argv;
+        string m_xclang_target;
     public:
         replace_header_members
     private:

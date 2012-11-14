@@ -97,23 +97,23 @@ def add_options()
         if opt[2].include? ',<>' then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "value(&m_#{varname}),"           
+            $out_option_desc << "po::value(&m_#{varname}),"           
         elsif opt[2].include? '=<>' then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "value(&m_#{varname}),"
+            $out_option_desc << "po::value(&m_#{varname}),"
         elsif opt[2].include? '-<>' then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "value(&m_#{varname}),"
+            $out_option_desc << "po::value(&m_#{varname}),"
         elsif opt[2].include? '<>' then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "value(&m_#{varname}),"
+            $out_option_desc << "po::value(&m_#{varname}),"
         elsif not opt[3].empty? then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "value(&m_#{varname}),"
+            $out_option_desc << "po::value(&m_#{varname}),"
         end
         if var_member.empty? then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
@@ -134,7 +134,7 @@ def add_options()
             $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{varname}.empty();\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
             $out_header_methods << "#{$TAB}#{$TAB}string get_#{varname}(void) const {\n"
-            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{varname}.empty();\n"
+            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{varname};\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
 
             # check & get values

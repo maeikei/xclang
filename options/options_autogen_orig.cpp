@@ -10,11 +10,11 @@ void XClangOptions::parseArgs(void)
     try {
         po::options_description desc("Allowed options");
         desc.add_options()
-            ("xclang-target",value(&m_xclang_target) ,"xclang target ")
+            ("xclang-target",po::value(&m_xclang_target) ,"xclang target ")
             repleace_option_desc
         ;
-        variables_map vm;
-        store(parse_command_line(argc, argv, desc), vm);
+        po::variables_map vm;
+        po::store(po::parse_command_line(m_argc, m_argv, desc), vm);
         if (vm.count("help")) {
             cout << desc << "\n";
             return;

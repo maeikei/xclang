@@ -12,9 +12,11 @@ namespace xclang
         ~XClangOptions();
     private:
         XClangOptions();
+        void parseArgs(void);
     private:
         const int m_argc;
         const char** m_argv;
+        string m_xclang_target;
     public:
         bool m_spspsp;
         bool m_analyze;
@@ -80,7 +82,7 @@ namespace xclang
             return m_serialize_diagnostics.empty();
         }
         string get_serialize_diagnostics(void) const {
-            return m_serialize_diagnostics.empty();
+            return m_serialize_diagnostics;
         }
         bool has_E(void) const {
             return m_E;
@@ -101,49 +103,49 @@ namespace xclang
             return m_Wa.empty();
         }
         string get_Wa(void) const {
-            return m_Wa.empty();
+            return m_Wa;
         }
         bool has_Wl(void) const {
             return m_Wl.empty();
         }
         string get_Wl(void) const {
-            return m_Wl.empty();
+            return m_Wl;
         }
         bool has_Wp(void) const {
             return m_Wp.empty();
         }
         string get_Wp(void) const {
-            return m_Wp.empty();
+            return m_Wp;
         }
         bool has_Xanalyzer(void) const {
             return m_Xanalyzer.empty();
         }
         string get_Xanalyzer(void) const {
-            return m_Xanalyzer.empty();
+            return m_Xanalyzer;
         }
         bool has_Xassembler(void) const {
             return m_Xassembler.empty();
         }
         string get_Xassembler(void) const {
-            return m_Xassembler.empty();
+            return m_Xassembler;
         }
         bool has_Xclang(void) const {
             return m_Xclang.empty();
         }
         string get_Xclang(void) const {
-            return m_Xclang.empty();
+            return m_Xclang;
         }
         bool has_Xlinker(void) const {
             return m_Xlinker.empty();
         }
         string get_Xlinker(void) const {
-            return m_Xlinker.empty();
+            return m_Xlinker;
         }
         bool has_Xpreprocessor(void) const {
             return m_Xpreprocessor.empty();
         }
         string get_Xpreprocessor(void) const {
-            return m_Xpreprocessor.empty();
+            return m_Xpreprocessor;
         }
         bool has_arcmt_migrate_emit_errors(void) const {
             return m_arcmt_migrate_emit_errors;
@@ -152,7 +154,7 @@ namespace xclang
             return m_arcmt_migrate_report_output.empty();
         }
         string get_arcmt_migrate_report_output(void) const {
-            return m_arcmt_migrate_report_output.empty();
+            return m_arcmt_migrate_report_output;
         }
         bool has_c(void) const {
             return m_c;
@@ -176,13 +178,13 @@ namespace xclang
             return m_ftrap_function.empty();
         }
         string get_ftrap_function(void) const {
-            return m_ftrap_function.empty();
+            return m_ftrap_function;
         }
         bool has_gcc_toolchain(void) const {
             return m_gcc_toolchain.empty();
         }
         string get_gcc_toolchain(void) const {
-            return m_gcc_toolchain.empty();
+            return m_gcc_toolchain;
         }
         bool has_objcmt_migrate_literals(void) const {
             return m_objcmt_migrate_literals;
@@ -194,7 +196,7 @@ namespace xclang
             return m_o.empty();
         }
         string get_o(void) const {
-            return m_o.empty();
+            return m_o;
         }
         bool has_pipe(void) const {
             return m_pipe;
@@ -203,7 +205,7 @@ namespace xclang
             return m_print_file_name.empty();
         }
         string get_print_file_name(void) const {
-            return m_print_file_name.empty();
+            return m_print_file_name;
         }
         bool has_print_libgcc_file_name(void) const {
             return m_print_libgcc_file_name;
@@ -212,7 +214,7 @@ namespace xclang
             return m_print_prog_name.empty();
         }
         string get_print_prog_name(void) const {
-            return m_print_prog_name.empty();
+            return m_print_prog_name;
         }
         bool has_print_search_dirs(void) const {
             return m_print_search_dirs;
@@ -227,7 +229,7 @@ namespace xclang
             return m_target.empty();
         }
         string get_target(void) const {
-            return m_target.empty();
+            return m_target;
         }
         bool has_time(void) const {
             return m_time;
@@ -242,7 +244,7 @@ namespace xclang
             return m_working_directory.empty();
         }
         string get_working_directory(void) const {
-            return m_working_directory.empty();
+            return m_working_directory;
         }
     };
 }
