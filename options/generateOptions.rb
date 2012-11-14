@@ -26,7 +26,7 @@ def parsetext(help)
 end
 
 parsetext(`clang --help`)
-parsetext(`clang -cc1 --help`)
+#parsetext(`clang -cc1 --help`)
 
 
 def get_real_opt(opt)
