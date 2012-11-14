@@ -385,7 +385,7 @@ void XClangOptions::parseArgs(void)
             return;
         }
         if(vm.count("###")){
-            m_### = true;
+            m_spspsp = true;
         }
         if(vm.count("analyze")){
             m_analyze = true;
@@ -406,7 +406,7 @@ void XClangOptions::parseArgs(void)
             m_E = true;
         }
         if(vm.count("ObjC++")){
-            m_ObjC++ = true;
+            m_ObjCplusplus = true;
         }
         if(vm.count("ObjC")){
             m_ObjC = true;
@@ -1351,7 +1351,7 @@ void XClangOptions::parseArgs(void)
             m_nobuiltininc = true;
         }
         if(vm.count("nostdinc++")){
-            m_nostdinc++ = true;
+            m_nostdincplusplus = true;
         }
         if(vm.count("nostdsysteminc")){
             m_nostdsysteminc = true;

@@ -16,14 +16,14 @@ namespace xclang
         const int m_argc;
         const char** m_argv;
     public:
-        bool m_###;
+        bool m_spspsp;
         bool m_analyze;
         bool m_help;
         bool m_migrate;
         bool m_relocatable_pch;
         string m_serialize_diagnostics;
         bool m_E;
-        bool m_ObjC++;
+        bool m_ObjCplusplus;
         bool m_ObjC;
         bool m_Qunused_arguments;
         bool m_S;
@@ -338,7 +338,7 @@ namespace xclang
         bool m_no_implicit_float;
         bool m_no_ns_alloc_error;
         bool m_nobuiltininc;
-        bool m_nostdinc++;
+        bool m_nostdincplusplus;
         bool m_nostdsysteminc;
         string m_objc_isystem;
         string m_objcxx_isystem;
@@ -383,8 +383,8 @@ namespace xclang
         bool m_v;
         bool m_w;
     private:
-        bool has_###(void) const {
-            return m_###;
+        bool has_spspsp(void) const {
+            return m_spspsp;
         }
         bool has_analyze(void) const {
             return m_analyze;
@@ -407,8 +407,8 @@ namespace xclang
         bool has_E(void) const {
             return m_E;
         }
-        bool has_ObjC++(void) const {
-            return m_ObjC++;
+        bool has_ObjCplusplus(void) const {
+            return m_ObjCplusplus;
         }
         bool has_ObjC(void) const {
             return m_ObjC;
@@ -1655,8 +1655,8 @@ namespace xclang
         bool has_nobuiltininc(void) const {
             return m_nobuiltininc;
         }
-        bool has_nostdinc++(void) const {
-            return m_nostdinc++;
+        bool has_nostdincplusplus(void) const {
+            return m_nostdincplusplus;
         }
         bool has_nostdsysteminc(void) const {
             return m_nostdsysteminc;

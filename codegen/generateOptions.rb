@@ -95,28 +95,28 @@ def add_options()
         # values
         var_member = ""
         if opt[2].include? ',<>' then
-            varname = opt[1].gsub(/-/,"_")
+            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
             $out_option_desc << "value(&m_#{varname}),"           
         elsif opt[2].include? '=<>' then
-            varname = opt[1].gsub(/-/,"_")
+            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
             $out_option_desc << "value(&m_#{varname}),"
         elsif opt[2].include? '-<>' then
-            varname = opt[1].gsub(/-/,"_")
+            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
             $out_option_desc << "value(&m_#{varname}),"
         elsif opt[2].include? '<>' then
-            varname = opt[1].gsub(/-/,"_")
+            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
             $out_option_desc << "value(&m_#{varname}),"
         elsif not opt[3].empty? then
-            varname = opt[1].gsub(/-/,"_")
+            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
             $out_option_desc << "value(&m_#{varname}),"
         end
         if var_member.empty? then
-            varname = opt[1].gsub(/-/,"_")
+            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "bool m_#{varname};"
             $out_header_members << "#{$TAB}#{$TAB}#{var_member}\n"
             $out_header_methods << "#{$TAB}#{$TAB}bool has_#{varname}(void) const {\n"
@@ -157,6 +157,9 @@ add_options
 #print $out_vm_count
 #print $out_header_members
 #print $out_header_methods
+
+
+
 $header_file = ""
 File.open("options_autogen_orig.hpp").each do |line|
     if line =~ /replace_header_members/ then
