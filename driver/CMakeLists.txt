@@ -5,7 +5,4 @@ add_library(driver
   programs.hpp
   configreader.cpp
   configreader.hpp
-  options.cpp
-  optionsautogen.cpp
-  options.hpp
 )
