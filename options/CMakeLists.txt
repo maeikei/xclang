@@ -1,4 +1,4 @@
-add_library(autogen
+add_library(options
   options.cpp
   optionsautogen.cpp
   options.hpp
