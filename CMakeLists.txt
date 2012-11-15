@@ -2,6 +2,7 @@ project(xclang)
 cmake_minimum_required(VERSION 2.8)
 include_directories(${PROJECT_SOURCE_DIR}/3rdpart_build/lua/src)
 include_directories(${PROJECT_SOURCE_DIR}/driver)
+include_directories(${PROJECT_SOURCE_DIR}/options)
 include_directories(${CMAKE_BINARY_DIR}/3rdpart_build/include)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")

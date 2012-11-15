@@ -1,17 +1,12 @@
 $TAB="    "
 
-# parse help text.
-$all_options = []
-$all_options_arranged = []
-
-
-def parsetext(help)
+def parsetext(help,opt_array)
     one_opt = []
     startsave = false
     help.split(/\n/).each do |line|
         if line =~ /^  -/ then
             if startsave then
-                $all_options << one_opt
+                opt_array << one_opt
             end
             startsave = true
             one_opt = []
@@ -25,19 +20,29 @@ def parsetext(help)
     end    
 end
 
-parsetext(`clang --help`)
-#parsetext(`clang -cc1 --help`)
+
+
+$clang_options = []
+$clang_cc_options = []
+# parse help text.
+parsetext(`clang --help`,$clang_options)
+parsetext(`clang -cc1 --help`,$clang_cc_options)
 
 
 def get_real_opt(opt)
     opt.gsub(/^-/,"").gsub(/^-/,"").gsub(/=<[\w]+>/,"").gsub(/,<[\w]+>/,"").gsub(/-<[\w]+>/,"").gsub(/<[\w]+>/,"")
 end
 
-$all_options.uniq!()
-$all_options.each do |opt|
+
+def arrange_options(opt,arranged)
+opt.each do |opt|
     # option names.
-    arranged = []
     optname = opt[0].split(/ /)[2]
+    real_opt_name = get_real_opt(optname)
+    if arranged.has_key?(real_opt_name) then
+        next
+    end
+    arranged[real_opt_name] = []
     attr =[]
     value_check = true
     if optname =~ /=<[\w]+>/ then
@@ -58,33 +63,53 @@ $all_options.each do |opt|
     if optname =~ /^--/ then
         attr << "--"
     end
-    arranged << optname
-    arranged << get_real_opt(optname)
-    arranged << attr
+    arranged[real_opt_name] << optname
+    arranged[real_opt_name] << real_opt_name
+    arranged[real_opt_name] << attr
     
     remain = opt[0].gsub("#{optname}","")
     remain_values = remain.scan(/<[\w]+>/)
     if not remain_values.empty? then
-        arranged << remain_values
+        arranged[real_opt_name] << remain_values
         else
-        arranged << ""
+        arranged[real_opt_name] << ""
     end
     
-    arranged << remain
+    arranged[real_opt_name] << remain
     len = arranged.length
-    arranged << opt[1..len]
-    $all_options_arranged << arranged
+    arranged[real_opt_name] << opt[1..len]
+end
 end
 #p $all_options_arranged
+$clang_options_arranged = {}
+$clang_cc_options_arranged = {}
 
+arrange_options($clang_options,$clang_options_arranged)
+arrange_options($clang_cc_options,$clang_cc_options_arranged)
+
+#p $clang_options_arranged
+#p $clang_cc_options_arranged
+
+$all_options_arranged = {}
+arrange_options($clang_options,$all_options_arranged)
+arrange_options($clang_cc_options,$all_options_arranged)
+#p $all_options_arranged
+
+#p $clang_options_arranged.length
+#p $clang_cc_options_arranged.length
+#p $all_options_arranged.length
+
+$all_options_arranged = $all_options_arranged.sort
 
 $out_option_desc = ""
 $out_vm_count = ""
 $out_header_members = ""
 $out_header_methods = ""
 def add_options()
-    $all_options_arranged.each do |opt|
+    $all_options_arranged.each do |key,opt|
         out_opt = ""
+        #        p key
+        #p opt
         if opt[2].include? '--' then
             out_opt <<"\"#{opt[1]},#{opt[1]}\""
         else
@@ -144,7 +169,8 @@ def add_options()
         end
         
         # help text
-        $out_option_desc << "\"#{opt[4]}#{opt[5].to_s}\""
+        helptext = "#{opt[4]}#{opt[5].to_s}".gsub(/\"/,"\\\"")
+        $out_option_desc << "\"#{helptext}\""
         $out_option_desc << ")\n"
         
         
