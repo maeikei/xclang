@@ -15,6 +15,7 @@ XClangDriver::XClangDriver(const int argc,const char *argv[])
 ,m_NewArgv(nullptr)
 ,m_Argv()
 ,m_CXX(false)
+,m_opt(argc,argv)
 ,m_program(argv[0])
 ,m_config(nullptr)
 {

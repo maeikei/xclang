@@ -7,6 +7,7 @@
 using namespace std;
 #include "programs.hpp"
 #include "configreader.hpp"
+#include "options.hpp"
 namespace xclang
 {
 class XClangDriver
@@ -28,6 +29,7 @@ class XClangDriver
         char **m_NewArgv;
         list<string> m_Argv;
         bool m_CXX ;
+        XClangOptions m_opt;
         XClangPrograms m_program;
         ConfigReader *m_config;
 

@@ -12,6 +12,7 @@ XClangOptions::XClangOptions(int argc,const char** argv)
 :m_argc(argc)
 ,m_argv(argv)
 {
+    parseArgs();
 }
 XClangOptions::~XClangOptions()
 {
