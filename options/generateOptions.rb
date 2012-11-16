@@ -20,8 +20,6 @@ def parsetext(help,opt_array)
     end    
 end
 
-
-
 $clang_options = []
 $clang_cc_options = []
 # parse help text.
@@ -30,76 +28,60 @@ parsetext(`clang -cc1 --help`,$clang_cc_options)
 
 
 def get_real_opt(opt)
-    opt.gsub(/^-/,"").gsub(/^-/,"").gsub(/=<[\w]+>/,"").gsub(/,<[\w]+>/,"").gsub(/-<[\w]+>/,"").gsub(/<[\w]+>/,"")
+    opt.gsub(/=<[\w]+>/,"").gsub(/,<[\w]+>/,"").gsub(/-<[\w]+>/,"").gsub(/<[\w]+>/,"")
 end
 
 
 def arrange_options(opt,arranged)
-opt.each do |opt|
-    # option names.
-    optname = opt[0].split(/ /)[2]
-    real_opt_name = get_real_opt(optname)
-    if arranged.has_key?(real_opt_name) then
-        next
+    opt.each do |opt|
+        # option names.
+        optname = opt[0].split(/\s/)[2]
+        type = "iConstOptionTypeAlone"
+        if optname =~ /=<[\w]+>/ then
+            type = "iConstOptionTypeEQValue | #{type}"
+        end
+        if optname =~ /,<[\w]+>/ then
+            type = "iConstOptionTypeCommaValue | #{type}"
+        end
+        if optname =~ /-<[\w]+>/ then
+            type = "iConstOptionTypeBarValue | #{type}"
+        end
+        if optname =~ /<[\w]+>/ then
+            type = "iConstOptionTypeValue| #{type}"
+        end
+        if opt[0].split(/\s/)[3..10].to_s =~ /<[\w]+>/ then
+            type = "iConstOptionTypeNextValue| #{type}"
+        end
+        real_opt = get_real_opt(optname)
+        arranged[real_opt] = type
     end
-    arranged[real_opt_name] = []
-    attr =[]
-    value_check = true
-    if optname =~ /=<[\w]+>/ then
-        attr << "=<>"
-        value_check = false
-    end
-    if optname =~ /,<[\w]+>/ then
-        attr << ",<>"
-        value_check = false
-    end
-    if optname =~ /-<[\w]+>/ then
-        attr << "-<>"
-        value_check = false
-    end
-    if optname =~ /<[\w]+>/ and value_check then
-        attr << "<>"
-    end
-    if optname =~ /^--/ then
-        attr << "--"
-    end
-    arranged[real_opt_name] << optname
-    arranged[real_opt_name] << real_opt_name
-    arranged[real_opt_name] << attr
-    
-    remain = opt[0].gsub("#{optname}","")
-    remain_values = remain.scan(/<[\w]+>/)
-    if not remain_values.empty? then
-        arranged[real_opt_name] << remain_values
-        else
-        arranged[real_opt_name] << ""
-    end
-    
-    arranged[real_opt_name] << remain
-    len = arranged.length
-    arranged[real_opt_name] << opt[1..len]
 end
-end
-#p $all_options_arranged
 $clang_options_arranged = {}
 $clang_cc_options_arranged = {}
 
 arrange_options($clang_options,$clang_options_arranged)
 arrange_options($clang_cc_options,$clang_cc_options_arranged)
 
+def gen_initialize_list(opts,out)
+    opts.each do |key,type|
+        out << "{\"#{key}\",#{type}}",
+    end
+end
+
+$out_header_clang_options = ""
+$out_header_clang_cc1_options = ""
+gen_initialize_list($clang_options_arranged,$out_header_clang_options)
+gen_initialize_list($clang_cc_options_arranged,$out_header_clang_cc1_options)
+
 #p $clang_options_arranged
 #p $clang_cc_options_arranged
 
-$all_options_arranged = {}
-arrange_options($clang_options,$all_options_arranged)
-arrange_options($clang_cc_options,$all_options_arranged)
 #p $all_options_arranged
 
 #p $clang_options_arranged.length
 #p $clang_cc_options_arranged.length
 #p $all_options_arranged.length
 
-$all_options_arranged = $all_options_arranged.sort
 
 $out_option_desc = ""
 $out_vm_count = ""
@@ -110,11 +92,13 @@ def add_options()
         out_opt = ""
         #        p key
         #p opt
+        last_opt_name = ""
         if opt[2].include? '--' then
-            out_opt <<"\"#{opt[1]},#{opt[1]}\""
+            last_opt_name = "\"#{opt[1]}\""
         else
-            out_opt <<"\",#{opt[1]}\""
+            last_opt_name <<"\"#{opt[1]}\""
         end
+        out_opt << last_opt_name
         # options
         $out_option_desc << "#{$TAB}#{$TAB}#{$TAB}(#{out_opt},"
         # values
@@ -122,23 +106,23 @@ def add_options()
         if opt[2].include? ',<>' then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "po::value(&m_#{varname}),"           
+            $out_option_desc << "po::value<string>(),"
         elsif opt[2].include? '=<>' then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "po::value(&m_#{varname}),"
+            $out_option_desc << "po::value<string>(),"
         elsif opt[2].include? '-<>' then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "po::value(&m_#{varname}),"
+            $out_option_desc << "po::value<string>(),"
         elsif opt[2].include? '<>' then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "po::value(&m_#{varname}),"
+            $out_option_desc << "po::value<string>(),"
         elsif not opt[3].empty? then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
             var_member << "string m_#{varname};"
-            $out_option_desc << "po::value(&m_#{varname}),"
+            $out_option_desc << "po::value<string>(),"
         end
         if var_member.empty? then
             varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
@@ -149,7 +133,7 @@ def add_options()
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
 
             # check & get values
-            $out_vm_count << "#{$TAB}#{$TAB}if(vm.count(\"#{opt[1]}\")){\n"
+            $out_vm_count << "#{$TAB}#{$TAB}if(vm.count(#{last_opt_name})){\n"
             $out_vm_count << "#{$TAB}#{$TAB}#{$TAB}m_#{varname} = true;\n"
             $out_vm_count << "#{$TAB}#{$TAB}}\n"
 
@@ -163,7 +147,7 @@ def add_options()
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
 
             # check & get values
-            $out_vm_count << "#{$TAB}#{$TAB}if(vm.count(\"#{opt[1]}\")){\n"
+            $out_vm_count << "#{$TAB}#{$TAB}if(vm.count(#{last_opt_name})){\n"
             $out_vm_count << "#{$TAB}#{$TAB}#{$TAB}m_#{varname} = vm[\"#{opt[1]}\"].as<string>();\n"
             $out_vm_count << "#{$TAB}#{$TAB}}\n"
         end
@@ -192,6 +176,10 @@ File.open("options_autogen_orig.hpp").each do |line|
         $header_file << $out_header_members
     elsif line =~ /replace_header_methods/ then
         $header_file << $out_header_methods
+    elsif line =~ /replace_header_clang_options/ then
+        $header_file << $out_header_clang_options
+    elsif line =~ /replace_header_clang_cc1_options/ then
+        $header_file << $out_header_clang_cc1_options
     else
         $header_file << line
     end

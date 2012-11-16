@@ -2,9 +2,17 @@
 #define __OPTIONS_HPP_
 
 #include <string>
+#include <map>
 using namespace std;
 namespace xclang
 {
+    const int iConstOptionTypeAlone         = 0;
+    const int iConstOptionTypeNextValue     = 0x1;
+    const int iConstOptionTypeEQValue       = 0x10;
+    const int iConstOptionTypeCommaValue    = 0x100;
+    const int iConstOptionTypeBarValue      = 0x1000;
+
+    
     class XClangOptions
     {
     public:
@@ -17,7 +25,6 @@ namespace xclang
         const int m_argc;
         const char** m_argv;
         string m_xclang_target;
-    public:
         bool m_spspsp;
         bool m_C;
         bool m_CC;
@@ -372,7 +379,7 @@ namespace xclang
         bool m_version;
         bool m_w;
         string m_working_directory;
-    private:
+    public:
         bool has_spspsp(void) const {
             return m_spspsp;
         }
@@ -1795,6 +1802,14 @@ namespace xclang
         string get_working_directory(void) const {
             return m_working_directory;
         }
+    };
+    const map<string,int> m_clang_options
+    {
+        replace_header_clang_options
+    };
+    const map<string,int> m_clang_cc1_options
+    {
+        replace_header_clang_cc1_options
     };
 }
 #endif // __OPTIONS_HPP_
