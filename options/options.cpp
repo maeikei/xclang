@@ -8,12 +8,6 @@ using namespace xclang;
 namespace po = boost::program_options;
 
 
-XClangOptions::XClangOptions(int argc,const char** argv)
-:m_argc(argc)
-,m_argv(argv)
-{
-    parseArgs();
-}
 XClangOptions::~XClangOptions()
 {
 }

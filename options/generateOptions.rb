@@ -73,7 +73,7 @@ arrange_options($clang_cc_options,$clang_cc_options_arranged)
 
 def gen_initialize_list(opts,out)
     opts.sort.each do |key,type|
-        out << "#{$TAB}#{$TAB}(\"#{key}\",#{type[0]})\n"
+        out << "#{$TAB}(\"#{key}\",#{type[0]})\n"
     end
 end
 
@@ -84,19 +84,24 @@ gen_initialize_list($clang_cc_options_arranged,$out_clang_cc1_options)
 
 #p $clang_options_arranged
 #p $clang_cc_options_arranged
-
 #p $all_options_arranged
 
-#p $clang_options_arranged.length
-#p $clang_cc_options_arranged.length
-#p $all_options_arranged.length
 
 $out_header_members = ""
 $out_header_methods = ""
+$out_intialize = ""
+$out_parse_args = ""
 def gen_member_list(opts)
     opts.sort.each do |key,type|
         if type[2].empty? then
             $out_header_members << "#{$TAB}#{$TAB}bool m#{type[1]};\n"
+
+            $out_intialize << ",m#{type[1]}(false)\n"
+                                                          
+            $out_parse_args << "#{$TAB}it = m_real_options.find(\"#{key}\");\n"
+            $out_parse_args << "#{$TAB}if( m_real_options.end() != it) {\n"
+            $out_parse_args << "#{$TAB}#{$TAB}m#{type[1]} = true;\n"
+            $out_parse_args << "#{$TAB}}\n"
                                                           
             $out_header_methods << "#{$TAB}#{$TAB}bool has#{type[1]}(void) const {\n"
             $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m#{type[1]};\n"
@@ -104,6 +109,13 @@ def gen_member_list(opts)
         else
             $out_header_members << "#{$TAB}#{$TAB}string m#{type[1]};\n"
 
+            $out_intialize << ",m#{type[1]}(\"\")\n"
+                                                          
+            $out_parse_args << "#{$TAB}it = m_real_options.find(\"#{key}\");\n"
+            $out_parse_args << "#{$TAB}if( m_real_options.end() != it) {\n"
+            $out_parse_args << "#{$TAB}#{$TAB}m#{type[1]} = it->second;\n"
+            $out_parse_args << "#{$TAB}}\n"
+                               
             $out_header_methods << "#{$TAB}#{$TAB}bool has#{type[1]}(void) const {\n"
             $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m#{type[1]}.empty();\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
@@ -142,6 +154,10 @@ File.open("options_autogen_orig.cpp").each do |line|
         $src_file << $out_clang_options
     elsif line =~ /replace_clang_cc1_options/ then
         $src_file << $out_clang_cc1_options
+    elsif line =~ /replace_intialize/ then
+        $src_file << $out_intialize
+    elsif line =~ /replace_parse_args/ then
+        $src_file << $out_parse_args
     else
         $src_file << line
     end

@@ -25,9 +25,9 @@ namespace xclang
     private:
         const int m_argc;
         const char** m_argv;
+        map<string,string> m_real_options;
         static const map<string,int> m_clang_options;
         static const map<string,int> m_clang_cc1_options;
-        string m_xclang_target;
         replace_header_members
     public:
         replace_header_methods
