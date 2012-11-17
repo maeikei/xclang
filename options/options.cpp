@@ -41,6 +41,15 @@ void XClangOptions::splitArgs(void)
             i++;
         }
     }
+
+#if 1
+    auto it = m_real_options.begin();
+    for(;it !=  m_real_options.end();it++)
+    {
+        cout << it->first << endl;
+        cout << it->second << endl;
+    }
+#endif
 }
 int XClangOptions::getNextArgs(const string &opt,int type,int i)
 {
@@ -51,7 +60,7 @@ int XClangOptions::getNextArgs(const string &opt,int type,int i)
     }
     if ( type & iConstOptionTypeNextValue )
     {
-        value = m_argv[i++];
+        value = m_argv[++i];
     }
     m_real_options.insert(pair<string,string>(opt,value));
     return ++i;
