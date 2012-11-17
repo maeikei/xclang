@@ -6,6 +6,7 @@
 using namespace std;
 namespace xclang
 {
+    const int iConstOptionTypeNone          =      0x0;
     const int iConstOptionTypeAlone         =      0x1;
     const int iConstOptionTypeNextValue     =     0x10;
     const int iConstOptionTypeEQValue       =    0x100;
@@ -21,6 +22,7 @@ namespace xclang
         ~XClangOptions();
     private:
         XClangOptions();
+        int getNextArgs(const string &opt,int type,int i);
         void splitArgs(void);
         void parseArgs(void);
     private:

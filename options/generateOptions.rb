@@ -36,7 +36,7 @@ def arrange_options(opt,arranged)
     opt.each do |opt|
         # option names.
         optname = opt[0].split(/\s/)[2]
-        type = "iConstOptionTypeAlone"
+        type = "iConstOptionTypeNone"
         type_r = []
         if optname =~ /=<[\w]+>/ then
             type = "iConstOptionTypeEQValue | #{type}"
@@ -57,6 +57,9 @@ def arrange_options(opt,arranged)
         if opt[0].split(/\s/)[3..10].to_s =~ /<[\w]+>/ then
             type = "iConstOptionTypeNextValue| #{type}"
             type_r <<' <>'
+        end
+        if not type =~ /Value/ then
+            type = "iConstOptionTypeAlone| #{type}"
         end
         real_opt = get_real_opt(optname)
         arranged[real_opt] = []
