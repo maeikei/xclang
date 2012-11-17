@@ -25,18 +25,12 @@ namespace xclang
     private:
         const int m_argc;
         const char** m_argv;
+        static const map<string,int> m_clang_options;
+        static const map<string,int> m_clang_cc1_options;
         string m_xclang_target;
         replace_header_members
     public:
         replace_header_methods
     };
-    const map<string,int> m_clang_options(
-    {
-        replace_header_clang_options
-    });
-    const map<string,int> m_clang_cc1_options(
-    {
-        replace_header_clang_cc1_options
-    });
 }
 #endif // __OPTIONS_HPP_

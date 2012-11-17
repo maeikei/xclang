@@ -37,23 +37,32 @@ def arrange_options(opt,arranged)
         # option names.
         optname = opt[0].split(/\s/)[2]
         type = "iConstOptionTypeAlone"
+        type_r = []
         if optname =~ /=<[\w]+>/ then
             type = "iConstOptionTypeEQValue | #{type}"
+            type_r <<'=<>'
         end
         if optname =~ /,<[\w]+>/ then
             type = "iConstOptionTypeCommaValue | #{type}"
+            type_r <<',<>'
         end
         if optname =~ /-<[\w]+>/ then
             type = "iConstOptionTypeBarValue | #{type}"
+            type_r <<'-<>'
         end
         if optname =~ /<[\w]+>/ then
             type = "iConstOptionTypeValue| #{type}"
+            type_r <<'<>'
         end
         if opt[0].split(/\s/)[3..10].to_s =~ /<[\w]+>/ then
             type = "iConstOptionTypeNextValue| #{type}"
+            type_r <<' <>'
         end
         real_opt = get_real_opt(optname)
-        arranged[real_opt] = type
+        arranged[real_opt] = []
+        arranged[real_opt] << type
+        arranged[real_opt] << real_opt.gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
+        arranged[real_opt] << type_r
     end
 end
 $clang_options_arranged = {}
@@ -64,14 +73,14 @@ arrange_options($clang_cc_options,$clang_cc_options_arranged)
 
 def gen_initialize_list(opts,out)
     opts.each do |key,type|
-        out << "{\"#{key}\",#{type}}",
+        out << "#{$TAB}#{$TAB}(\"#{key}\",#{type[0]})\n"
     end
 end
 
-$out_header_clang_options = ""
-$out_header_clang_cc1_options = ""
-gen_initialize_list($clang_options_arranged,$out_header_clang_options)
-gen_initialize_list($clang_cc_options_arranged,$out_header_clang_cc1_options)
+$out_clang_options = ""
+$out_clang_cc1_options = ""
+gen_initialize_list($clang_options_arranged,$out_clang_options)
+gen_initialize_list($clang_cc_options_arranged,$out_clang_cc1_options)
 
 #p $clang_options_arranged
 #p $clang_cc_options_arranged
@@ -82,92 +91,31 @@ gen_initialize_list($clang_cc_options_arranged,$out_header_clang_cc1_options)
 #p $clang_cc_options_arranged.length
 #p $all_options_arranged.length
 
-
-$out_option_desc = ""
-$out_vm_count = ""
 $out_header_members = ""
 $out_header_methods = ""
-def add_options()
-    $all_options_arranged.each do |key,opt|
-        out_opt = ""
-        #        p key
-        #p opt
-        last_opt_name = ""
-        if opt[2].include? '--' then
-            last_opt_name = "\"#{opt[1]}\""
+def gen_member_list(opts)
+    opts.each do |key,type|
+        if type[2].empty? then
+            $out_header_members << "#{$TAB}#{$TAB}bool m_#{type[1]};\n"
+                                                          
+            $out_header_methods << "#{$TAB}#{$TAB}bool has_#{type[1]}(void) const {\n"
+            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{type[1]};\n"
+            $out_header_methods << "#{$TAB}#{$TAB}}\n"
         else
-            last_opt_name <<"\"#{opt[1]}\""
-        end
-        out_opt << last_opt_name
-        # options
-        $out_option_desc << "#{$TAB}#{$TAB}#{$TAB}(#{out_opt},"
-        # values
-        var_member = ""
-        if opt[2].include? ',<>' then
-            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
-            var_member << "string m_#{varname};"
-            $out_option_desc << "po::value<string>(),"
-        elsif opt[2].include? '=<>' then
-            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
-            var_member << "string m_#{varname};"
-            $out_option_desc << "po::value<string>(),"
-        elsif opt[2].include? '-<>' then
-            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
-            var_member << "string m_#{varname};"
-            $out_option_desc << "po::value<string>(),"
-        elsif opt[2].include? '<>' then
-            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
-            var_member << "string m_#{varname};"
-            $out_option_desc << "po::value<string>(),"
-        elsif not opt[3].empty? then
-            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
-            var_member << "string m_#{varname};"
-            $out_option_desc << "po::value<string>(),"
-        end
-        if var_member.empty? then
-            varname = opt[1].gsub(/-/,"_").gsub(/###/,"spspsp").gsub(/\+\+/,"plusplus")
-            var_member << "bool m_#{varname};"
-            $out_header_members << "#{$TAB}#{$TAB}#{var_member}\n"
-            $out_header_methods << "#{$TAB}#{$TAB}bool has_#{varname}(void) const {\n"
-            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{varname};\n"
-            $out_header_methods << "#{$TAB}#{$TAB}}\n"
+            $out_header_members << "#{$TAB}#{$TAB}string m_#{type[1]};\n"
 
-            # check & get values
-            $out_vm_count << "#{$TAB}#{$TAB}if(vm.count(#{last_opt_name})){\n"
-            $out_vm_count << "#{$TAB}#{$TAB}#{$TAB}m_#{varname} = true;\n"
-            $out_vm_count << "#{$TAB}#{$TAB}}\n"
-
-        else
-            $out_header_members << "#{$TAB}#{$TAB}#{var_member}\n"
-            $out_header_methods << "#{$TAB}#{$TAB}bool has_#{varname}(void) const {\n"
-            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{varname}.empty();\n"
+            $out_header_methods << "#{$TAB}#{$TAB}bool has_#{type[1]}(void) const {\n"
+            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{type[1]}.empty();\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
-            $out_header_methods << "#{$TAB}#{$TAB}string get_#{varname}(void) const {\n"
-            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{varname};\n"
+            $out_header_methods << "#{$TAB}#{$TAB}string get_#{type[1]}(void) const {\n"
+            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{type[1]};\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
-
-            # check & get values
-            $out_vm_count << "#{$TAB}#{$TAB}if(vm.count(#{last_opt_name})){\n"
-            $out_vm_count << "#{$TAB}#{$TAB}#{$TAB}m_#{varname} = vm[\"#{opt[1]}\"].as<string>();\n"
-            $out_vm_count << "#{$TAB}#{$TAB}}\n"
         end
-        
-        # help text
-        helptext = "#{opt[4]}#{opt[5].to_s}".gsub(/\"/,"\\\"")
-        $out_option_desc << "\"#{helptext}\""
-        $out_option_desc << ")\n"
-        
-        
     end
 end
 
-add_options
 
-#print $out_option_desc
-#print $out_vm_count
-#print $out_header_members
-#print $out_header_methods
-
+gen_member_list($clang_options_arranged.merge($clang_cc_options_arranged))
 
 
 $header_file = ""
@@ -187,19 +135,21 @@ end
 File.open("options.hpp", 'w') do|f|
     f.write($header_file)
 end
-
-$source_file = ""
+                                                          
+$src_file = ""
 File.open("options_autogen_orig.cpp").each do |line|
-    if line =~ /repleace_option_desc/ then
-        $source_file << $out_option_desc
-    elsif line =~ /repleace_vm_count/ then
-        $source_file << $out_vm_count
+    if line =~ /replace_clang_options/ then
+        $src_file << $out_clang_options
+    elsif line =~ /replace_clang_cc1_options/ then
+        $src_file << $out_clang_cc1_options
     else
-        $source_file << line
+        $src_file << line
     end
 end
+
 File.open("optionsautogen.cpp", 'w') do|f|
-    f.write($source_file)
+    f.write($src_file)
 end
+
 
 
