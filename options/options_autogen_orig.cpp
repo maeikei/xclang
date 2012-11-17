@@ -26,6 +26,7 @@ XClangOptions::XClangOptions(int argc,const char** argv)
 ,m_real_options()
 replace_intialize
 {
+    splitArgs();
     parseArgs();
 }
 

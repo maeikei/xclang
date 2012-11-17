@@ -11,3 +11,7 @@ namespace po = boost::program_options;
 XClangOptions::~XClangOptions()
 {
 }
+void XClangOptions::splitArgs(void)
+{
+    
+}

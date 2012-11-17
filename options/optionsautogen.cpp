@@ -755,6 +755,7 @@ XClangOptions::XClangOptions(int argc,const char** argv)
 ,m_w(false)
 ,m_working_directory("")
 {
+    splitArgs();
     parseArgs();
 }
 

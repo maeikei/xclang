@@ -21,6 +21,7 @@ namespace xclang
         ~XClangOptions();
     private:
         XClangOptions();
+        void splitArgs(void);
         void parseArgs(void);
     private:
         const int m_argc;
