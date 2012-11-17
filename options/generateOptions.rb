@@ -72,7 +72,7 @@ arrange_options($clang_options,$clang_options_arranged)
 arrange_options($clang_cc_options,$clang_cc_options_arranged)
 
 def gen_initialize_list(opts,out)
-    opts.each do |key,type|
+    opts.sort.each do |key,type|
         out << "#{$TAB}#{$TAB}(\"#{key}\",#{type[0]})\n"
     end
 end
@@ -94,21 +94,21 @@ gen_initialize_list($clang_cc_options_arranged,$out_clang_cc1_options)
 $out_header_members = ""
 $out_header_methods = ""
 def gen_member_list(opts)
-    opts.each do |key,type|
+    opts.sort.each do |key,type|
         if type[2].empty? then
-            $out_header_members << "#{$TAB}#{$TAB}bool m_#{type[1]};\n"
+            $out_header_members << "#{$TAB}#{$TAB}bool m#{type[1]};\n"
                                                           
-            $out_header_methods << "#{$TAB}#{$TAB}bool has_#{type[1]}(void) const {\n"
-            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{type[1]};\n"
+            $out_header_methods << "#{$TAB}#{$TAB}bool has#{type[1]}(void) const {\n"
+            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m#{type[1]};\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
         else
-            $out_header_members << "#{$TAB}#{$TAB}string m_#{type[1]};\n"
+            $out_header_members << "#{$TAB}#{$TAB}string m#{type[1]};\n"
 
-            $out_header_methods << "#{$TAB}#{$TAB}bool has_#{type[1]}(void) const {\n"
-            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{type[1]}.empty();\n"
+            $out_header_methods << "#{$TAB}#{$TAB}bool has#{type[1]}(void) const {\n"
+            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m#{type[1]}.empty();\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
-            $out_header_methods << "#{$TAB}#{$TAB}string get_#{type[1]}(void) const {\n"
-            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m_#{type[1]};\n"
+            $out_header_methods << "#{$TAB}#{$TAB}string get#{type[1]}(void) const {\n"
+            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m#{type[1]};\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
         end
     end
