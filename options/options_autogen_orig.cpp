@@ -24,6 +24,8 @@ XClangOptions::XClangOptions(int argc,const char** argv)
 :m_argc(argc)
 ,m_argv(argv)
 ,m_real_options()
+,m_input_files()
+,m_input_files_str("")
 replace_intialize
 {
     splitArgs();

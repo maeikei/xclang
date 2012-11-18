@@ -28,28 +28,12 @@ void XClangOptions::splitArgs(void)
         }
         else
         {
-            auto itreal = m_real_options.find("--input");
-            if(itreal != m_real_options.end())
-            {
-                m_real_options["--input"] += " ";
-                m_real_options["--input"] += m_argv[i];
-            }
-            else
-            {
-                m_real_options.insert(pair<string,string>("--input",m_argv[i]));
-            }
+            m_input_files.push_back(m_argv[i]);
+            m_input_files_str += m_argv[i];
+            m_input_files_str += " ";
             i++;
         }
     }
-
-#if 1
-    auto it = m_real_options.begin();
-    for(;it !=  m_real_options.end();it++)
-    {
-        cout << it->first << endl;
-        cout << it->second << endl;
-    }
-#endif
 }
 int XClangOptions::getNextArgs(const string &opt,int type,int i)
 {
@@ -68,28 +52,20 @@ int XClangOptions::getNextArgs(const string &opt,int type,int i)
 
 string XClangOptions::concatOpt(const string &key,const string &value,const map<string,int> &opts) const
 {
-    string ret;
-    if( key != "--input")
+    string ret(key);
+    auto it = opts.find(key);
+    if(it != opts.end())
     {
-        ret = value;
-    }
-    else
-    {
-        ret = key;
-        auto it = opts.find(key);
-        if(it != opts.end())
+        if( it->second & iConstOptionTypeNextValue )
         {
-            if( it->second & iConstOptionTypeNextValue )
-            {
-                ret += " ";
-            }
-            ret += value;
+            ret += " ";
         }
+        ret += value;
     }
     return ret;
 }
 
-string XClangOptions::getClangCC1Options(void) const
+vector<string> XClangOptions::getClangCC1Actions(void) const
 {
     string opts;
     auto it = m_real_options.begin();
@@ -98,10 +74,12 @@ string XClangOptions::getClangCC1Options(void) const
         opts += concatOpt(it->first,it->second,m_clang_cc1_options);
         opts += " ";
     }
-    return opts;
+    vector<string> ret;
+    ret.push_back(opts);
+    return ret;
 }
 
-string XClangOptions::getLinkOptions(void) const
+vector<string> XClangOptions::getLinkActions(void) const
 {
     string opts;
     auto it = m_real_options.begin();
@@ -110,5 +88,15 @@ string XClangOptions::getLinkOptions(void) const
         opts += concatOpt(it->first,it->second,m_clang_options);
         opts += " ";
     }
-    return opts;
+    vector<string> ret;
+    ret.push_back(opts);
+    return ret;
+}
+bool XClangOptions::is_do_link(void) const
+{
+    if (this->has_c())
+    {
+        return false;
+    }
+    return true;
 }
