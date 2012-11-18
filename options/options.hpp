@@ -20,11 +20,14 @@ namespace xclang
     public:
         XClangOptions(int argc,const char** argv);
         ~XClangOptions();
+        string getClangCC1Options(void) const;
+        string getLinkOptions(void) const;
     private:
         XClangOptions();
         int getNextArgs(const string &opt,int type,int i);
         void splitArgs(void);
         void parseArgs(void);
+        string concatOpt(const string &key,const string &value,const map<string,int> &opts) const;
     private:
         const int m_argc;
         const char** m_argv;

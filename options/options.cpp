@@ -28,15 +28,15 @@ void XClangOptions::splitArgs(void)
         }
         else
         {
-            auto itreal = m_real_options.find("--source");
+            auto itreal = m_real_options.find("--input");
             if(itreal != m_real_options.end())
             {
-                m_real_options["--source"] += ",";
-                m_real_options["--source"] += m_argv[i];
+                m_real_options["--input"] += " ";
+                m_real_options["--input"] += m_argv[i];
             }
             else
             {
-                m_real_options.insert(pair<string,string>("--source",m_argv[i]));
+                m_real_options.insert(pair<string,string>("--input",m_argv[i]));
             }
             i++;
         }
@@ -64,4 +64,51 @@ int XClangOptions::getNextArgs(const string &opt,int type,int i)
     }
     m_real_options.insert(pair<string,string>(opt,value));
     return ++i;
+}
+
+string XClangOptions::concatOpt(const string &key,const string &value,const map<string,int> &opts) const
+{
+    string ret;
+    if( key != "--input")
+    {
+        ret = value;
+    }
+    else
+    {
+        ret = key;
+        auto it = opts.find(key);
+        if(it != opts.end())
+        {
+            if( it->second & iConstOptionTypeNextValue )
+            {
+                ret += " ";
+            }
+            ret += value;
+        }
+    }
+    return ret;
+}
+
+string XClangOptions::getClangCC1Options(void) const
+{
+    string opts;
+    auto it = m_real_options.begin();
+    for(;it !=  m_real_options.end();it++)
+    {
+        opts += concatOpt(it->first,it->second,m_clang_cc1_options);
+        opts += " ";
+    }
+    return opts;
+}
+
+string XClangOptions::getLinkOptions(void) const
+{
+    string opts;
+    auto it = m_real_options.begin();
+    for(;it !=  m_real_options.end();it++)
+    {
+        opts += concatOpt(it->first,it->second,m_clang_options);
+        opts += " ";
+    }
+    return opts;
 }
