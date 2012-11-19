@@ -37,6 +37,7 @@ namespace xclang
         vector<string> m_input_files;
         string m_input_files_str;
         vector<string> m_objects_files;
+        string m_out_file;
         static const map<string,int> m_clang_options;
         static const map<string,int> m_clang_cc1_options;
         bool m_spspsp;

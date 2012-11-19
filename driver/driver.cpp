@@ -33,12 +33,21 @@ int XClangDriver::exce(void)
 {    
     this->calcTarget();
     this->adjustClangOptions();
+    vector<string> actions = m_opt.getClangActions();
+    for(auto it = actions.begin(); it != actions.end()  ;it++ )
+    {
+        string cmdline ;
+        cmdline += *it + " " ;
+        cout << "cmdline=<" << cmdline << ">" << endl;
+        // system(cmdline.c_str());
+    }
+#if 0
     string cmdline ;
     for(auto it = m_Argv.begin(); it != m_Argv.end()  ;it++ )
     {
         cmdline += *it + " " ;
     }
-    system(cmdline.c_str());
+#endif
     return 0;
 }
 

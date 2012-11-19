@@ -19,8 +19,15 @@ void XClangOptions::splitArgs(void)
     int i = 1;
     while(i < m_argc)
     {
-        auto it = m_clang_options.find(string(m_argv[i]));
-        auto itcc = m_clang_cc1_options.find(string(m_argv[i]));
+        string vStr(m_argv[i]);
+        if("-o" == vStr)
+        {
+            m_out_file = string(m_argv[++i]);
+            i++;
+            continue;
+        }
+        auto it = m_clang_options.find(vStr);
+        auto itcc = m_clang_cc1_options.find(vStr);
         if (it != m_clang_options.end())
         {
             i = getNextArgs(it->first,it->second,i);
@@ -31,8 +38,8 @@ void XClangOptions::splitArgs(void)
         }
         else
         {
-            m_input_files.push_back(m_argv[i]);
-            m_input_files_str += m_argv[i];
+            m_input_files.push_back(vStr);
+            m_input_files_str += vStr;
             m_input_files_str += " ";
             i++;
         }
@@ -102,7 +109,7 @@ vector<string> XClangOptions::getClangActions(void)
             opt_elment += fileName.string();
             actions.push_back(opt_elment);
         }
-        if(not this->is_not_link() )
+        if( not this->is_not_link() )
         {
             string opt_elment(opts);
             opt_elment += " ";
@@ -111,7 +118,6 @@ vector<string> XClangOptions::getClangActions(void)
             fs::path fileName= fs::temp_directory_path();
             boost::uuids::uuid uName = boost::uuids::random_generator()();
             string name = boost::uuids::to_string(uName);
-            fileName += "/";
             fileName += name;
             fileName += extension;
             opt_elment += fileName.string();
@@ -119,7 +125,6 @@ vector<string> XClangOptions::getClangActions(void)
             actions.push_back(opt_elment);
         }
     }
-    actions.push_back(opts);
     return actions;
 }
 
