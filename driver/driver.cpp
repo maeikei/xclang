@@ -5,7 +5,6 @@ using namespace std;
 #include "driver.hpp"
 using namespace xclang;
 
-#include "boost/filesystem.hpp"
 
 
 XClangDriver::XClangDriver(const int argc,const char *argv[])
