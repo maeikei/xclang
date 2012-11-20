@@ -29,6 +29,15 @@ int XClangDriver::exce(void)
         cout << "cmdline=<" << cmdline << ">" << endl;
         //system(cmdline.c_str());
     }
+    vector<string> linkActions = m_opt.getLinkActions();
+    for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
+    {
+        string cmdline(m_program.findProgramName("link"));
+        cmdline += " " + *it + " " ;
+        cout << "cmdline=<" << cmdline << ">" << endl;
+        //system(cmdline.c_str());
+    }
+    
     return 0;
 }
 

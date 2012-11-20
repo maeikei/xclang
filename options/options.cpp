@@ -154,9 +154,19 @@ vector<string> XClangOptions::getLinkActions(void)
         opts += concatOpt(it->first,it->second,m_clang_options);
         opts += " ";
     }
-    vector<string> ret;
-    ret.push_back(opts);
-    return ret;
+    vector<string> actions;
+    if( not is_not_link() )
+    {
+        opts += " -o ";
+        opts += m_out_file;
+        for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
+        {
+            opts += " ";
+            opts += *it;
+        }
+        actions.push_back(opts);
+    }
+    return actions;
 }
 
 bool XClangOptions::is_not_link(void) const
@@ -166,6 +176,10 @@ bool XClangOptions::is_not_link(void) const
         return true;
     }
     if (has_S())
+    {
+        return true;
+    }
+    if (has_E())
     {
         return true;
     }
