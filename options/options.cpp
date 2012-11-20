@@ -179,3 +179,19 @@ bool XClangOptions::is_not_link(void) const
     }
     return false;
 }
+
+
+#if 0
+void XClangOptions::adjustClangOptions(void)
+{
+#if 1 // will change to a const list
+    m_Argv.push_back("-nostdinc");
+    m_Argv.push_back("-nostdlib");
+    if (m_program.iscxx())
+    {
+        m_Argv.push_back("-nostdincxx");
+    }
+#endif
+}
+#endif
+

@@ -10,6 +10,7 @@ class XClangPrograms
     public:
         XClangPrograms(const string &argv0);
         ~XClangPrograms();
+        string findProgramName(const string &name) const;
         string gethome(void) const
         {
             return m_home;

@@ -66,3 +66,9 @@ XClangPrograms::XClangPrograms(const string &argv0)
 XClangPrograms::~XClangPrograms()
 {
 }
+
+string XClangPrograms::findProgramName(const string &name) const
+{
+    string ret(name);
+    return ret;
+}
