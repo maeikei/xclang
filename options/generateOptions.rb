@@ -120,7 +120,7 @@ def gen_member_list(opts)
             $out_parse_args << "#{$TAB}}\n"
                                
             $out_header_methods << "#{$TAB}#{$TAB}bool has#{type[1]}(void) const {\n"
-            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m#{type[1]}.empty();\n"
+            $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return not m#{type[1]}.empty();\n"
             $out_header_methods << "#{$TAB}#{$TAB}}\n"
             $out_header_methods << "#{$TAB}#{$TAB}string get#{type[1]}(void) const {\n"
             $out_header_methods << "#{$TAB}#{$TAB}#{$TAB}return m#{type[1]};\n"

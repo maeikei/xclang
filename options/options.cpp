@@ -85,9 +85,26 @@ vector<string> XClangOptions::getClangActions(void)
     }
     
     vector<string> actions;
-    if(this->has_o() && ( this->has_c() || this->has_S()) )
+    // has no link action,whill use orignal o parameter.
+    if(has_o() && ( has_c() || has_S()) )
     {
-        actions.push_back(opts + " " + m_input_files_str);
+        opts += " -o ";
+        opts += m_out_file;
+        opts += " ";
+        opts += m_input_files_str;
+        actions.push_back(opts);
+        return actions;
+    }
+    if(has_E() )
+    {
+        if(has_o())
+        {
+            opts += " -o ";
+            opts += m_out_file;
+        }
+        opts += " ";
+        opts += m_input_files_str;
+        actions.push_back(opts);
         return actions;
     }
     string extension(".o");
@@ -98,7 +115,7 @@ vector<string> XClangOptions::getClangActions(void)
 
     for(auto it = m_input_files.begin();it !=  m_input_files.end();it++)
     {
-        if(this->has_c() || this->has_S())
+        if(has_c() || has_S())
         {
             string opt_elment(opts);
             opt_elment += " ";
@@ -109,7 +126,7 @@ vector<string> XClangOptions::getClangActions(void)
             opt_elment += fileName.string();
             actions.push_back(opt_elment);
         }
-        if( not this->is_not_link() )
+        if( not is_not_link() )
         {
             string opt_elment(opts);
             opt_elment += " ";
@@ -144,19 +161,19 @@ vector<string> XClangOptions::getLinkActions(void)
 
 bool XClangOptions::is_not_link(void) const
 {
-    if (this->has_c())
+    if (has_c())
     {
         return true;
     }
-    if (this->has_S())
+    if (has_S())
     {
         return true;
     }
-    if (this->has_version())
+    if (has_version())
     {
         return true;
     }
-    if (this->has_help())
+    if (has_help())
     {
         return true;
     }

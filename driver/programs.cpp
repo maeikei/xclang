@@ -56,10 +56,12 @@ XClangPrograms::XClangPrograms(const string &argv0)
     catch (...)
     {
     }
+#if 0
     cout << "m_fullpath=<" << m_fullpath << ">" << endl;
     cout << "m_home=<" << m_home << ">" << endl;
     cout << "m_target=<" << m_target << ">" << endl;
     cout << "m_suffix=<" << m_suffix << ">" << endl;
+#endif
 }
 XClangPrograms::~XClangPrograms()
 {

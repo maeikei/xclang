@@ -415,7 +415,7 @@ namespace xclang
             return m__relocatable_pch;
         }
         bool has__serialize_diagnostics(void) const {
-            return m__serialize_diagnostics.empty();
+            return not m__serialize_diagnostics.empty();
         }
         string get__serialize_diagnostics(void) const {
             return m__serialize_diagnostics;
@@ -427,7 +427,7 @@ namespace xclang
             return m_CC;
         }
         bool has_D(void) const {
-            return m_D.empty();
+            return not m_D.empty();
         }
         string get_D(void) const {
             return m_D;
@@ -439,7 +439,7 @@ namespace xclang
             return m_Eonly;
         }
         bool has_F(void) const {
-            return m_F.empty();
+            return not m_F.empty();
         }
         string get_F(void) const {
             return m_F;
@@ -448,7 +448,7 @@ namespace xclang
             return m_H;
         }
         bool has_I(void) const {
-            return m_I.empty();
+            return not m_I.empty();
         }
         string get_I(void) const {
             return m_I;
@@ -460,19 +460,19 @@ namespace xclang
             return m_MP;
         }
         bool has_MQ(void) const {
-            return m_MQ.empty();
+            return not m_MQ.empty();
         }
         string get_MQ(void) const {
             return m_MQ;
         }
         bool has_MT(void) const {
-            return m_MT.empty();
+            return not m_MT.empty();
         }
         string get_MT(void) const {
             return m_MT;
         }
         bool has_O(void) const {
-            return m_O.empty();
+            return not m_O.empty();
         }
         string get_O(void) const {
             return m_O;
@@ -499,25 +499,25 @@ namespace xclang
             return m_S;
         }
         bool has_U(void) const {
-            return m_U.empty();
+            return not m_U.empty();
         }
         string get_U(void) const {
             return m_U;
         }
         bool has_Wa(void) const {
-            return m_Wa.empty();
+            return not m_Wa.empty();
         }
         string get_Wa(void) const {
             return m_Wa;
         }
         bool has_Wl(void) const {
-            return m_Wl.empty();
+            return not m_Wl.empty();
         }
         string get_Wl(void) const {
             return m_Wl;
         }
         bool has_Wlarge_by_value_copy(void) const {
-            return m_Wlarge_by_value_copy.empty();
+            return not m_Wlarge_by_value_copy.empty();
         }
         string get_Wlarge_by_value_copy(void) const {
             return m_Wlarge_by_value_copy;
@@ -526,43 +526,43 @@ namespace xclang
             return m_Wno_rewrite_macros;
         }
         bool has_Wp(void) const {
-            return m_Wp.empty();
+            return not m_Wp.empty();
         }
         string get_Wp(void) const {
             return m_Wp;
         }
         bool has_Xanalyzer(void) const {
-            return m_Xanalyzer.empty();
+            return not m_Xanalyzer.empty();
         }
         string get_Xanalyzer(void) const {
             return m_Xanalyzer;
         }
         bool has_Xassembler(void) const {
-            return m_Xassembler.empty();
+            return not m_Xassembler.empty();
         }
         string get_Xassembler(void) const {
             return m_Xassembler;
         }
         bool has_Xclang(void) const {
-            return m_Xclang.empty();
+            return not m_Xclang.empty();
         }
         string get_Xclang(void) const {
             return m_Xclang;
         }
         bool has_Xlinker(void) const {
-            return m_Xlinker.empty();
+            return not m_Xlinker.empty();
         }
         string get_Xlinker(void) const {
             return m_Xlinker;
         }
         bool has_Xpreprocessor(void) const {
-            return m_Xpreprocessor.empty();
+            return not m_Xpreprocessor.empty();
         }
         string get_Xpreprocessor(void) const {
             return m_Xpreprocessor;
         }
         bool has_add_plugin(void) const {
-            return m_add_plugin.empty();
+            return not m_add_plugin.empty();
         }
         string get_add_plugin(void) const {
             return m_add_plugin;
@@ -571,13 +571,13 @@ namespace xclang
             return m_analyze;
         }
         bool has_analyze_function(void) const {
-            return m_analyze_function.empty();
+            return not m_analyze_function.empty();
         }
         string get_analyze_function(void) const {
             return m_analyze_function;
         }
         bool has_analyzer_checker(void) const {
-            return m_analyzer_checker.empty();
+            return not m_analyzer_checker.empty();
         }
         string get_analyzer_checker(void) const {
             return m_analyzer_checker;
@@ -586,13 +586,13 @@ namespace xclang
             return m_analyzer_checker_help;
         }
         bool has_analyzer_constraints(void) const {
-            return m_analyzer_constraints.empty();
+            return not m_analyzer_constraints.empty();
         }
         string get_analyzer_constraints(void) const {
             return m_analyzer_constraints;
         }
         bool has_analyzer_disable_checker(void) const {
-            return m_analyzer_disable_checker.empty();
+            return not m_analyzer_disable_checker.empty();
         }
         string get_analyzer_disable_checker(void) const {
             return m_analyzer_disable_checker;
@@ -604,37 +604,37 @@ namespace xclang
             return m_analyzer_eagerly_assume;
         }
         bool has_analyzer_inline_max_function_size(void) const {
-            return m_analyzer_inline_max_function_size.empty();
+            return not m_analyzer_inline_max_function_size.empty();
         }
         string get_analyzer_inline_max_function_size(void) const {
             return m_analyzer_inline_max_function_size;
         }
         bool has_analyzer_inline_max_stack_depth(void) const {
-            return m_analyzer_inline_max_stack_depth.empty();
+            return not m_analyzer_inline_max_stack_depth.empty();
         }
         string get_analyzer_inline_max_stack_depth(void) const {
             return m_analyzer_inline_max_stack_depth;
         }
         bool has_analyzer_inlining_mode(void) const {
-            return m_analyzer_inlining_mode.empty();
+            return not m_analyzer_inlining_mode.empty();
         }
         string get_analyzer_inlining_mode(void) const {
             return m_analyzer_inlining_mode;
         }
         bool has_analyzer_ipa(void) const {
-            return m_analyzer_ipa.empty();
+            return not m_analyzer_ipa.empty();
         }
         string get_analyzer_ipa(void) const {
             return m_analyzer_ipa;
         }
         bool has_analyzer_max_loop(void) const {
-            return m_analyzer_max_loop.empty();
+            return not m_analyzer_max_loop.empty();
         }
         string get_analyzer_max_loop(void) const {
             return m_analyzer_max_loop;
         }
         bool has_analyzer_max_nodes(void) const {
-            return m_analyzer_max_nodes.empty();
+            return not m_analyzer_max_nodes.empty();
         }
         string get_analyzer_max_nodes(void) const {
             return m_analyzer_max_nodes;
@@ -649,13 +649,13 @@ namespace xclang
             return m_analyzer_opt_analyze_nested_blocks;
         }
         bool has_analyzer_output(void) const {
-            return m_analyzer_output.empty();
+            return not m_analyzer_output.empty();
         }
         string get_analyzer_output(void) const {
             return m_analyzer_output;
         }
         bool has_analyzer_purge(void) const {
-            return m_analyzer_purge.empty();
+            return not m_analyzer_purge.empty();
         }
         string get_analyzer_purge(void) const {
             return m_analyzer_purge;
@@ -664,7 +664,7 @@ namespace xclang
             return m_analyzer_stats;
         }
         bool has_analyzer_store(void) const {
-            return m_analyzer_store.empty();
+            return not m_analyzer_store.empty();
         }
         string get_analyzer_store(void) const {
             return m_analyzer_store;
@@ -685,7 +685,7 @@ namespace xclang
             return m_arcmt_migrate_emit_errors;
         }
         bool has_arcmt_migrate_report_output(void) const {
-            return m_arcmt_migrate_report_output.empty();
+            return not m_arcmt_migrate_report_output.empty();
         }
         string get_arcmt_migrate_report_output(void) const {
             return m_arcmt_migrate_report_output;
@@ -700,7 +700,7 @@ namespace xclang
             return m_ast_dump_xml;
         }
         bool has_ast_merge(void) const {
-            return m_ast_merge.empty();
+            return not m_ast_merge.empty();
         }
         string get_ast_merge(void) const {
             return m_ast_merge;
@@ -712,7 +712,7 @@ namespace xclang
             return m_ast_view;
         }
         bool has_backend_option(void) const {
-            return m_backend_option.empty();
+            return not m_backend_option.empty();
         }
         string get_backend_option(void) const {
             return m_backend_option;
@@ -721,7 +721,7 @@ namespace xclang
             return m_c;
         }
         bool has_c_isystem(void) const {
-            return m_c_isystem.empty();
+            return not m_c_isystem.empty();
         }
         string get_c_isystem(void) const {
             return m_c_isystem;
@@ -733,7 +733,7 @@ namespace xclang
             return m_cfg_add_initializers;
         }
         bool has_chain_include(void) const {
-            return m_chain_include.empty();
+            return not m_chain_include.empty();
         }
         string get_chain_include(void) const {
             return m_chain_include;
@@ -754,7 +754,7 @@ namespace xclang
             return m_cl_single_precision_constant;
         }
         bool has_cl_std(void) const {
-            return m_cl_std.empty();
+            return not m_cl_std.empty();
         }
         string get_cl_std(void) const {
             return m_cl_std;
@@ -763,7 +763,7 @@ namespace xclang
             return m_cl_unsafe_math_optimizations;
         }
         bool has_code_completion_at(void) const {
-            return m_code_completion_at.empty();
+            return not m_code_completion_at.empty();
         }
         string get_code_completion_at(void) const {
             return m_code_completion_at;
@@ -775,19 +775,19 @@ namespace xclang
             return m_code_completion_patterns;
         }
         bool has_coverage_file(void) const {
-            return m_coverage_file.empty();
+            return not m_coverage_file.empty();
         }
         string get_coverage_file(void) const {
             return m_coverage_file;
         }
         bool has_cxx_abi(void) const {
-            return m_cxx_abi.empty();
+            return not m_cxx_abi.empty();
         }
         string get_cxx_abi(void) const {
             return m_cxx_abi;
         }
         bool has_cxx_isystem(void) const {
-            return m_cxx_isystem.empty();
+            return not m_cxx_isystem.empty();
         }
         string get_cxx_isystem(void) const {
             return m_cxx_isystem;
@@ -799,13 +799,13 @@ namespace xclang
             return m_dM;
         }
         bool has_dependency_dot(void) const {
-            return m_dependency_dot.empty();
+            return not m_dependency_dot.empty();
         }
         string get_dependency_dot(void) const {
             return m_dependency_dot;
         }
         bool has_dependency_file(void) const {
-            return m_dependency_file.empty();
+            return not m_dependency_file.empty();
         }
         string get_dependency_file(void) const {
             return m_dependency_file;
@@ -814,7 +814,7 @@ namespace xclang
             return m_detailed_preprocessing_record;
         }
         bool has_diagnostic_log_file(void) const {
-            return m_diagnostic_log_file.empty();
+            return not m_diagnostic_log_file.empty();
         }
         string get_diagnostic_log_file(void) const {
             return m_diagnostic_log_file;
@@ -832,7 +832,7 @@ namespace xclang
             return m_disable_red_zone;
         }
         bool has_dump_build_information(void) const {
-            return m_dump_build_information.empty();
+            return not m_dump_build_information.empty();
         }
         string get_dump_build_information(void) const {
             return m_dump_build_information;
@@ -847,7 +847,7 @@ namespace xclang
             return m_dump_tokens;
         }
         bool has_dwarf_debug_flags(void) const {
-            return m_dwarf_debug_flags.empty();
+            return not m_dwarf_debug_flags.empty();
         }
         string get_dwarf_debug_flags(void) const {
             return m_dwarf_debug_flags;
@@ -883,7 +883,7 @@ namespace xclang
             return m_emit_pth;
         }
         bool has_error_on_deserialized_decl(void) const {
-            return m_error_on_deserialized_decl.empty();
+            return not m_error_on_deserialized_decl.empty();
         }
         string get_error_on_deserialized_decl(void) const {
             return m_error_on_deserialized_decl;
@@ -919,19 +919,19 @@ namespace xclang
             return m_fconst_strings;
         }
         bool has_fconstant_string_class(void) const {
-            return m_fconstant_string_class.empty();
+            return not m_fconstant_string_class.empty();
         }
         string get_fconstant_string_class(void) const {
             return m_fconstant_string_class;
         }
         bool has_fconstexpr_backtrace_limit(void) const {
-            return m_fconstexpr_backtrace_limit.empty();
+            return not m_fconstexpr_backtrace_limit.empty();
         }
         string get_fconstexpr_backtrace_limit(void) const {
             return m_fconstexpr_backtrace_limit;
         }
         bool has_fconstexpr_depth(void) const {
-            return m_fconstexpr_depth.empty();
+            return not m_fconstexpr_depth.empty();
         }
         string get_fconstexpr_depth(void) const {
             return m_fconstexpr_depth;
@@ -946,7 +946,7 @@ namespace xclang
             return m_fdata_sections;
         }
         bool has_fdebug_compilation_dir(void) const {
-            return m_fdebug_compilation_dir.empty();
+            return not m_fdebug_compilation_dir.empty();
         }
         string get_fdebug_compilation_dir(void) const {
             return m_fdebug_compilation_dir;
@@ -967,7 +967,7 @@ namespace xclang
             return m_fdeprecated_macro;
         }
         bool has_fdiagnostics_format(void) const {
-            return m_fdiagnostics_format.empty();
+            return not m_fdiagnostics_format.empty();
         }
         string get_fdiagnostics_format(void) const {
             return m_fdiagnostics_format;
@@ -979,7 +979,7 @@ namespace xclang
             return m_fdiagnostics_print_source_range_info;
         }
         bool has_fdiagnostics_show_category(void) const {
-            return m_fdiagnostics_show_category.empty();
+            return not m_fdiagnostics_show_category.empty();
         }
         string get_fdiagnostics_show_category(void) const {
             return m_fdiagnostics_show_category;
@@ -1015,7 +1015,7 @@ namespace xclang
             return m_femit_coverage_notes;
         }
         bool has_ferror_limit(void) const {
-            return m_ferror_limit.empty();
+            return not m_ferror_limit.empty();
         }
         string get_ferror_limit(void) const {
             return m_ferror_limit;
@@ -1072,7 +1072,7 @@ namespace xclang
             return m_flimit_debug_info;
         }
         bool has_fmacro_backtrace_limit(void) const {
-            return m_fmacro_backtrace_limit.empty();
+            return not m_fmacro_backtrace_limit.empty();
         }
         string get_fmacro_backtrace_limit(void) const {
             return m_fmacro_backtrace_limit;
@@ -1081,19 +1081,19 @@ namespace xclang
             return m_fmath_errno;
         }
         bool has_fmessage_length(void) const {
-            return m_fmessage_length.empty();
+            return not m_fmessage_length.empty();
         }
         string get_fmessage_length(void) const {
             return m_fmessage_length;
         }
         bool has_fmodule_cache_path(void) const {
-            return m_fmodule_cache_path.empty();
+            return not m_fmodule_cache_path.empty();
         }
         string get_fmodule_cache_path(void) const {
             return m_fmodule_cache_path;
         }
         bool has_fmodule_name(void) const {
-            return m_fmodule_name.empty();
+            return not m_fmodule_name.empty();
         }
         string get_fmodule_name(void) const {
             return m_fmodule_name;
@@ -1108,7 +1108,7 @@ namespace xclang
             return m_fms_extensions;
         }
         bool has_fmsc_version(void) const {
-            return m_fmsc_version.empty();
+            return not m_fmsc_version.empty();
         }
         string get_fmsc_version(void) const {
             return m_fmsc_version;
@@ -1210,7 +1210,7 @@ namespace xclang
             return m_fobjc_arc;
         }
         bool has_fobjc_arc_cxxlib(void) const {
-            return m_fobjc_arc_cxxlib.empty();
+            return not m_fobjc_arc_cxxlib.empty();
         }
         string get_fobjc_arc_cxxlib(void) const {
             return m_fobjc_arc_cxxlib;
@@ -1222,7 +1222,7 @@ namespace xclang
             return m_fobjc_default_synthesize_properties;
         }
         bool has_fobjc_dispatch_method(void) const {
-            return m_fobjc_dispatch_method.empty();
+            return not m_fobjc_dispatch_method.empty();
         }
         string get_fobjc_dispatch_method(void) const {
             return m_fobjc_dispatch_method;
@@ -1249,13 +1249,13 @@ namespace xclang
             return m_fobjc_runtime_has_weak;
         }
         bool has_foverride_record_layout(void) const {
-            return m_foverride_record_layout.empty();
+            return not m_foverride_record_layout.empty();
         }
         string get_foverride_record_layout(void) const {
             return m_foverride_record_layout;
         }
         bool has_fpack_struct(void) const {
-            return m_fpack_struct.empty();
+            return not m_fpack_struct.empty();
         }
         string get_fpack_struct(void) const {
             return m_fpack_struct;
@@ -1273,7 +1273,7 @@ namespace xclang
             return m_fshow_column;
         }
         bool has_fshow_overloads(void) const {
-            return m_fshow_overloads.empty();
+            return not m_fshow_overloads.empty();
         }
         string get_fshow_overloads(void) const {
             return m_fshow_overloads;
@@ -1285,19 +1285,19 @@ namespace xclang
             return m_fsyntax_only;
         }
         bool has_ftabstop(void) const {
-            return m_ftabstop.empty();
+            return not m_ftabstop.empty();
         }
         string get_ftabstop(void) const {
             return m_ftabstop;
         }
         bool has_ftemplate_backtrace_limit(void) const {
-            return m_ftemplate_backtrace_limit.empty();
+            return not m_ftemplate_backtrace_limit.empty();
         }
         string get_ftemplate_backtrace_limit(void) const {
             return m_ftemplate_backtrace_limit;
         }
         bool has_ftemplate_depth(void) const {
-            return m_ftemplate_depth.empty();
+            return not m_ftemplate_depth.empty();
         }
         string get_ftemplate_depth(void) const {
             return m_ftemplate_depth;
@@ -1306,7 +1306,7 @@ namespace xclang
             return m_ftime_report;
         }
         bool has_ftrap_function(void) const {
-            return m_ftrap_function.empty();
+            return not m_ftrap_function.empty();
         }
         string get_ftrap_function(void) const {
             return m_ftrap_function;
@@ -1315,7 +1315,7 @@ namespace xclang
             return m_ftrapv;
         }
         bool has_ftrapv_handler(void) const {
-            return m_ftrapv_handler.empty();
+            return not m_ftrapv_handler.empty();
         }
         string get_ftrapv_handler(void) const {
             return m_ftrapv_handler;
@@ -1330,7 +1330,7 @@ namespace xclang
             return m_fuse_register_sized_bitfield_access;
         }
         bool has_fvisibility(void) const {
-            return m_fvisibility.empty();
+            return not m_fvisibility.empty();
         }
         string get_fvisibility(void) const {
             return m_fvisibility;
@@ -1348,13 +1348,13 @@ namespace xclang
             return m_g;
         }
         bool has_gcc_toolchain(void) const {
-            return m_gcc_toolchain.empty();
+            return not m_gcc_toolchain.empty();
         }
         string get_gcc_toolchain(void) const {
             return m_gcc_toolchain;
         }
         bool has_header_include_file(void) const {
-            return m_header_include_file.empty();
+            return not m_header_include_file.empty();
         }
         string get_header_include_file(void) const {
             return m_header_include_file;
@@ -1363,37 +1363,37 @@ namespace xclang
             return m_help;
         }
         bool has_idirafter(void) const {
-            return m_idirafter.empty();
+            return not m_idirafter.empty();
         }
         string get_idirafter(void) const {
             return m_idirafter;
         }
         bool has_iframework(void) const {
-            return m_iframework.empty();
+            return not m_iframework.empty();
         }
         string get_iframework(void) const {
             return m_iframework;
         }
         bool has_imacros(void) const {
-            return m_imacros.empty();
+            return not m_imacros.empty();
         }
         string get_imacros(void) const {
             return m_imacros;
         }
         bool has_include(void) const {
-            return m_include.empty();
+            return not m_include.empty();
         }
         string get_include(void) const {
             return m_include;
         }
         bool has_include_pch(void) const {
-            return m_include_pch.empty();
+            return not m_include_pch.empty();
         }
         string get_include_pch(void) const {
             return m_include_pch;
         }
         bool has_include_pth(void) const {
-            return m_include_pth.empty();
+            return not m_include_pth.empty();
         }
         string get_include_pth(void) const {
             return m_include_pth;
@@ -1405,67 +1405,67 @@ namespace xclang
             return m_init_only;
         }
         bool has_internal_externc_isystem(void) const {
-            return m_internal_externc_isystem.empty();
+            return not m_internal_externc_isystem.empty();
         }
         string get_internal_externc_isystem(void) const {
             return m_internal_externc_isystem;
         }
         bool has_internal_isystem(void) const {
-            return m_internal_isystem.empty();
+            return not m_internal_isystem.empty();
         }
         string get_internal_isystem(void) const {
             return m_internal_isystem;
         }
         bool has_iprefix(void) const {
-            return m_iprefix.empty();
+            return not m_iprefix.empty();
         }
         string get_iprefix(void) const {
             return m_iprefix;
         }
         bool has_iquote(void) const {
-            return m_iquote.empty();
+            return not m_iquote.empty();
         }
         string get_iquote(void) const {
             return m_iquote;
         }
         bool has_isysroot(void) const {
-            return m_isysroot.empty();
+            return not m_isysroot.empty();
         }
         string get_isysroot(void) const {
             return m_isysroot;
         }
         bool has_isystem(void) const {
-            return m_isystem.empty();
+            return not m_isystem.empty();
         }
         string get_isystem(void) const {
             return m_isystem;
         }
         bool has_iwithprefix(void) const {
-            return m_iwithprefix.empty();
+            return not m_iwithprefix.empty();
         }
         string get_iwithprefix(void) const {
             return m_iwithprefix;
         }
         bool has_iwithprefixbefore(void) const {
-            return m_iwithprefixbefore.empty();
+            return not m_iwithprefixbefore.empty();
         }
         string get_iwithprefixbefore(void) const {
             return m_iwithprefixbefore;
         }
         bool has_iwithsysroot(void) const {
-            return m_iwithsysroot.empty();
+            return not m_iwithsysroot.empty();
         }
         string get_iwithsysroot(void) const {
             return m_iwithsysroot;
         }
         bool has_load(void) const {
-            return m_load.empty();
+            return not m_load.empty();
         }
         string get_load(void) const {
             return m_load;
         }
         bool has_main_file_name(void) const {
-            return m_main_file_name.empty();
+            return not m_main_file_name.empty();
         }
         string get_main_file_name(void) const {
             return m_main_file_name;
@@ -1474,7 +1474,7 @@ namespace xclang
             return m_masm_verbose;
         }
         bool has_mcode_model(void) const {
-            return m_mcode_model.empty();
+            return not m_mcode_model.empty();
         }
         string get_mcode_model(void) const {
             return m_mcode_model;
@@ -1483,7 +1483,7 @@ namespace xclang
             return m_mconstructor_aliases;
         }
         bool has_mdebug_pass(void) const {
-            return m_mdebug_pass.empty();
+            return not m_mdebug_pass.empty();
         }
         string get_mdebug_pass(void) const {
             return m_mdebug_pass;
@@ -1504,7 +1504,7 @@ namespace xclang
             return m_menable_unsafe_fp_math;
         }
         bool has_mfloat_abi(void) const {
-            return m_mfloat_abi.empty();
+            return not m_mfloat_abi.empty();
         }
         string get_mfloat_abi(void) const {
             return m_mfloat_abi;
@@ -1513,19 +1513,19 @@ namespace xclang
             return m_migrate;
         }
         bool has_mlimit_float_precision(void) const {
-            return m_mlimit_float_precision.empty();
+            return not m_mlimit_float_precision.empty();
         }
         string get_mlimit_float_precision(void) const {
             return m_mlimit_float_precision;
         }
         bool has_mlink_bitcode_file(void) const {
-            return m_mlink_bitcode_file.empty();
+            return not m_mlink_bitcode_file.empty();
         }
         string get_mlink_bitcode_file(void) const {
             return m_mlink_bitcode_file;
         }
         bool has_mllvm(void) const {
-            return m_mllvm.empty();
+            return not m_mllvm.empty();
         }
         string get_mllvm(void) const {
             return m_mllvm;
@@ -1549,7 +1549,7 @@ namespace xclang
             return m_mqdsp6_compat;
         }
         bool has_mregparm(void) const {
-            return m_mregparm.empty();
+            return not m_mregparm.empty();
         }
         string get_mregparm(void) const {
             return m_mregparm;
@@ -1558,7 +1558,7 @@ namespace xclang
             return m_mrelax_all;
         }
         bool has_mrelocation_model(void) const {
-            return m_mrelocation_model.empty();
+            return not m_mrelocation_model.empty();
         }
         string get_mrelocation_model(void) const {
             return m_mrelocation_model;
@@ -1573,7 +1573,7 @@ namespace xclang
             return m_msoft_float;
         }
         bool has_mstack_alignment(void) const {
-            return m_mstack_alignment.empty();
+            return not m_mstack_alignment.empty();
         }
         string get_mstack_alignment(void) const {
             return m_mstack_alignment;
@@ -1582,7 +1582,7 @@ namespace xclang
             return m_mstackrealign;
         }
         bool has_mt_migrate_directory(void) const {
-            return m_mt_migrate_directory.empty();
+            return not m_mt_migrate_directory.empty();
         }
         string get_mt_migrate_directory(void) const {
             return m_mt_migrate_directory;
@@ -1612,13 +1612,13 @@ namespace xclang
             return m_nostdsysteminc;
         }
         bool has_o(void) const {
-            return m_o.empty();
+            return not m_o.empty();
         }
         string get_o(void) const {
             return m_o;
         }
         bool has_objc_isystem(void) const {
-            return m_objc_isystem.empty();
+            return not m_objc_isystem.empty();
         }
         string get_objc_isystem(void) const {
             return m_objc_isystem;
@@ -1630,7 +1630,7 @@ namespace xclang
             return m_objcmt_migrate_subscripting;
         }
         bool has_objcxx_isystem(void) const {
-            return m_objcxx_isystem.empty();
+            return not m_objcxx_isystem.empty();
         }
         string get_objcxx_isystem(void) const {
             return m_objcxx_isystem;
@@ -1639,7 +1639,7 @@ namespace xclang
             return m_pg;
         }
         bool has_pic_level(void) const {
-            return m_pic_level.empty();
+            return not m_pic_level.empty();
         }
         string get_pic_level(void) const {
             return m_pic_level;
@@ -1648,19 +1648,19 @@ namespace xclang
             return m_pipe;
         }
         bool has_plugin(void) const {
-            return m_plugin.empty();
+            return not m_plugin.empty();
         }
         string get_plugin(void) const {
             return m_plugin;
         }
         bool has_plugin_arg(void) const {
-            return m_plugin_arg.empty();
+            return not m_plugin_arg.empty();
         }
         string get_plugin_arg(void) const {
             return m_plugin_arg;
         }
         bool has_preamble_bytes(void) const {
-            return m_preamble_bytes.empty();
+            return not m_preamble_bytes.empty();
         }
         string get_preamble_bytes(void) const {
             return m_preamble_bytes;
@@ -1669,7 +1669,7 @@ namespace xclang
             return m_print_decl_contexts;
         }
         bool has_print_file_name(void) const {
-            return m_print_file_name.empty();
+            return not m_print_file_name.empty();
         }
         string get_print_file_name(void) const {
             return m_print_file_name;
@@ -1684,7 +1684,7 @@ namespace xclang
             return m_print_preamble;
         }
         bool has_print_prog_name(void) const {
-            return m_print_prog_name.empty();
+            return not m_print_prog_name.empty();
         }
         string get_print_prog_name(void) const {
             return m_print_prog_name;
@@ -1708,13 +1708,13 @@ namespace xclang
             return m_relocatable_pch;
         }
         bool has_remap_file(void) const {
-            return m_remap_file.empty();
+            return not m_remap_file.empty();
         }
         string get_remap_file(void) const {
             return m_remap_file;
         }
         bool has_resource_dir(void) const {
-            return m_resource_dir.empty();
+            return not m_resource_dir.empty();
         }
         string get_resource_dir(void) const {
             return m_resource_dir;
@@ -1732,13 +1732,13 @@ namespace xclang
             return m_save_temps;
         }
         bool has_serialize_diagnostic_file(void) const {
-            return m_serialize_diagnostic_file.empty();
+            return not m_serialize_diagnostic_file.empty();
         }
         string get_serialize_diagnostic_file(void) const {
             return m_serialize_diagnostic_file;
         }
         bool has_stack_protector(void) const {
-            return m_stack_protector.empty();
+            return not m_stack_protector.empty();
         }
         string get_stack_protector(void) const {
             return m_stack_protector;
@@ -1747,13 +1747,13 @@ namespace xclang
             return m_static_define;
         }
         bool has_std(void) const {
-            return m_std.empty();
+            return not m_std.empty();
         }
         string get_std(void) const {
             return m_std;
         }
         bool has_stdlib(void) const {
-            return m_stdlib.empty();
+            return not m_stdlib.empty();
         }
         string get_stdlib(void) const {
             return m_stdlib;
@@ -1762,31 +1762,31 @@ namespace xclang
             return m_sys_header_deps;
         }
         bool has_target(void) const {
-            return m_target.empty();
+            return not m_target.empty();
         }
         string get_target(void) const {
             return m_target;
         }
         bool has_target_abi(void) const {
-            return m_target_abi.empty();
+            return not m_target_abi.empty();
         }
         string get_target_abi(void) const {
             return m_target_abi;
         }
         bool has_target_cpu(void) const {
-            return m_target_cpu.empty();
+            return not m_target_cpu.empty();
         }
         string get_target_cpu(void) const {
             return m_target_cpu;
         }
         bool has_target_feature(void) const {
-            return m_target_feature.empty();
+            return not m_target_feature.empty();
         }
         string get_target_feature(void) const {
             return m_target_feature;
         }
         bool has_target_linker_version(void) const {
-            return m_target_linker_version.empty();
+            return not m_target_linker_version.empty();
         }
         string get_target_linker_version(void) const {
             return m_target_linker_version;
@@ -1795,7 +1795,7 @@ namespace xclang
             return m_time;
         }
         bool has_token_cache(void) const {
-            return m_token_cache.empty();
+            return not m_token_cache.empty();
         }
         string get_token_cache(void) const {
             return m_token_cache;
@@ -1810,7 +1810,7 @@ namespace xclang
             return m_trim_egraph;
         }
         bool has_triple(void) const {
-            return m_triple.empty();
+            return not m_triple.empty();
         }
         string get_triple(void) const {
             return m_triple;
@@ -1834,7 +1834,7 @@ namespace xclang
             return m_w;
         }
         bool has_working_directory(void) const {
-            return m_working_directory.empty();
+            return not m_working_directory.empty();
         }
         string get_working_directory(void) const {
             return m_working_directory;
