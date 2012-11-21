@@ -1,5 +1,6 @@
 add_library(options
   options.cpp
-  optionsautogen.cpp
   options.hpp
+  ClangOptions.org.inc
+  ClangOptions.org.cpp
 )

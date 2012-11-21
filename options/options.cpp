@@ -11,6 +11,38 @@ namespace fs = boost::filesystem;
 #include <boost/uuid/uuid_io.hpp>
 //namespace ud = boost::uuids;
 
+#include "options.hpp"
+using namespace xclang;
+#include <boost/assign/list_of.hpp>
+using namespace boost::assign;
+#include <iostream>
+#include <iterator>
+using namespace std;
+
+
+
+
+
+
+
+
+XClangOptions::XClangOptions(int argc,const char** argv)
+:m_argc(argc)
+,m_argv(argv)
+,m_real_options()
+,m_input_files()
+,m_input_files_str("")
+,m_objects_files()
+,m_out_file("a.out")
+{
+    splitArgs();
+    parseArgs();
+}
+
+void XClangOptions::parseArgs(void)
+{
+}
+
 XClangOptions::~XClangOptions()
 {
 }
