@@ -1,17 +1,9 @@
 
 
-enum OPT_ID {
-#define PREFIX(NAME, VALUE)
-#define OPTION(PREFIX, NAME, ID, KIND, GROUP, ALIAS, FLAGS, PARAM, \
-HELPTEXT, METAVAR)   \
-OPT_##ID,
-#include "ClangOptions.org.inc"
-#undef OPTION
-#undef PREFIX
-
-};
 
 
+#include "options.hpp"
+using namespace xclang;
 
 
 
@@ -21,7 +13,6 @@ HELPTEXT, METAVAR)
 #include "ClangOptions.org.inc"
 #undef OPTION
 #undef PREFIX
-
 
 
 
@@ -53,27 +44,33 @@ static const int Action_Group          = 0x1 << 10;
 
 
 
+
 struct OptTable_Info
 {
     const char * const *prefix;
     const char *name;
     const int kind;
     const int flags;
-    const OPT_ID id;
+    const int id;
 };
 
 static const OptTable_Info InfoTable[] = {
 #define PREFIX(NAME, VALUE)
 #define OPTION(PREFIX, NAME, ID, KIND, GROUP, ALIAS, FLAGS, PARAM, \
 HELPTEXT, METAVAR)   \
-{ PREFIX, NAME,KIND,FLAGS,OPT_##ID},
+{ PREFIX, NAME,KIND,FLAGS,XClangOptions::OPT_##ID},
 #include "ClangOptions.org.inc"
 };
+static map<string,int> genMap(int flags);
 
-#if 0
-#include <stdio.h>
-int main()
+const map<string,int> XClangOptions::m_clang_options = genMap(CC1Option);
+const map<string,int> XClangOptions::m_clang_cc1_options = genMap(DriverOption);
+
+
+
+static map<string,int> genMap(int flags)
 {
+    map<string,int> ret;
     for (auto i = 0; i < sizeof(InfoTable)/sizeof(OptTable_Info); i++)
     {
         char** p = (char **)InfoTable[i].prefix;
@@ -83,12 +80,63 @@ int main()
         }
         while ( nullptr != p && nullptr != *p)
         {
-            printf("%s,",*p);
+            if( flags &InfoTable[i].flags )
+            {
+                string key(*p);
+                key += InfoTable[i].name;
+                ret.insert(pair<string, int>(key,InfoTable[i].kind));
+            }
             p++;
         }
-        printf("%s,0x%x,0x%x ,0x%x\n",InfoTable[i].name,InfoTable[i].kind,InfoTable[i].flags,InfoTable[i].id);
     }
-    return 0;
+    return ret;
 }
-#endif
 
+
+
+void XClangOptions::splitArgs(void)
+{
+    int i = 1;
+    while(i < m_argc)
+    {
+        string vStr(m_argv[i]);
+        if("-o" == vStr)
+        {
+            m_out_file = string(m_argv[++i]);
+            i++;
+            continue;
+        }
+        auto it = m_clang_options.find(vStr);
+        auto itcc = m_clang_cc1_options.find(vStr);
+        if (it != m_clang_options.end())
+        {
+            i = getNextArgs(it->first,it->second,i);
+        }
+        else if (itcc != m_clang_cc1_options.end())
+        {
+            i = getNextArgs(itcc->first,itcc->second,i);
+        }
+        else
+        {
+            m_input_files.push_back(vStr);
+            m_input_files_str += vStr;
+            m_input_files_str += " ";
+            i++;
+        }
+    }
+}
+
+int XClangOptions::getNextArgs(const string &opt,int type,int i)
+{
+    string value;
+    if ( type & iConstOptionTypeAlone )
+    {
+        m_real_options.insert(pair<string,string>(opt,""));
+    }
+    if ( type & iConstOptionTypeNextValue )
+    {
+        value = m_argv[++i];
+    }
+    m_real_options.insert(pair<string,string>(opt,value));
+    return ++i;
+}

@@ -15,9 +15,20 @@ namespace xclang
     const int iConstOptionTypeBarValue      =  0x10000;
     const int iConstOptionTypeValue         = 0x100000;
 
+#define has(x) has_option(OPT_##x)
     
     class XClangOptions
     {
+    public:
+        enum {
+#define PREFIX(NAME, VALUE)
+#define OPTION(PREFIX, NAME, ID, KIND, GROUP, ALIAS, FLAGS, PARAM, \
+HELPTEXT, METAVAR)   \
+OPT_##ID,
+#include "ClangOptions.org.inc"
+#undef OPTION
+#undef PREFIX
+        };
     public:
         XClangOptions(int argc,const char** argv);
         ~XClangOptions();
@@ -30,6 +41,8 @@ namespace xclang
         void parseArgs(void);
         string concatOpt(const string &key,const string &value,const map<string,int> &opts) const;
         bool is_not_link(void) const;
+        
+        bool has_option(int opt_id) const;
     private:
         const int m_argc;
         const char** m_argv;

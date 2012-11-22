@@ -46,51 +46,6 @@ void XClangOptions::parseArgs(void)
 XClangOptions::~XClangOptions()
 {
 }
-void XClangOptions::splitArgs(void)
-{
-    int i = 1;
-    while(i < m_argc)
-    {
-        string vStr(m_argv[i]);
-        if("-o" == vStr)
-        {
-            m_out_file = string(m_argv[++i]);
-            i++;
-            continue;
-        }
-        auto it = m_clang_options.find(vStr);
-        auto itcc = m_clang_cc1_options.find(vStr);
-        if (it != m_clang_options.end())
-        {
-            i = getNextArgs(it->first,it->second,i);
-        }
-        else if (itcc != m_clang_cc1_options.end())
-        {
-            i = getNextArgs(itcc->first,itcc->second,i);
-        }
-        else
-        {
-            m_input_files.push_back(vStr);
-            m_input_files_str += vStr;
-            m_input_files_str += " ";
-            i++;
-        }
-    }
-}
-int XClangOptions::getNextArgs(const string &opt,int type,int i)
-{
-    string value;
-    if ( type & iConstOptionTypeAlone )
-    {
-        m_real_options.insert(pair<string,string>(opt,""));
-    }
-    if ( type & iConstOptionTypeNextValue )
-    {
-        value = m_argv[++i];
-    }
-    m_real_options.insert(pair<string,string>(opt,value));
-    return ++i;
-}
 
 string XClangOptions::concatOpt(const string &key,const string &value,const map<string,int> &opts) const
 {
@@ -118,7 +73,7 @@ vector<string> XClangOptions::getClangActions(void)
     
     vector<string> actions;
     // has no link action,whill use orignal o parameter.
-    if(has_o() && ( has_c() || has_S()) )
+    if(has(o)&& ( has(c) || has(S)) )
     {
         opts += " -o ";
         opts += m_out_file;
@@ -127,9 +82,9 @@ vector<string> XClangOptions::getClangActions(void)
         actions.push_back(opts);
         return actions;
     }
-    if(has_E() )
+    if(has(E) )
     {
-        if(has_o())
+        if(has(o))
         {
             opts += " -o ";
             opts += m_out_file;
@@ -140,14 +95,14 @@ vector<string> XClangOptions::getClangActions(void)
         return actions;
     }
     string extension(".o");
-    if(has_S())
+    if(has(S))
     {
        extension = ".s";
     }
 
     for(auto it = m_input_files.begin();it !=  m_input_files.end();it++)
     {
-        if(has_c() || has_S())
+        if(has(c) || has(S))
         {
             string opt_elment(opts);
             opt_elment += " ";
@@ -203,29 +158,32 @@ vector<string> XClangOptions::getLinkActions(void)
 
 bool XClangOptions::is_not_link(void) const
 {
-    if (has_c())
+    if (has(C))
     {
         return true;
     }
-    if (has_S())
+    if (has(S))
     {
         return true;
     }
-    if (has_E())
+    if (has(E))
     {
         return true;
     }
-    if (has_version())
+    if (has(help))
     {
         return true;
     }
-    if (has_help())
+    if (has(version))
     {
         return true;
     }
     return false;
 }
-
+bool XClangOptions::has_option(int opt_id) const
+{
+    return true;
+}
 
 #if 0
 void XClangOptions::adjustClangOptions(void)
