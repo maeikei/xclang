@@ -4,7 +4,8 @@
 
 #include "options.hpp"
 using namespace xclang;
-
+#include <iostream>
+using namespace std;
 
 
 #define PREFIX(NAME, VALUE) const char *const NAME[] = VALUE;
@@ -15,31 +16,35 @@ HELPTEXT, METAVAR)
 #undef PREFIX
 
 
-
-static const int DriverOption          = 0x1 << 1;
-static const int CC1Option             = 0x1 << 2;
-static const int RenderJoined          = 0x1 << 3;
-static const int LinkerInput           = 0x1 << 4;
-static const int Unsupported           = 0x1 << 5;
-static const int HelpHidden            = 0x1 << 6;
-static const int NoForward             = 0x1 << 7;
-static const int RenderAsInput         = 0x1 << 8;
-static const int NoArgumentUnused      = 0x1 << 9;
-static const int Group                 = 0x1 << 10;
-
-static const int NoDriverOption = ~DriverOption;
+static const int iConstTypeBase        = 0x1;
 
 
-static const int JoinedOrSeparate      = 0x1 << 1;
-static const int Joined                = 0x1 << 2;
-static const int Separate              = 0x1 << 3;
-static const int CommaJoined           = 0x1 << 4;
-static const int MultiArg              = 0x1 << 5;
-static const int JoinedAndSeparate     = 0x1 << 6;
-static const int Input                 = 0x1 << 7;
-static const int Unknown               = 0x1 << 8;
-static const int Flag                  = 0x1 << 9;
-static const int Action_Group          = 0x1 << 10;
+static const int DriverOption          = iConstTypeBase << 1;
+static const int CC1Option             = iConstTypeBase << 2;
+static const int RenderJoined          = iConstTypeBase << 3;
+static const int LinkerInput           = iConstTypeBase << 4;
+static const int Unsupported           = iConstTypeBase << 5;
+static const int HelpHidden            = iConstTypeBase << 6;
+static const int NoForward             = iConstTypeBase << 7;
+static const int RenderAsInput         = iConstTypeBase << 8;
+static const int NoArgumentUnused      = iConstTypeBase << 9;
+static const int Group                 = iConstTypeBase << 10;
+static const int NoDriverOption        = iConstTypeBase << 11;;
+
+
+
+static const int iConstKindBase        = 0x1;
+
+static const int JoinedOrSeparate      = iConstKindBase << 1;
+static const int Joined                = iConstKindBase << 2;
+static const int Separate              = iConstKindBase << 3;
+static const int CommaJoined           = iConstKindBase << 4;
+static const int MultiArg              = iConstKindBase << 5;
+static const int JoinedAndSeparate     = iConstKindBase << 6;
+static const int Input                 = iConstKindBase << 7;
+static const int Unknown               = iConstKindBase << 8;
+static const int Flag                  = iConstKindBase << 9;
+static const int Action_Group          = iConstKindBase << 10;
 
 
 
@@ -61,16 +66,16 @@ HELPTEXT, METAVAR)   \
 { PREFIX, NAME,KIND,FLAGS,XClangOptions::OPT_##ID},
 #include "ClangOptions.org.inc"
 };
-static map<string,int> genMap(int flags);
+static map<string,OptProperty> genMap(void);
 
-const map<string,int> XClangOptions::m_clang_options = genMap(CC1Option);
-const map<string,int> XClangOptions::m_clang_cc1_options = genMap(DriverOption);
+//const map<string,int> XClangOptions::m_clang_options = genMap(CC1Option);
+//const map<string,int> XClangOptions::m_clang_cc1_options = genMap(DriverOption);
 
+const map<string,OptProperty> XClangOptions::m_xclang_options = genMap();
 
-
-static map<string,int> genMap(int flags)
+static map<string,OptProperty> genMap()
 {
-    map<string,int> ret;
+    map<string,OptProperty> ret;
     for (auto i = 0; i < sizeof(InfoTable)/sizeof(OptTable_Info); i++)
     {
         char** p = (char **)InfoTable[i].prefix;
@@ -80,12 +85,10 @@ static map<string,int> genMap(int flags)
         }
         while ( nullptr != p && nullptr != *p)
         {
-            if( flags &InfoTable[i].flags )
-            {
-                string key(*p);
-                key += InfoTable[i].name;
-                ret.insert(pair<string, int>(key,InfoTable[i].kind));
-            }
+            string key(*p);
+            key += InfoTable[i].name;
+            OptProperty pro = {InfoTable[i].kind,InfoTable[i].flags,InfoTable[i].id};
+            ret.insert(pair<string, OptProperty>(key, pro  ));
             p++;
         }
     }
@@ -96,6 +99,14 @@ static map<string,int> genMap(int flags)
 
 void XClangOptions::splitArgs(void)
 {
+#ifdef DEBUG
+    for(auto it = m_xclang_options.begin();it != m_xclang_options.end();it++)
+    {
+        cout << "key=<" << it->first << ">" << endl;
+    }
+    cout << "m_xclang_options end" << endl;
+#endif
+
     int i = 1;
     while(i < m_argc)
     {
@@ -106,34 +117,26 @@ void XClangOptions::splitArgs(void)
             i++;
             continue;
         }
-        auto it = m_clang_options.find(vStr);
-        auto itcc = m_clang_cc1_options.find(vStr);
-        if (it != m_clang_options.end())
+        auto it = m_xclang_options.find(vStr);
+        if (it != m_xclang_options.end())
         {
             i = getNextArgs(it->first,it->second,i);
+            continue;
         }
-        else if (itcc != m_clang_cc1_options.end())
-        {
-            i = getNextArgs(itcc->first,itcc->second,i);
-        }
-        else
-        {
-            m_input_files.push_back(vStr);
-            m_input_files_str += vStr;
-            m_input_files_str += " ";
-            i++;
-        }
+        m_input_files.push_back(vStr);
+        m_input_files_str += vStr;
+        m_input_files_str += " ";
+        i++;
     }
 }
 
-int XClangOptions::getNextArgs(const string &opt,int type,int i)
+int XClangOptions::getNextArgs(const string &opt,const OptProperty &prop,int i)
 {
-    string value;
-    if ( type & iConstOptionTypeAlone )
+    string value("");
+    if ( prop.kind & Separate )
     {
-        m_real_options.insert(pair<string,string>(opt,""));
     }
-    if ( type & iConstOptionTypeNextValue )
+    if ( prop.kind & Joined )
     {
         value = m_argv[++i];
     }

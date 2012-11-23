@@ -21,6 +21,7 @@ using namespace std;
 
 
 
+#define has(x) has_option(OPT_##x)
 
 
 
@@ -30,6 +31,7 @@ XClangOptions::XClangOptions(int argc,const char** argv)
 :m_argc(argc)
 ,m_argv(argv)
 ,m_real_options()
+,m_real_value()
 ,m_input_files()
 ,m_input_files_str("")
 ,m_objects_files()
@@ -50,6 +52,7 @@ XClangOptions::~XClangOptions()
 string XClangOptions::concatOpt(const string &key,const string &value,const map<string,int> &opts) const
 {
     string ret(key);
+#if 0
     auto it = opts.find(key);
     if(it != opts.end())
     {
@@ -59,6 +62,7 @@ string XClangOptions::concatOpt(const string &key,const string &value,const map<
         }
         ret += value;
     }
+#endif
     return ret;
 }
 
@@ -67,7 +71,7 @@ vector<string> XClangOptions::getClangActions(void)
     string opts;
     for(auto it = m_real_options.begin();it !=  m_real_options.end();it++)
     {
-        opts += concatOpt(it->first,it->second,m_clang_cc1_options);
+//        opts += concatOpt(it->first,it->second,m_clang_cc1_options);
         opts += " ";
     }
     
@@ -138,7 +142,7 @@ vector<string> XClangOptions::getLinkActions(void)
     auto it = m_real_options.begin();
     for(;it !=  m_real_options.end();it++)
     {
-        opts += concatOpt(it->first,it->second,m_clang_options);
+//        opts += concatOpt(it->first,it->second,m_clang_options);
         opts += " ";
     }
     vector<string> actions;
@@ -182,7 +186,12 @@ bool XClangOptions::is_not_link(void) const
 }
 bool XClangOptions::has_option(int opt_id) const
 {
-    return true;
+    auto it = m_real_value.find(opt_id);
+    if(it != m_real_value.end())
+    {
+        return true;
+    }
+    return false;
 }
 
 #if 0
