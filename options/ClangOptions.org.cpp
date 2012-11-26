@@ -35,18 +35,24 @@ static const int NoDriverOption        = iConstTypeBase << 11;;
 
 static const int iConstKindBase        = 0x1;
 
-static const int JoinedOrSeparate      = iConstKindBase << 1;
-static const int Joined                = iConstKindBase << 2;
-static const int Separate              = iConstKindBase << 3;
-static const int CommaJoined           = iConstKindBase << 4;
-static const int MultiArg              = iConstKindBase << 5;
-static const int JoinedAndSeparate     = iConstKindBase << 6;
+static const int Flag                  = iConstKindBase << 0;
+static const int Joined                = iConstKindBase << 1;
+static const int Separate              = iConstKindBase << 2;
+static const int JoinedOrSeparate      = iConstKindBase << 3;
+static const int JoinedAndSeparate     = iConstKindBase << 4;
+static const int CommaJoined           = iConstKindBase << 5;
+static const int MultiArg              = iConstKindBase << 6;
 static const int Input                 = iConstKindBase << 7;
 static const int Unknown               = iConstKindBase << 8;
-static const int Flag                  = iConstKindBase << 9;
-static const int Action_Group          = iConstKindBase << 10;
+static const int Action_Group          = iConstKindBase << 9;
 
 
+static const int iConstGroupBase       = 0x1;
+
+
+static const int INVALID               = iConstGroupBase &0;
+static const int CompileOnly_Group     = iConstGroupBase << 0;
+static const int ccc_debug_Group       = iConstGroupBase << 1;
 
 
 
@@ -54,24 +60,24 @@ struct OptTable_Info
 {
     const char * const *prefix;
     const char *name;
-    const int kind;
-    const int flags;
-    const int id;
+    OptProperty prop;
 };
 
 static const OptTable_Info InfoTable[] = {
 #define PREFIX(NAME, VALUE)
 #define OPTION(PREFIX, NAME, ID, KIND, GROUP, ALIAS, FLAGS, PARAM, \
 HELPTEXT, METAVAR)   \
-{ PREFIX, NAME,KIND,FLAGS,XClangOptions::OPT_##ID},
+{ PREFIX, NAME,{KIND,FLAGS,XClangOptions::OPT_##ID}},
 #include "ClangOptions.org.inc"
 };
 static map<string,OptProperty> genMap(void);
+static map<string,OptProperty> genMapJoined(void);
 
 //const map<string,int> XClangOptions::m_clang_options = genMap(CC1Option);
 //const map<string,int> XClangOptions::m_clang_cc1_options = genMap(DriverOption);
 
 const map<string,OptProperty> XClangOptions::m_xclang_options = genMap();
+const map<string,OptProperty> XClangOptions::m_xclang_options_joined = genMapJoined();
 
 static map<string,OptProperty> genMap()
 {
@@ -87,8 +93,7 @@ static map<string,OptProperty> genMap()
         {
             string key(*p);
             key += InfoTable[i].name;
-            OptProperty pro = {InfoTable[i].kind,InfoTable[i].flags,InfoTable[i].id};
-            ret.insert(pair<string, OptProperty>(key, pro  ));
+            ret.insert(pair<string, OptProperty>(key, InfoTable[i].prop  ));
             p++;
         }
     }
@@ -96,6 +101,37 @@ static map<string,OptProperty> genMap()
 }
 
 
+static map<string,OptProperty> genMapJoined()
+{
+    map<string,OptProperty> ret;
+    for (auto i = 0; i < sizeof(InfoTable)/sizeof(OptTable_Info); i++)
+    {
+        char** p = (char **)InfoTable[i].prefix;
+        if(nullptr == p || nullptr == *p )
+        {
+            continue;
+        }
+        while ( nullptr != p && nullptr != *p)
+        {
+            if(InfoTable[i].prop.kind & Joined ||
+               InfoTable[i].prop.kind & JoinedOrSeparate ||
+               InfoTable[i].prop.kind & JoinedAndSeparate ||
+               InfoTable[i].prop.kind & CommaJoined
+               )
+            {
+            string key(*p);
+            key += InfoTable[i].name;
+            ret.insert(pair<string, OptProperty>(key, InfoTable[i].prop  ));
+            }
+            p++;
+        }
+    }
+    return ret;
+}
+
+
+
+#define DEBUG
 
 void XClangOptions::splitArgs(void)
 {
@@ -105,6 +141,11 @@ void XClangOptions::splitArgs(void)
         cout << "key=<" << it->first << ">" << endl;
     }
     cout << "m_xclang_options end" << endl;
+    for(auto it = m_xclang_options_joined.begin();it != m_xclang_options_joined.end();it++)
+    {
+        cout << "key=<" << it->first << ">" << endl;
+    }
+    cout << "m_xclang_options_joined end" << endl;
 #endif
 
     int i = 1;
@@ -114,6 +155,7 @@ void XClangOptions::splitArgs(void)
         if("-o" == vStr)
         {
             m_out_file = string(m_argv[++i]);
+            m_real_ids.insert(pair<int,string>(OPT_o,m_out_file));
             i++;
             continue;
         }
@@ -122,6 +164,10 @@ void XClangOptions::splitArgs(void)
         {
             i = getNextArgs(it->first,it->second,i);
             continue;
+        }
+        else
+        {
+            
         }
         m_input_files.push_back(vStr);
         m_input_files_str += vStr;
@@ -140,6 +186,16 @@ int XClangOptions::getNextArgs(const string &opt,const OptProperty &prop,int i)
     {
         value = m_argv[++i];
     }
-    m_real_options.insert(pair<string,string>(opt,value));
+    auto it = m_real_options.find(opt);
+    if ( m_real_options.end() != it )
+    {
+        it->second += " ";
+        it->second += value;
+    }
+    else
+    {
+        m_real_options.insert(pair<string,string>(opt,value));
+    }
+    m_real_ids.insert(pair<int,string>(prop.id,value));
     return ++i;
 }

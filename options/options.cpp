@@ -31,7 +31,7 @@ XClangOptions::XClangOptions(int argc,const char** argv)
 :m_argc(argc)
 ,m_argv(argv)
 ,m_real_options()
-,m_real_value()
+,m_real_ids()
 ,m_input_files()
 ,m_input_files_str("")
 ,m_objects_files()
@@ -186,8 +186,8 @@ bool XClangOptions::is_not_link(void) const
 }
 bool XClangOptions::has_option(int opt_id) const
 {
-    auto it = m_real_value.find(opt_id);
-    if(it != m_real_value.end())
+    auto it = m_real_ids.find(opt_id);
+    if(it != m_real_ids.end())
     {
         return true;
     }
