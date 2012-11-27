@@ -30,7 +30,8 @@ using namespace std;
 XClangOptions::XClangOptions(int argc,const char** argv)
 :m_argc(argc)
 ,m_argv(argv)
-,m_real_options()
+,m_clang_options()
+,m_link_options()
 ,m_real_ids()
 ,m_input_files()
 ,m_input_files_str("")
@@ -69,7 +70,7 @@ string XClangOptions::concatOpt(const string &key,const string &value,const map<
 vector<string> XClangOptions::getClangActions(void)
 {
     string opts;
-    for(auto it = m_real_options.begin();it !=  m_real_options.end();it++)
+    for(auto it = m_clang_options.begin();it !=  m_clang_options.end();it++)
     {
 //        opts += concatOpt(it->first,it->second,m_clang_cc1_options);
         opts += " ";
@@ -139,8 +140,8 @@ vector<string> XClangOptions::getClangActions(void)
 vector<string> XClangOptions::getLinkActions(void)
 {
     string opts;
-    auto it = m_real_options.begin();
-    for(;it !=  m_real_options.end();it++)
+    auto it = m_link_options.begin();
+    for(;it !=  m_link_options.end();it++)
     {
 //        opts += concatOpt(it->first,it->second,m_clang_options);
         opts += " ";

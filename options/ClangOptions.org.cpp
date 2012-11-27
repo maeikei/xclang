@@ -46,6 +46,11 @@ static const int Input                 = iConstKindBase << 7;
 static const int Unknown               = iConstKindBase << 8;
 static const int Action_Group          = iConstKindBase << 9;
 
+static const int iConstKindFullMatch   = Flag | Separate | JoinedOrSeparate | Action_Group;
+static const int iConstKindPrefixMatch = Joined | JoinedOrSeparate | JoinedAndSeparate | CommaJoined;
+
+
+
 
 static const int iConstGroupBase       = 0x1;
 
@@ -70,16 +75,19 @@ HELPTEXT, METAVAR)   \
 { PREFIX, NAME,{KIND,FLAGS,XClangOptions::OPT_##ID}},
 #include "ClangOptions.org.inc"
 };
-static map<string,OptProperty> genMap(void);
-static map<string,OptProperty> genMapJoined(void);
+
+static map<string,OptProperty> genSplitMap(int kind);
+//static map<string,OptProperty> genMapJoined(void);
 
 //const map<string,int> XClangOptions::m_clang_options = genMap(CC1Option);
 //const map<string,int> XClangOptions::m_clang_cc1_options = genMap(DriverOption);
 
-const map<string,OptProperty> XClangOptions::m_xclang_options = genMap();
-const map<string,OptProperty> XClangOptions::m_xclang_options_joined = genMapJoined();
+const map<string,OptProperty> XClangOptions::m_xclang_options_full_match = genSplitMap(iConstKindFullMatch);
+const map<string,OptProperty> XClangOptions::m_xclang_options_prefix_match = genSplitMap(iConstKindPrefixMatch);
 
-static map<string,OptProperty> genMap()
+
+
+static map<string,OptProperty> genSplitMap(int kind)
 {
     map<string,OptProperty> ret;
     for (auto i = 0; i < sizeof(InfoTable)/sizeof(OptTable_Info); i++)
@@ -91,37 +99,11 @@ static map<string,OptProperty> genMap()
         }
         while ( nullptr != p && nullptr != *p)
         {
-            string key(*p);
-            key += InfoTable[i].name;
-            ret.insert(pair<string, OptProperty>(key, InfoTable[i].prop  ));
-            p++;
-        }
-    }
-    return ret;
-}
-
-
-static map<string,OptProperty> genMapJoined()
-{
-    map<string,OptProperty> ret;
-    for (auto i = 0; i < sizeof(InfoTable)/sizeof(OptTable_Info); i++)
-    {
-        char** p = (char **)InfoTable[i].prefix;
-        if(nullptr == p || nullptr == *p )
-        {
-            continue;
-        }
-        while ( nullptr != p && nullptr != *p)
-        {
-            if(InfoTable[i].prop.kind & Joined ||
-               InfoTable[i].prop.kind & JoinedOrSeparate ||
-               InfoTable[i].prop.kind & JoinedAndSeparate ||
-               InfoTable[i].prop.kind & CommaJoined
-               )
+            if(InfoTable[i].prop.kind & kind )
             {
-            string key(*p);
-            key += InfoTable[i].name;
-            ret.insert(pair<string, OptProperty>(key, InfoTable[i].prop  ));
+                string key(*p);
+                key += InfoTable[i].name;
+                ret.insert(pair<string, OptProperty>(key, InfoTable[i].prop  ));
             }
             p++;
         }
@@ -131,21 +113,21 @@ static map<string,OptProperty> genMapJoined()
 
 
 
-#define DEBUG
+//#define DEBUG
 
 void XClangOptions::splitArgs(void)
 {
 #ifdef DEBUG
-    for(auto it = m_xclang_options.begin();it != m_xclang_options.end();it++)
+    for(auto it = m_xclang_options_full_match.begin();it != m_xclang_options_full_match.end();it++)
     {
         cout << "key=<" << it->first << ">" << endl;
     }
-    cout << "m_xclang_options end" << endl;
-    for(auto it = m_xclang_options_joined.begin();it != m_xclang_options_joined.end();it++)
+    cout << "m_xclang_options_full_match end" << endl;
+    for(auto it = m_xclang_options_prefix_match.rbegin();it != m_xclang_options_prefix_match.rend();it++)
     {
         cout << "key=<" << it->first << ">" << endl;
     }
-    cout << "m_xclang_options_joined end" << endl;
+    cout << "m_xclang_options_prefix_match end" << endl;
 #endif
 
     int i = 1;
@@ -155,19 +137,28 @@ void XClangOptions::splitArgs(void)
         if("-o" == vStr)
         {
             m_out_file = string(m_argv[++i]);
-            m_real_ids.insert(pair<int,string>(OPT_o,m_out_file));
+            m_real_ids.insert(pair<int,bool>(OPT_o,true));
             i++;
             continue;
         }
-        auto it = m_xclang_options.find(vStr);
-        if (it != m_xclang_options.end())
+        auto it = m_xclang_options_full_match.find(vStr);
+        if (it != m_xclang_options_full_match.end())
         {
-            i = getNextArgs(it->first,it->second,i);
+            i = getNextArgsFullMatch(vStr,it->second,i);
             continue;
         }
         else
         {
-            
+            for( auto itpre= m_xclang_options_prefix_match.rbegin();
+                itpre != m_xclang_options_prefix_match.rend();itpre++ )
+            {
+                auto pos = vStr.find(itpre->first);
+                if ( string::npos != pos)
+                {
+                    i = getNextArgsPrefixMatch(vStr,itpre->first,it->second,i);
+                    continue;
+                }
+            }
         }
         m_input_files.push_back(vStr);
         m_input_files_str += vStr;
@@ -176,26 +167,45 @@ void XClangOptions::splitArgs(void)
     }
 }
 
-int XClangOptions::getNextArgs(const string &opt,const OptProperty &prop,int i)
+#define is_driver_opt(prop) ((prop.flags & DriverOption )&& (not prop.flags &NoDriverOption))
+
+#define add_option(opt,prop) \
+{ \
+    if ( is_driver_opt(prop) ) \
+    { \
+        m_link_options.push_back(opt);\
+    }\
+    else \
+    {\
+        m_clang_options.push_back(opt);\
+    }\
+}
+
+int XClangOptions::getNextArgsFullMatch(const string &opt,const OptProperty &prop,int i)
 {
-    string value("");
+    add_option(opt,prop);
     if ( prop.kind & Separate )
     {
+        ++i;
+        add_option(m_argv[i],prop);
     }
-    if ( prop.kind & Joined )
+    if ( prop.kind & JoinedOrSeparate )
     {
-        value = m_argv[++i];
+        ++i;
+        add_option(m_argv[i],prop);
     }
-    auto it = m_real_options.find(opt);
-    if ( m_real_options.end() != it )
+    m_real_ids.insert(pair<int,bool>(prop.id,true));
+    return ++i;
+}
+
+int XClangOptions::getNextArgsPrefixMatch(const string &opt,const string &prefix,const OptProperty &prop,int i)
+{
+    add_option(opt,prop);
+    if ( prop.kind & JoinedAndSeparate )
     {
-        it->second += " ";
-        it->second += value;
+        ++i;
+        add_option(m_argv[i],prop);
     }
-    else
-    {
-        m_real_options.insert(pair<string,string>(opt,value));
-    }
-    m_real_ids.insert(pair<int,string>(prop.id,value));
+    m_real_ids.insert(pair<int,bool>(prop.id,true));
     return ++i;
 }
