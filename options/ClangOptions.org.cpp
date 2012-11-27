@@ -1,7 +1,3 @@
-
-
-
-
 #include "options.hpp"
 using namespace xclang;
 #include <iostream>
@@ -88,6 +84,10 @@ const map<string,OptProperty> XClangOptions::m_xclang_options_full_match = genSp
 const map<string,OptProperty> XClangOptions::m_xclang_options_prefix_match = genSplitMap(iConstKindPrefixMatch);
 
 
+//#define DEBUG
+
+#define dout std::cout << __func__ << ":" << __LINE__ << ":"
+
 
 static map<string,OptProperty> genSplitMap(int kind)
 {
@@ -158,7 +158,7 @@ void XClangOptions::splitArgs(void)
                 auto pos = vStr.find(itpre->first);
                 if ( string::npos != pos)
                 {
-                    i = getNextArgsPrefixMatch(vStr,itpre->first,it->second,i);
+                    i = getNextArgsPrefixMatch(vStr,itpre->first,itpre->second,i);
                     prefix_match = true;
                     break;
                 }
@@ -176,6 +176,35 @@ void XClangOptions::splitArgs(void)
 }
 
 
+
+#ifdef DEBUG
+#define add_option(opt,prop) \
+{ \
+    if ( prop.flags & iConstTypeLinker ) \
+    { \
+        if ( prop.flags &NoDriverOption ) \
+        { \
+            dout << "opt=<" << opt << ">" << endl;\
+            dout << "prop.flags=<" << prop.flags << ">" << endl;\
+            m_clang_options.push_back(opt);\
+        } \
+        else \
+        { \
+            dout << "opt=<" << opt << ">" << endl;\
+            dout << "prop.flags=<" << prop.flags << ">" << endl;\
+            m_link_options.push_back(opt);\
+        } \
+    }\
+    else \
+    {\
+        dout << "opt=<" << opt << ">" << endl;\
+        dout << "prop.flags=<" << prop.flags << ">" << endl;\
+        m_clang_options.push_back(opt);\
+    }\
+}
+
+#else
+
 #define add_option(opt,prop) \
 { \
     if ( prop.flags & iConstTypeLinker ) \
@@ -186,7 +215,6 @@ void XClangOptions::splitArgs(void)
         } \
         else \
         { \
-            cout << "opt=<" << opt << ">" << endl;\
             m_link_options.push_back(opt);\
         } \
     }\
@@ -196,10 +224,13 @@ void XClangOptions::splitArgs(void)
     }\
 }
 
+#endif
+
+
+
+
 int XClangOptions::getNextArgsFullMatch(const string &opt,const OptProperty &prop,int i)
 {
-//    cout << "opt=<" << opt << ">" << endl;
-//    cout << "i=<" << i << ">" << endl;
     add_option(opt,prop);
     if ( prop.kind & Separate )
     {
@@ -212,27 +243,17 @@ int XClangOptions::getNextArgsFullMatch(const string &opt,const OptProperty &pro
         add_option(m_argv[i],prop);
     }
     m_real_ids.insert(pair<int,bool>(prop.id,true));
-//    cout << "i=<" << i << ">" << endl;
     return ++i;
 }
 
 int XClangOptions::getNextArgsPrefixMatch(const string &opt,const string &prefix,const OptProperty &prop,int i)
 {
-//    cout << "opt=<" << opt << ">" << endl;
-//    cout << "prefix=<" << prefix << ">" << endl;
-//    cout << "i=<" << i << ">" << endl;
     add_option(opt,prop);
-    if ( prop.kind & JoinedOrSeparate )
-    {
-        ++i;
-        add_option(m_argv[i],prop);
-    }
     if ( prop.kind & JoinedAndSeparate )
     {
         ++i;
         add_option(m_argv[i],prop);
     }
-//    cout << "i=<" << i << ">" << endl;
     m_real_ids.insert(pair<int,bool>(prop.id,true));
     return ++i;
 }
