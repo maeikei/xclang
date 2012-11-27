@@ -72,7 +72,7 @@ vector<string> XClangOptions::getClangActions(void)
     string opts;
     for(auto it = m_clang_options.begin();it !=  m_clang_options.end();it++)
     {
-//        opts += concatOpt(it->first,it->second,m_clang_cc1_options);
+        opts += *it;
         opts += " ";
     }
     
@@ -140,10 +140,9 @@ vector<string> XClangOptions::getClangActions(void)
 vector<string> XClangOptions::getLinkActions(void)
 {
     string opts;
-    auto it = m_link_options.begin();
-    for(;it !=  m_link_options.end();it++)
+    for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
     {
-//        opts += concatOpt(it->first,it->second,m_clang_options);
+        opts += *it;
         opts += " ";
     }
     vector<string> actions;
