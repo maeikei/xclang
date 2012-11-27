@@ -139,29 +139,34 @@ vector<string> XClangOptions::getClangActions(void)
 
 vector<string> XClangOptions::getLinkActions(void)
 {
+    vector<string> actions;
+    if(  is_not_link() )
+    {
+        return actions;
+    }
     string opts;
     for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
     {
         opts += *it;
         opts += " ";
     }
-    vector<string> actions;
-    if( not is_not_link() )
+    opts += " -o ";
+    opts += m_out_file;
+    for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
     {
-        opts += " -o ";
-        opts += m_out_file;
-        for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
-        {
-            opts += " ";
-            opts += *it;
-        }
-        actions.push_back(opts);
+        opts += " ";
+        opts += *it;
     }
+    actions.push_back(opts);
     return actions;
 }
 
 bool XClangOptions::is_not_link(void) const
 {
+    if (has(c))
+    {
+        return true;
+    }
     if (has(C))
     {
         return true;
