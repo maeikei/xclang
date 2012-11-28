@@ -5,6 +5,9 @@
 #include <map>
 #include <vector>
 using namespace std;
+
+#include "configreader.hpp"
+
 namespace xclang
 {
 
@@ -32,19 +35,25 @@ OPT_##ID,
         ~XClangOptions();
         vector<string> getClangActions(void);
         vector<string> getLinkActions(void);
+        void setConfig(ConfigReader *conf)
+        {
+            m_config =conf;
+        }
     private:
         XClangOptions();
         int getNextArgsFullMatch(const string &opt,const OptProperty &prop,int i);
         int getNextArgsPrefixMatch(const string &opt,const string &prefix,const OptProperty &prop,int i);
         void splitArgs(void);
         void parseArgs(void);
-        string concatOpt(const string &key,const string &value,const map<string,int> &opts) const;
         bool is_not_link(void) const;
         
         bool has_option(int opt_id) const;
+        void adjustClangOptions(void);
+        void adjustLinkOptions(void);
     private:
         const int m_argc;
         const char** m_argv;
+        ConfigReader *m_config;
         vector<string> m_clang_options;
         vector<string> m_link_options;
         map<int,bool> m_real_ids;

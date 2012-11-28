@@ -3,9 +3,12 @@
 
 #include <string>
 using namespace std;
+
+
 namespace xclang
 {
-class XClangPrograms
+    class ConfigReader;
+    class XClangPrograms
     {
     public:
         XClangPrograms(const string &argv0);
@@ -23,6 +26,10 @@ class XClangPrograms
         {
             return m_suffix == "++";
         }
+        void setConfig(ConfigReader *conf)
+        {
+            m_config =conf;
+        }
     private:
         XClangPrograms();
     private:
@@ -31,6 +38,7 @@ class XClangPrograms
         string m_home;
         string m_target;
         string m_suffix;
+        ConfigReader *m_config;
     };
 }
 #endif // __PROGRAMS_HPP_

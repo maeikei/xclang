@@ -8,10 +8,11 @@ extern "C"
 
 #include <string>
 using namespace std;
-#include "programs.hpp"
+
 namespace xclang
 {
-class ConfigReader
+    class XClangPrograms;
+    class ConfigReader
     {
     public:
         ConfigReader(const string &home,const XClangPrograms &p);

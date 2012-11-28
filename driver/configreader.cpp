@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 #include "configreader.hpp"
+#include "programs.hpp"
 using namespace xclang;
 #include "lua.hpp"
 

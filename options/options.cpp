@@ -50,25 +50,10 @@ XClangOptions::~XClangOptions()
 {
 }
 
-string XClangOptions::concatOpt(const string &key,const string &value,const map<string,int> &opts) const
-{
-    string ret(key);
-#if 0
-    auto it = opts.find(key);
-    if(it != opts.end())
-    {
-        if( it->second & iConstOptionTypeNextValue )
-        {
-            ret += " ";
-        }
-        ret += value;
-    }
-#endif
-    return ret;
-}
 
 vector<string> XClangOptions::getClangActions(void)
 {
+    adjustClangOptions();
     string opts;
     for(auto it = m_clang_options.begin();it !=  m_clang_options.end();it++)
     {
@@ -139,6 +124,7 @@ vector<string> XClangOptions::getClangActions(void)
 
 vector<string> XClangOptions::getLinkActions(void)
 {
+    adjustLinkOptions();
     vector<string> actions;
     if(  is_not_link() )
     {
@@ -199,17 +185,28 @@ bool XClangOptions::has_option(int opt_id) const
     return false;
 }
 
-#if 0
 void XClangOptions::adjustClangOptions(void)
 {
-#if 1 // will change to a const list
-    m_Argv.push_back("-nostdinc");
-    m_Argv.push_back("-nostdlib");
-    if (m_program.iscxx())
+    m_clang_options.push_back("-no-standard-includes");
+    m_clang_options.push_back("-nobuiltininc");
+    m_clang_options.push_back("-nostdinc");
+    m_clang_options.push_back("-nostdlibinc");
+    m_clang_options.push_back("-nostdsysteminc");
+//    if (iscxx())
     {
-        m_Argv.push_back("-nostdincxx");
+        m_clang_options.push_back("-nostdinc++");
     }
-#endif
 }
-#endif
+void XClangOptions::adjustLinkOptions(void)
+{
+    m_link_options.push_back("-no-standard-libraries");
+    m_link_options.push_back("-nodefaultlibs");
+    m_link_options.push_back("-nolibc");
+    m_link_options.push_back("-nostartfiles");
+    m_link_options.push_back("-nostdlib");    
+    //    if (iscxx())
+    {
+        m_link_options.push_back("");
+    }
+}
 

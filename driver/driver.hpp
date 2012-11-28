@@ -20,9 +20,9 @@ class XClangDriver
         XClangDriver();
         int execProgram(const string &name );
     private:
-        XClangOptions m_opt;
         XClangPrograms m_program;
         ConfigReader *m_config;
+        XClangOptions m_opt;
     };
 }
 #endif // __DRIVER_HPP_
