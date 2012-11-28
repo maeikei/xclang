@@ -25,7 +25,7 @@ int XClangDriver::exce(void)
     vector<string> actions = m_opt.getClangActions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
-        string cmdline(m_program.findProgramName("clang"));
+        string cmdline(m_program.findProgramName("clang.llvm.clang"));
         cmdline += " -target " + m_opt.gettarget();
         cmdline += " " + *it + " " ;
         cout << "cmdline=<" << cmdline << ">" << endl;

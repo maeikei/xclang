@@ -36,6 +36,9 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
         m_runscript += "require(\"";
         m_runscript += m_opt.gettarget();
         m_runscript += "\")\n";
+
+        // add spec lua
+        m_runscript += "require(\"xclang-llvm\")\n";
         
         
 //        cout << "m_home=<" << m_home << ">" << endl;
@@ -63,4 +66,22 @@ ConfigReader::~ConfigReader()
     {
         lua_close(m_L);
     }
+}
+
+
+//#define DEBUG
+
+#define dout std::cout << __func__ << ":" << __LINE__ << ":"
+
+
+string ConfigReader::getValue(const string &key)
+{
+    string ret;
+    dout << "key=<" << key << ">" << endl;
+    return ret;
+}
+vector<string> ConfigReader::getValues(const string &key)
+{
+    vector<string> ret;
+    return ret;
 }

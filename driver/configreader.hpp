@@ -7,6 +7,7 @@ extern "C"
 }
 
 #include <string>
+#include <vector>
 using namespace std;
 
 namespace xclang
@@ -18,6 +19,8 @@ namespace xclang
     public:
         ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt);
         ~ConfigReader();
+        string getValue(const string &key);
+        vector<string> getValues(const string &key);
     private:
         ConfigReader();
     private:
