@@ -12,7 +12,7 @@ XClangDriver::XClangDriver(const int argc,const char *argv[])
 ,m_config(nullptr)
 ,m_opt(argc,argv)
 {
-    m_config = new ConfigReader(m_program.gethome(),m_program);
+    m_config = new ConfigReader(m_program.gethome(),m_program,m_opt);
     m_program.setConfig(m_config);
     m_opt.setConfig(m_config);
 }
@@ -26,7 +26,7 @@ int XClangDriver::exce(void)
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
         string cmdline(m_program.findProgramName("clang"));
-        cmdline += " -target " + m_program.gettarget();
+        cmdline += " -target " + m_opt.gettarget();
         cmdline += " " + *it + " " ;
         cout << "cmdline=<" << cmdline << ">" << endl;
         //system(cmdline.c_str());

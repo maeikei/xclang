@@ -39,12 +39,15 @@ OPT_##ID,
         {
             m_config =conf;
         }
+        string gettarget(void) const
+        {
+            return m_target;
+        }
     private:
         XClangOptions();
         int getNextArgsFullMatch(const string &opt,const OptProperty &prop,int i);
         int getNextArgsPrefixMatch(const string &opt,const string &prefix,const OptProperty &prop,int i);
         void splitArgs(void);
-        void parseArgs(void);
         bool is_not_link(void) const;
         
         bool has_option(int opt_id) const;
@@ -61,6 +64,7 @@ OPT_##ID,
         string m_input_files_str;
         vector<string> m_objects_files;
         string m_out_file;
+        string m_target;
         static const map<string,OptProperty> m_xclang_options_full_match;
         static const map<string,OptProperty> m_xclang_options_prefix_match;
 //        static const map<string,int> m_clang_options;

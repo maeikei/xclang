@@ -14,7 +14,6 @@ XClangPrograms::XClangPrograms(const string &argv0)
 :m_argv0(argv0)
 ,m_fullpath("")
 ,m_home("")
-,m_target("")
 ,m_suffix("")
 {
     try
@@ -40,8 +39,6 @@ XClangPrograms::XClangPrograms(const string &argv0)
         xclangpath = fs::canonical(xclangpath);
         m_fullpath = xclangpath.string();
         m_home = xclangpath.parent_path().parent_path().string();
-        boost::regex re(string("-xclang*"));
-        m_target = boost::regex_replace(xclangpath.filename().string(),re,"");
         
         fs::path xclangpath_orig(m_argv0);
         string filename = xclangpath_orig.filename().string();

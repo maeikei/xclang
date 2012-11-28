@@ -37,14 +37,11 @@ XClangOptions::XClangOptions(int argc,const char** argv)
 ,m_input_files_str("")
 ,m_objects_files()
 ,m_out_file("a.out")
+,m_target("")
 {
     splitArgs();
-    parseArgs();
 }
 
-void XClangOptions::parseArgs(void)
-{
-}
 
 XClangOptions::~XClangOptions()
 {

@@ -143,6 +143,12 @@ void XClangOptions::splitArgs(void)
             i++;
             continue;
         }
+        if("--xclang-target" == vStr)
+        {
+            m_target = string(m_argv[++i]);
+            i++;
+            continue;
+        }
         auto it = m_xclang_options_full_match.find(vStr);
         if (it != m_xclang_options_full_match.end())
         {

@@ -12,16 +12,18 @@ using namespace std;
 namespace xclang
 {
     class XClangPrograms;
+    class XClangOptions;
     class ConfigReader
     {
     public:
-        ConfigReader(const string &home,const XClangPrograms &p);
+        ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt);
         ~ConfigReader();
     private:
         ConfigReader();
     private:
         string m_home;
         const XClangPrograms &m_program;
+        const XClangOptions &m_opt;
         lua_State *m_L;
         string m_runscript;
     };

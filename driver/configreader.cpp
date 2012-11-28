@@ -4,12 +4,14 @@
 using namespace std;
 #include "configreader.hpp"
 #include "programs.hpp"
+#include "options.hpp"
 using namespace xclang;
 #include "lua.hpp"
 
-ConfigReader::ConfigReader(const string &home,const XClangPrograms &p)
+ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt)
 :m_home(home + "/share")
 ,m_program(p)
+,m_opt(opt)
 ,m_L(nullptr)
 ,m_runscript("\n")
 {
@@ -32,7 +34,7 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p)
         
         // add target spec lua
         m_runscript += "require(\"";
-        m_runscript += m_program.gettarget();
+        m_runscript += m_opt.gettarget();
         m_runscript += "\")\n";
         
         
