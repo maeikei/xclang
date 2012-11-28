@@ -1,5 +1,5 @@
 link_directories(${CMAKE_BINARY_DIR}/3rdpart_build/lib)
-set(XCLANG_PREFIX x86_64-pc-linux-gnueabi-)
+set(XCLANG_PREFIX "")
 set(XCLANG ${XCLANG_PREFIX}xclang)
 add_executable(${XCLANG}
   main.cpp
