@@ -1,3 +1,0 @@
-#!/bin/bash
-xclang_path=`echo $0 | sed -e "s/x86_64-pc-linux-gnu-//" | sed -e "s/++//"`-engine
-${xclang_path} --xclang-triple=x86_64-pc-linux-gnu --xclang-lang=c++ $*

@@ -1,3 +1,0 @@
-#!/bin/bash
-xclang_path=`echo $0 | sed -e "s/i386-apple-darwin-//"`-engine
-$xclang_path --xclang-triple=i386-apple-darwin $*
