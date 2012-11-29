@@ -69,6 +69,19 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
             lua_pop(m_L, 2);
         }
         lua_pop(m_L, 1);
+
+        
+        lua_getglobal(m_L, "clang");
+        lua_pushstring(m_L, "defaultasmcppcflags");
+        lua_gettable(m_L, -2);
+        lua_pushnil(m_L);
+        while (lua_next(m_L, -2) != 0) {
+            lua_pushvalue(m_L, -2);
+            printf("%s, %s\n", lua_tostring(m_L, -1), lua_tostring(m_L, -2));
+            lua_pop(m_L, 2);
+        }
+        lua_pop(m_L, 1);
+        
         
         
     }
