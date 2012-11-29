@@ -35,6 +35,10 @@ OPT_##ID,
         ~XClangOptions();
         vector<string> getClangActions(void);
         vector<string> getLinkActions(void);
+
+        vector<string> getClangLuaActions(void);
+        vector<string> getLinkLuActions(void);
+        
         string gettarget(void) const
         {
             return m_target;
