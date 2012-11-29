@@ -39,7 +39,7 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 
         // add spec lua
         m_runscript += "require(\"xclang-llvm\")\n";
-        m_runscript += "require(\"xclang-llvm\")\n";
+        m_runscript += "require(\"xclang-actions\")\n";
         
 //        cout << "m_home=<" << m_home << ">" << endl;
 //        cout << "m_runscript=<" << m_runscript << ">" << endl;
@@ -94,7 +94,9 @@ string ConfigReader::getAction(const string &act,const string &cmds)
     {
         m_runscript += "do_action_";
         m_runscript += act;
-        m_runscript += "()\n";
+        m_runscript += "(\"";
+        m_runscript += cmds;
+        m_runscript += "\")\n";
         int ret = luaL_dostring(m_L,m_runscript.c_str());
         if(LUA_OK != ret)
         {
