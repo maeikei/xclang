@@ -27,7 +27,7 @@ int XClangDriver::exce(void)
         cmdline += " " + *it + " " ;
         cout << "cmdline=<" << cmdline << ">" << endl;
         ConfigReader act(m_program.gethome(),m_program,m_opt);
-        cmdline = act.getAction("cc",cmdline);
+        cmdline = act.getAction("clang",cmdline);
         //system(cmdline.c_str());
     }
     vector<string> linkActions = m_opt.getLinkActions();

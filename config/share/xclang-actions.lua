@@ -448,3 +448,16 @@ function xclang_cust(cmd)
 	end
 end
 
+
+
+---------------------------------------------------
+-- custerm commond. 
+---------------------------------------------------
+function do_action_clang(cmd)
+	globalExeCmd = cmd
+	ret = xclang_common_exec(cmd)
+	if 0 ~= ret then
+		return
+	end
+end
+

@@ -39,7 +39,7 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 
         // add spec lua
         m_runscript += "require(\"xclang-llvm\")\n";
-        
+        m_runscript += "require(\"xclang-llvm\")\n";
         
 //        cout << "m_home=<" << m_home << ">" << endl;
 //        cout << "m_runscript=<" << m_runscript << ">" << endl;
@@ -87,8 +87,30 @@ vector<string> ConfigReader::getValues(const string &key)
 }
 string ConfigReader::getAction(const string &act,const string &cmds)
 {
-    string ret;
     dout << "act=<" << act << ">" << endl;
     dout << "cmds=<" << cmds << ">" << endl;
+    string ret;
+    try
+    {
+        m_runscript += "do_action_";
+        m_runscript += act;
+        m_runscript += "()\n";
+        int ret = luaL_dostring(m_L,m_runscript.c_str());
+        if(LUA_OK != ret)
+        {
+            const char *msg = (lua_type(m_L, -1) == LUA_TSTRING) ? lua_tostring(m_L, -1): NULL;
+            if (msg == NULL) msg = "(error object is not a string)";
+            lua_pop(m_L, 1);
+            throw string(msg) + m_runscript;
+        }
+    }
+    catch (string e)
+    {
+        cout << "exceptin=<" << e << ">" << endl;
+    }
+    catch (...)
+    {
+    }
+    
     return ret;
 }
