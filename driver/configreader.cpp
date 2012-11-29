@@ -85,3 +85,10 @@ vector<string> ConfigReader::getValues(const string &key)
     vector<string> ret;
     return ret;
 }
+string ConfigReader::getAction(const string &act,const string &cmds)
+{
+    string ret;
+    dout << "act=<" << act << ">" << endl;
+    dout << "cmds=<" << cmds << ">" << endl;
+    return ret;
+}

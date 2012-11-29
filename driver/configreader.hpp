@@ -21,6 +21,7 @@ namespace xclang
         ~ConfigReader();
         string getValue(const string &key);
         vector<string> getValues(const string &key);
+        string getAction(const string &act,const string &cmds);
     private:
         ConfigReader();
     private:

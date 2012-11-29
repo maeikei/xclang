@@ -16,7 +16,6 @@ XClangPrograms::XClangPrograms(const string &argv0)
 ,m_fullpath("")
 ,m_home("")
 ,m_suffix("")
-,m_config(nullptr)
 {
     try
     {
@@ -69,6 +68,5 @@ XClangPrograms::~XClangPrograms()
 string XClangPrograms::findProgramName(const string &name) const
 {
     string ret(name);
-    m_config->getValue(name);
     return ret;
 }

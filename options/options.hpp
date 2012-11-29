@@ -35,10 +35,6 @@ OPT_##ID,
         ~XClangOptions();
         vector<string> getClangActions(void);
         vector<string> getLinkActions(void);
-        void setConfig(ConfigReader *conf)
-        {
-            m_config =conf;
-        }
         string gettarget(void) const
         {
             return m_target;
@@ -56,7 +52,6 @@ OPT_##ID,
     private:
         const int m_argc;
         const char** m_argv;
-        ConfigReader *m_config;
         vector<string> m_clang_options;
         vector<string> m_link_options;
         map<int,bool> m_real_ids;

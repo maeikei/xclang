@@ -21,7 +21,6 @@ class XClangDriver
         int execProgram(const string &name );
     private:
         XClangPrograms m_program;
-        ConfigReader *m_config;
         XClangOptions m_opt;
     };
 }

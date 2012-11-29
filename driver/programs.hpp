@@ -22,10 +22,6 @@ namespace xclang
         {
             return m_suffix == "++";
         }
-        void setConfig(ConfigReader *conf)
-        {
-            m_config =conf;
-        }
     private:
         XClangPrograms();
     private:
@@ -33,7 +29,6 @@ namespace xclang
         string m_fullpath;
         string m_home;
         string m_suffix;
-        ConfigReader *m_config;
     };
 }
 #endif // __PROGRAMS_HPP_
