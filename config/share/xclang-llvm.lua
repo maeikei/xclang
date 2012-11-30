@@ -14,7 +14,7 @@ clang =
 	{
 		cc1as	    = clang_prefix.."/clang -cc1as",
 		cc		    = clang_prefix.."/clang",
-		cxx		    = clang_prefix.."/clang",
+		cxx		    = clang_prefix.."/clang++",
 		opt		    = clang_prefix.."/opt",
 		llc		    = clang_prefix.."/llc",
 		lli		    = clang_prefix.."/lli",

@@ -33,6 +33,12 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 //        cout << "LUA_CPATH=<" << ::getenv("LUA_CPATH") << ">" <<endl;
         luaL_openlibs(m_L);
 
+        // home var
+        m_runscript += "globalXClangHome = ";
+        m_runscript += "\"";
+        m_runscript += m_home;
+        m_runscript += "\"\n";
+
         
         // add target spec lua
         m_runscript += "require(\"";
@@ -41,12 +47,7 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 
         // add spec lua
         m_runscript += "require(\"xclang-llvm\")\n";
-        m_runscript += "require(\"xclang-actions\")\n";
 
-        m_runscript += "globalXClangHome = ";
-        m_runscript += "\"";
-        m_runscript += m_home;
-        m_runscript += "\"\n";
         
         
 //        cout << "m_home=<" << m_home << ">" << endl;

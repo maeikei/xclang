@@ -43,6 +43,10 @@ OPT_##ID,
         {
             return m_target;
         }
+        void setConfig(ConfigReader *_config)
+        {
+            m_config = _config;
+        }
     private:
         XClangOptions();
         int getNextArgsFullMatch(const string &opt,const OptProperty &prop,int i);
@@ -56,6 +60,7 @@ OPT_##ID,
     private:
         const int m_argc;
         const char** m_argv;
+        ConfigReader *m_config;
         vector<string> m_clang_options;
         vector<string> m_link_options;
         map<int,bool> m_real_ids;
