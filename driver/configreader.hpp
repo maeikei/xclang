@@ -8,6 +8,7 @@ extern "C"
 
 #include <string>
 #include <vector>
+#include <map>
 using namespace std;
 
 namespace xclang
@@ -21,15 +22,18 @@ namespace xclang
         ~ConfigReader();
         string getValue(const string &key);
         vector<string> getValues(const string &key);
-        string getAction(const string &act,const string &cmds);
     private:
         ConfigReader();
+        void readtable(const string &name,const string &item,map<string,string> &table);
+        void readtable(const string &name,const string &item,vector<string> &table);
     private:
         string m_home;
         const XClangPrograms &m_program;
         const XClangOptions &m_opt;
         lua_State *m_L;
         string m_runscript;
+        map<string,string> m_llvm;
+        map<string,string> m_defaultasmcppcflags;
     };
 }
 #endif // __CONFIG_READER_HPP_

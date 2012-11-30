@@ -10,8 +10,9 @@ using namespace xclang;
 XClangDriver::XClangDriver(const int argc,const char *argv[])
 :m_program(argv[0])
 ,m_opt(argc,argv)
+,m_config(nullptr)
 {
-//    m_config = new ConfigReader(m_program.gethome(),m_program,m_opt);
+    m_config = new ConfigReader(m_program.gethome(),m_program,m_opt);
 }
 XClangDriver::~XClangDriver()
 {
@@ -26,8 +27,6 @@ int XClangDriver::exce(void)
         cmdline += m_opt.gettarget();
         cmdline += " " + *it + " " ;
         cout << "cmdline=<" << cmdline << ">" << endl;
-        ConfigReader act(m_program.gethome(),m_program,m_opt);
-        cmdline = act.getAction("clang",cmdline);
         //system(cmdline.c_str());
     }
     vector<string> linkActions = m_opt.getLinkActions();
@@ -36,8 +35,6 @@ int XClangDriver::exce(void)
         string cmdline;
         cmdline += " " + *it + " " ;
         cout << "cmdline=<" << cmdline << ">" << endl;
-        ConfigReader act(m_program.gethome(),m_program,m_opt);
-        cmdline = act.getAction("link",cmdline);
         //system(cmdline.c_str());
     }    
     return 0;

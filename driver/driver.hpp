@@ -22,6 +22,7 @@ class XClangDriver
     private:
         XClangPrograms m_program;
         XClangOptions m_opt;
+        ConfigReader *m_config;
     };
 }
 #endif // __DRIVER_HPP_

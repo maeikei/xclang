@@ -14,6 +14,8 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 ,m_opt(opt)
 ,m_L(nullptr)
 ,m_runscript("\n")
+,m_llvm()
+,m_defaultasmcppcflags()
 {
     try
     {
@@ -57,33 +59,8 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
             lua_pop(m_L, 1);
             throw string(msg) + m_runscript;
         }
-
-        
-        lua_getglobal(m_L, "clang");
-        lua_pushstring(m_L, "llvm");
-        lua_gettable(m_L, -2);
-        lua_pushnil(m_L);
-        while (lua_next(m_L, -2) != 0) {
-            lua_pushvalue(m_L, -2);
-            printf("%s, %s\n", lua_tostring(m_L, -1), lua_tostring(m_L, -2));
-            lua_pop(m_L, 2);
-        }
-        lua_pop(m_L, 1);
-
-        
-        lua_getglobal(m_L, "clang");
-        lua_pushstring(m_L, "defaultasmcppcflags");
-        lua_gettable(m_L, -2);
-        lua_pushnil(m_L);
-        while (lua_next(m_L, -2) != 0) {
-            lua_pushvalue(m_L, -2);
-            printf("%s, %s\n", lua_tostring(m_L, -1), lua_tostring(m_L, -2));
-            lua_pop(m_L, 2);
-        }
-        lua_pop(m_L, 1);
-        
-        
-        
+        readtable("clang","llvm",m_llvm);
+        readtable("clang","defaultasmcppcflags",m_defaultasmcppcflags);
     }
     catch (string e)
     {
@@ -99,6 +76,36 @@ ConfigReader::~ConfigReader()
     {
         lua_close(m_L);
     }
+}
+
+void ConfigReader::readtable(const string &name,const string &item,map<string,string> &table)
+{
+    lua_getglobal(m_L, name.c_str());
+    lua_pushstring(m_L,item.c_str());
+    lua_gettable(m_L, -2);
+    lua_pushnil(m_L);
+    while (lua_next(m_L, -2) != 0)
+    {
+        lua_pushvalue(m_L, -2);
+        table.insert(pair<string, string>(lua_tostring(m_L, -1), lua_tostring(m_L, -2)));
+        lua_pop(m_L, 2);
+    }
+    lua_pop(m_L, 1);
+}
+
+void ConfigReader::readtable(const string &name,const string &item,vector<string> &table)
+{
+    lua_getglobal(m_L, name.c_str());
+    lua_pushstring(m_L,item.c_str());
+    lua_gettable(m_L, -2);
+    lua_pushnil(m_L);
+    while (lua_next(m_L, -2) != 0)
+    {
+        lua_pushvalue(m_L, -2);
+        table.push_back(lua_tostring(m_L, -2));
+        lua_pop(m_L, 2);
+    }
+    lua_pop(m_L, 1);
 }
 
 
@@ -118,43 +125,11 @@ vector<string> ConfigReader::getValues(const string &key)
     vector<string> ret;
     return ret;
 }
-string ConfigReader::getAction(const string &act,const string &cmds)
-{
-    dout << "act=<" << act << ">" << endl;
-    dout << "cmds=<" << cmds << ">" << endl;
-    string ret;
-#if 0
-    try
-    {
-        m_runscript += "do_action_";
-        m_runscript += act;
-        m_runscript += "(\"";
-        m_runscript += cmds;
-        m_runscript += "\")\n";
-        int ret = luaL_dostring(m_L,m_runscript.c_str());
-        if(LUA_OK != ret)
-        {
-            const char *msg = (lua_type(m_L, -1) == LUA_TSTRING) ? lua_tostring(m_L, -1): NULL;
-            if (msg == NULL) msg = "(error object is not a string)";
-            lua_pop(m_L, 1);
-            throw string(msg) + m_runscript;
-        }
-    }
-    catch (string e)
-    {
-        cout << "exceptin=<" << e << ">" << endl;
-    }
-    catch (...)
-    {
-    }
-#endif
-    return ret;
-}
 
 
 
 
-#if 0
+#if 0 /// copy net work samples.
 
 #include <lua.hpp>
 
