@@ -25,7 +25,16 @@ int XClangDriver::exce(void)
     vector<string> actions = m_opt.getClangActions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
-        string cmdline("-target ");
+        string cmdline;
+        if (m_program.iscxx())
+        {
+            cmdline += m_config->getLLVMProgram("cxx");
+        }
+        else
+        {
+            cmdline += m_config->getLLVMProgram("cc");
+        }
+        cmdline += " -target ";
         cmdline += m_opt.gettarget();
         cmdline += " " + *it + " " ;
         cout << "cmdline=<" << cmdline << ">" << endl;

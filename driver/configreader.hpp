@@ -22,6 +22,15 @@ namespace xclang
         ~ConfigReader();
         string getValue(const string &key);
         vector<string> getValues(const string &key);
+        string getLLVMProgram(const string &name) const
+        {
+            auto it = m_llvm.find(name);
+            if(it != m_llvm.end())
+            {
+                return it->second;
+            }
+            return name;
+        }
     private:
         ConfigReader();
         void readtable(const string &name,const string &item,map<string,string> &table);
