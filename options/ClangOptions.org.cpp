@@ -27,7 +27,7 @@ static const int NoArgumentUnused      = iConstTypeBase << 9;
 static const int Group                 = iConstTypeBase << 10;
 static const int NoDriverOption        = iConstTypeBase << 11;;
 
-static const int iConstTypeLinker   = DriverOption | RenderJoined | LinkerInput;
+static const int iConstTypeLinker   =  RenderJoined | LinkerInput;
 
 
 
@@ -179,6 +179,19 @@ void XClangOptions::splitArgs(void)
         m_input_files_str += " ";
         i++;
     }
+//#ifdef DEBUG
+#if 1
+    for(auto it = m_clang_options.begin();it != m_clang_options.end();it++)
+    {
+        cout << "*it=<" << *it << ">" << endl;
+    }
+    cout << "m_clang_options end" << endl;
+    for(auto it = m_link_options.begin();it != m_link_options.end();it++)
+    {
+        cout << "*it=<" << *it << ">" << endl;
+    }
+    cout << "m_link_options end" << endl;
+#endif
 }
 
 

@@ -38,7 +38,7 @@ int XClangDriver::exce(void)
         cmdline += m_opt.gettarget();
         cmdline += " " + *it + " " ;
         cout << "cmdline=<" << cmdline << ">" << endl;
-        //system(cmdline.c_str());
+        system(cmdline.c_str());
     }
     vector<string> linkActions = m_opt.getLinkActions();
     for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
