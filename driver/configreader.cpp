@@ -8,8 +8,15 @@ using namespace std;
 using namespace xclang;
 #include "lua.hpp"
 
+//#define DEBUG
+
+#define dout std::cout << __func__ << ":" << __LINE__ << ":"
+
+
+
+
 ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt)
-:m_home(home + "/share")
+:m_home(home )
 ,m_program(p)
 ,m_opt(opt)
 ,m_L(nullptr)
@@ -25,12 +32,10 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
             throw string("can not create lua vm \n");
         }
         // initialize search path
-        string path_lua(m_home);
+        string path_lua(m_home + "/share");
         path_lua += "/?.lua";
         ::setenv("LUA_PATH", path_lua.c_str(),1);
         ::setenv("LUA_CPATH", "",1);
-//        cout << "LUA_PATH=<" << ::getenv("LUA_PATH") << ">" <<endl;
-//        cout << "LUA_CPATH=<" << ::getenv("LUA_CPATH") << ">" <<endl;
         luaL_openlibs(m_L);
 
         // home var
@@ -47,11 +52,6 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 
         // add spec lua
         m_runscript += "require(\"xclang-llvm\")\n";
-
-        
-        
-//        cout << "m_home=<" << m_home << ">" << endl;
-//        cout << "m_runscript=<" << m_runscript << ">" << endl;
         int ret = luaL_dostring(m_L,m_runscript.c_str());
         if(LUA_OK != ret)
         {
@@ -60,8 +60,14 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
             lua_pop(m_L, 1);
             throw string(msg) + m_runscript;
         }
+// read confiure from ruby.
         readtable("clang","llvm",m_llvm);
         readtable("clang","defaultasmcppcflags",m_defaultasmcppcflags);
+        readtable("clang","defaultcflags",m_defaultcflags);
+        readtable("clang","defaultcxxflags",m_defaultcxxflags);
+        
+        
+        
     }
     catch (string e)
     {
@@ -91,7 +97,13 @@ void ConfigReader::readtable(const string &name,const string &item,map<string,st
         table.insert(pair<string, string>(lua_tostring(m_L, -1), lua_tostring(m_L, -2)));
         lua_pop(m_L, 2);
     }
-    lua_pop(m_L, 1);
+    lua_pop(m_L, 1);    
+#ifdef DEBUG
+    for (auto it = table.begin(); it != table.end(); it++ )
+    {
+        dout << "it->first=<" << it->first << ">" << "it->first=<" << it->second << ">" << endl;
+    }
+#endif
 }
 
 void ConfigReader::readtable(const string &name,const string &item,vector<string> &table)
@@ -107,12 +119,14 @@ void ConfigReader::readtable(const string &name,const string &item,vector<string
         lua_pop(m_L, 2);
     }
     lua_pop(m_L, 1);
+#ifdef DEBUG
+    for (auto it = table.begin(); it != table.end(); it++ )
+    {
+        dout << "*it =<" << *it << ">" << endl;
+    }
+#endif
 }
 
-
-//#define DEBUG
-
-#define dout std::cout << __func__ << ":" << __LINE__ << ":"
 
 
 string ConfigReader::getValue(const string &key)

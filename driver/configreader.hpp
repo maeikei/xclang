@@ -33,7 +33,9 @@ namespace xclang
         lua_State *m_L;
         string m_runscript;
         map<string,string> m_llvm;
-        map<string,string> m_defaultasmcppcflags;
+        vector<string> m_defaultasmcppcflags;
+        vector<string> m_defaultcflags;
+        vector<string> m_defaultcxxflags;
     };
 }
 #endif // __CONFIG_READER_HPP_
