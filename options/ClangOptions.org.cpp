@@ -75,10 +75,6 @@ HELPTEXT, METAVAR)   \
 };
 
 static map<string,OptProperty> genSplitMap(int kind);
-//static map<string,OptProperty> genMapJoined(void);
-
-//const map<string,int> XClangOptions::m_clang_options = genMap(CC1Option);
-//const map<string,int> XClangOptions::m_clang_cc1_options = genMap(DriverOption);
 
 const map<string,OptProperty> XClangOptions::m_xclang_options_full_match = genSplitMap(iConstKindFullMatch);
 const map<string,OptProperty> XClangOptions::m_xclang_options_prefix_match = genSplitMap(iConstKindPrefixMatch);
