@@ -287,10 +287,9 @@ void XClangOptions::adjustClangOptions(void)
     {
         m_clang_options.push_back("-c");
     }
-    m_clang_options.push_back("-nostdinc");
     if ( m_prog.iscxx())
     {
-        m_clang_options.push_back("-nostdinc++");
+        m_config->
     }
 }
 void XClangOptions::adjustLinkOptions(void)
