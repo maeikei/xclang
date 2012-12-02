@@ -31,6 +31,15 @@ namespace xclang
             }
             return name;
         }
+        string getToolChain(const string &name) const
+        {
+            auto it = m_toolchain.find(name);
+            if(it != m_toolchain.end())
+            {
+                return it->second;
+            }
+            return name;
+        }
     private:
         ConfigReader();
         void readtable(const string &name,const string &item,map<string,string> &table);
@@ -45,6 +54,8 @@ namespace xclang
         vector<string> m_defaultasmcppcflags;
         vector<string> m_defaultcflags;
         vector<string> m_defaultcxxflags;
+        
+        map<string,string> m_toolchain;
     };
 }
 #endif // __CONFIG_READER_HPP_

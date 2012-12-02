@@ -23,6 +23,9 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 ,m_runscript("\n")
 ,m_llvm()
 ,m_defaultasmcppcflags()
+,m_defaultcflags()
+,m_defaultcxxflags()
+,m_toolchain()
 {
     try
     {
@@ -60,14 +63,14 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
             lua_pop(m_L, 1);
             throw string(msg) + m_runscript;
         }
-// read confiure from ruby.
+// read confiure from lua.
         readtable("clang","llvm",m_llvm);
         readtable("clang","defaultasmcppcflags",m_defaultasmcppcflags);
         readtable("clang","defaultcflags",m_defaultcflags);
         readtable("clang","defaultcxxflags",m_defaultcxxflags);
         
-        
-        
+// read confiure from lua.
+        readtable("xclang","toolchain",m_toolchain);
     }
     catch (string e)
     {

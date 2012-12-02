@@ -37,16 +37,24 @@ int XClangDriver::exce(void)
         cmdline += " -target ";
         cmdline += m_opt.gettarget();
         cmdline += " " + *it + " " ;
-        cout << "cmdline=<" << cmdline << ">" << endl;
+//        cout << "cmdline=<" << cmdline << ">" << endl;
         system(cmdline.c_str());
     }
     vector<string> linkActions = m_opt.getLinkActions();
     for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
     {
         string cmdline;
+        if (m_program.iscxx())
+        {
+            cmdline += m_config->getToolChain("ldxx");
+        }
+        else
+        {
+            cmdline += m_config->getToolChain("ld");
+        }
         cmdline += " " + *it + " " ;
-        cout << "cmdline=<" << cmdline << ">" << endl;
-        //system(cmdline.c_str());
+//        cout << "cmdline=<" << cmdline << ">" << endl;
+        system(cmdline.c_str());
     }    
     return 0;
 }
