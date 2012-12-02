@@ -179,8 +179,7 @@ void XClangOptions::splitArgs(void)
         m_input_files_str += " ";
         i++;
     }
-//#ifdef DEBUG
-#if 1
+#ifdef DEBUG
     for(auto it = m_clang_options.begin();it != m_clang_options.end();it++)
     {
         cout << "*it=<" << *it << ">" << endl;

@@ -27,9 +27,10 @@ using namespace std;
 
 
 
-XClangOptions::XClangOptions(int argc,const char** argv)
+XClangOptions::XClangOptions(int argc,const char** argv,const XClangPrograms &_prog)
 :m_argc(argc)
 ,m_argv(argv)
+,m_prog(_prog)
 ,m_clang_options()
 ,m_link_options()
 ,m_real_ids()
@@ -282,12 +283,12 @@ bool XClangOptions::has_option(int opt_id) const
 
 void XClangOptions::adjustClangOptions(void)
 {
-    m_clang_options.push_back("-no-standard-includes");
-    m_clang_options.push_back("-nobuiltininc");
+    if (not has(c) && not has(E) && not has(S))
+    {
+        m_clang_options.push_back("-c");
+    }
     m_clang_options.push_back("-nostdinc");
-    m_clang_options.push_back("-nostdlibinc");
-    m_clang_options.push_back("-nostdsysteminc");
-//    if (iscxx())
+    if ( m_prog.iscxx())
     {
         m_clang_options.push_back("-nostdinc++");
     }
@@ -299,7 +300,7 @@ void XClangOptions::adjustLinkOptions(void)
     m_link_options.push_back("-nolibc");
     m_link_options.push_back("-nostartfiles");
     m_link_options.push_back("-nostdlib");    
-    //    if (iscxx())
+    if (m_prog.iscxx())
     {
         m_link_options.push_back("");
     }

@@ -7,6 +7,7 @@
 using namespace std;
 
 #include "configreader.hpp"
+#include "programs.hpp"
 
 namespace xclang
 {
@@ -31,7 +32,7 @@ OPT_##ID,
 #undef PREFIX
         };
     public:
-        XClangOptions(int argc,const char** argv);
+        XClangOptions(int argc,const char** argv,const XClangPrograms &_prog);
         ~XClangOptions();
         vector<string> getClangActions(void);
         vector<string> getLinkActions(void);
@@ -61,6 +62,7 @@ OPT_##ID,
         const int m_argc;
         const char** m_argv;
         ConfigReader *m_config;
+        const XClangPrograms &m_prog;
         vector<string> m_clang_options;
         vector<string> m_link_options;
         map<int,bool> m_real_ids;

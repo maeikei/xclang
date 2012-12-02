@@ -9,7 +9,7 @@ using namespace xclang;
 
 XClangDriver::XClangDriver(const int argc,const char *argv[])
 :m_program(argv[0])
-,m_opt(argc,argv)
+,m_opt(argc,argv,m_program)
 ,m_config(nullptr)
 {
     m_config = new ConfigReader(m_program.gethome(),m_program,m_opt);
