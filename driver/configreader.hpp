@@ -56,6 +56,10 @@ namespace xclang
         vector<string> m_defaultcxxflags;
         
         map<string,string> m_toolchain;
+        vector<string> m_archcflags;
+        vector<string> m_archcxxflags;
+        vector<string> m_stdinc;
+        vector<string> m_stdincxx;
     };
 }
 #endif // __CONFIG_READER_HPP_

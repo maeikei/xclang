@@ -25,6 +25,7 @@ xclang =
 		ar		    = binutils_prefix.."/ar",
 		as		    = binutils_prefix.."/as",
 		ld		    = binutils_prefix.."/ld",
+		ldxx		= binutils_prefix.."/ld",
 		nm		    = binutils_prefix.."/nm",
 		objcopy 	= binutils_prefix.."/objcopy",
 		objdump 	= binutils_prefix.."/objdump",
@@ -32,25 +33,11 @@ xclang =
 		strip 		= binutils_prefix.."/strip",
 		dlltool 	= binutils_prefix.."/dlltool",
 	},
-	cmdctype =
-	{
-	},
-	cmdcxxtype =
-	{
-	},
-	stdcoption =
-	{
-		"-triple i686-pc-linux-gnu",
-	},
-	stdcxxoption =
-	{
-		"-triple i686-pc-linux-gnu",
-	},
-	stdcflags =
+	archcflags =
 	{
 		"-D__LINUX__",
 	},
-	stdcxxflags =
+	archcxxflags =
 	{
 		"-D__LINUX__",
 	},
@@ -60,12 +47,8 @@ xclang =
 	},
 	stdincxx =
 	{
-	},
-	archinc =
-	{
-	},
-	archincxx =
-	{
+		stdc_prefix.."/include",
+		stdcxx_prefix.."/include",
 	},
 ---------------------------------------------------
 -- link time options. 

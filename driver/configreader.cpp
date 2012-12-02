@@ -14,6 +14,9 @@ using namespace xclang;
 
 
 
+#define readClangMemberValue(x) readtable("clang",#x,m_##x);
+#define readXClangMemberValue(x) readtable("xclang",#x,m_##x);
+
 
 ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt)
 :m_home(home )
@@ -26,6 +29,10 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 ,m_defaultcflags()
 ,m_defaultcxxflags()
 ,m_toolchain()
+,m_archcflags()
+,m_archcxxflags()
+,m_stdinc()
+,m_stdincxx()
 {
     try
     {
@@ -64,13 +71,19 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
             throw string(msg) + m_runscript;
         }
 // read confiure from lua.
-        readtable("clang","llvm",m_llvm);
-        readtable("clang","defaultasmcppcflags",m_defaultasmcppcflags);
-        readtable("clang","defaultcflags",m_defaultcflags);
-        readtable("clang","defaultcxxflags",m_defaultcxxflags);
+        readClangMemberValue(llvm);
+        readClangMemberValue(defaultasmcppcflags);
+        readClangMemberValue(defaultcflags);
+        readClangMemberValue(defaultcxxflags);
         
 // read confiure from lua.
-        readtable("xclang","toolchain",m_toolchain);
+        readXClangMemberValue(toolchain);
+        readXClangMemberValue(archcflags);
+        readXClangMemberValue(archcxxflags);
+        readXClangMemberValue(stdinc);
+        readXClangMemberValue(stdincxx);
+        
+        
     }
     catch (string e)
     {
