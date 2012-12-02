@@ -46,7 +46,6 @@ clang =
 	defaultcxxflags =
 	{
 		"-x c++",
-		"-nostdinc",
 		"-nostdinc++",
 	},
 }

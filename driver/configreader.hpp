@@ -17,6 +17,7 @@ namespace xclang
     class XClangOptions;
     class ConfigReader
     {
+        friend class XClangOptions;
     public:
         ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt);
         ~ConfigReader();
@@ -31,7 +32,7 @@ namespace xclang
             }
             return name;
         }
-        string getToolChain(const string &name) const
+        string getToolChainProgram(const string &name) const
         {
             auto it = m_toolchain.find(name);
             if(it != m_toolchain.end())

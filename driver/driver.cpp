@@ -46,11 +46,11 @@ int XClangDriver::exce(void)
         string cmdline;
         if (m_program.iscxx())
         {
-            cmdline += m_config->getToolChain("ldxx");
+            cmdline += m_config->getToolChainProgram("ldxx");
         }
         else
         {
-            cmdline += m_config->getToolChain("ld");
+            cmdline += m_config->getToolChainProgram("ld");
         }
         cmdline += " " + *it + " " ;
 //        cout << "cmdline=<" << cmdline << ">" << endl;

@@ -43,12 +43,11 @@ xclang =
 	},
 	stdinc =
 	{
-		stdc_prefix.."/include",
+		"-I"..stdc_prefix.."/include",
 	},
 	stdincxx =
 	{
-		stdc_prefix.."/include",
-		stdcxx_prefix.."/include",
+		"-I"..stdcxx_prefix.."/include",
 	},
 ---------------------------------------------------
 -- link time options. 
