@@ -34,8 +34,8 @@ namespace xclang
         }
         string getToolChainProgram(const string &name) const
         {
-            auto it = m_toolchain.find(name);
-            if(it != m_toolchain.end())
+            auto it = m_progs.find(name);
+            if(it != m_progs.end())
             {
                 return it->second;
             }
@@ -51,16 +51,20 @@ namespace xclang
         const XClangOptions &m_opt;
         lua_State *m_L;
         string m_runscript;
+        
         map<string,string> m_llvm;
         vector<string> m_defaultasmcppcflags;
         vector<string> m_defaultcflags;
         vector<string> m_defaultcxxflags;
         
-        map<string,string> m_toolchain;
         vector<string> m_archcflags;
         vector<string> m_archcxxflags;
         vector<string> m_stdinc;
         vector<string> m_stdincxx;
+
+        map<string,string> m_progs;
+
+    
     };
 }
 #endif // __CONFIG_READER_HPP_

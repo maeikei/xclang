@@ -16,6 +16,7 @@ using namespace xclang;
 
 #define readClangMemberValue(x) readtable("clang",#x,m_##x);
 #define readXClangMemberValue(x) readtable("xclang",#x,m_##x);
+#define readToolChainMemberValue(x) readtable("toolchain",#x,m_##x);
 
 
 ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt)
@@ -28,11 +29,11 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 ,m_defaultasmcppcflags()
 ,m_defaultcflags()
 ,m_defaultcxxflags()
-,m_toolchain()
 ,m_archcflags()
 ,m_archcxxflags()
 ,m_stdinc()
 ,m_stdincxx()
+,m_progs()
 {
     try
     {
@@ -77,12 +78,13 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
         readClangMemberValue(defaultcxxflags);
         
 // read confiure from lua.
-        readXClangMemberValue(toolchain);
         readXClangMemberValue(archcflags);
         readXClangMemberValue(archcxxflags);
         readXClangMemberValue(stdinc);
         readXClangMemberValue(stdincxx);
         
+// read confiure from lua.
+        readToolChainMemberValue(progs);
         
     }
     catch (string e)
