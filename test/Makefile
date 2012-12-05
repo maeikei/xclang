@@ -1,6 +1,6 @@
 XCLANG_PATH = /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/bin
-CC = $(XCLANG_PATH)/i686-pc-mingw32-xclang
-CXX = $(XCLANG_PATH)/i686-pc-mingw32-xclang++
+CC = $(XCLANG_PATH)/x86_64-w64-mingw32-xclang
+CXX = $(XCLANG_PATH)/x86_64-w64-mingw32-xclang++
 all:
 	$(CC) sub.c main.c -o main.out
 	$(CC) sub.c main.c
