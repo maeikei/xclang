@@ -194,6 +194,12 @@ void XClangOptions::splitArgs(void)
 #ifdef DEBUG
 #define add_option(opt,prop) \
 { \
+    if ( prop.flags & CC1Option ) \
+    {\
+        dout << "opt=<" << opt << ">" << endl;\
+        dout << "prop.flags=<" << prop.flags << ">" << endl;\
+        m_cc1_options.push_back(opt);\
+    }\
     if ( prop.flags & iConstTypeLinker ) \
     { \
         if ( prop.flags &NoDriverOption ) \
@@ -221,6 +227,10 @@ void XClangOptions::splitArgs(void)
 
 #define add_option(opt,prop) \
 { \
+    if ( prop.flags & CC1Option ) \
+    {\
+        m_cc1_options.push_back(opt);\
+    }\
     if ( prop.flags & iConstTypeLinker ) \
     { \
         if ( prop.flags &NoDriverOption ) \

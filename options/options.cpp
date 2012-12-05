@@ -31,6 +31,7 @@ XClangOptions::XClangOptions(int argc,const char** argv,const XClangPrograms &_p
 :m_argc(argc)
 ,m_argv(argv)
 ,m_prog(_prog)
+,m_cc1_options()
 ,m_clang_options()
 ,m_link_options()
 ,m_real_ids()

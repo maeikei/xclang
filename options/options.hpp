@@ -63,6 +63,7 @@ OPT_##ID,
         const char** m_argv;
         ConfigReader *m_config;
         const XClangPrograms &m_prog;
+        vector<string> m_cc1_options;
         vector<string> m_clang_options;
         vector<string> m_link_options;
         map<int,bool> m_real_ids;
