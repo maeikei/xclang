@@ -34,6 +34,7 @@ OPT_##ID,
     public:
         XClangOptions(int argc,const char** argv,const XClangPrograms &_prog);
         ~XClangOptions();
+        vector<string> getCC1Actions(void);
         vector<string> getClangActions(void);
         vector<string> getLinkActions(void);
 

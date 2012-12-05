@@ -4,9 +4,8 @@
 if nil == globalXClangHome then
 	globalXClangHome = "C:/xclang-dev/xclang-obj/InstallRoot"
 end
-binutils_prefix = globalXClangHome.."/tools/binutils/i686-pc-linux-gnu/bin"
-clang_prefix = globalXClangHome.."/tools/llvm/"
-platform_prefix = globalXClangHome.."/platform/i686-pc-linux-gnu"
+binutils_prefix = globalXClangHome.."/binutils/x86_64-pc-linux-gnueabi/bin"
+platform_prefix = globalXClangHome.."/platform/x86_64-pc-linux-gnueabi"
 
 
 stdc_prefix = platform_prefix.."/usr"
@@ -16,68 +15,42 @@ stdc_prefix_ext = platform_prefix.."/"
 stdcxx_prefix_ext = platform_prefix.."/"
 
 
-globalXClangDefaultOutPutName = "a.out"
-globalXClangOutputObjExtension = ".o"
-globalXClangOutputAsmExtension = ".s"
-globalXClanglibgccName = stdc_prefix.."/lib/libCompilerRT-Generic.a"
-
-
 xclang =
 {
----------------------------------------------------
--- compile time options. 
----------------------------------------------------
-	arch= "x86",
-	triple= "i686-pc-linux-gnu",
-	toolchain =
-	{
-		ar		= binutils_prefix.."/ar",
-		as		= binutils_prefix.."/as",
-		ld		= binutils_prefix.."/ld",
-		nm		= binutils_prefix.."/nm",
-		objcopy 	= binutils_prefix.."/objcopy",
-		objdump 	= binutils_prefix.."/objdump",
-		ranlib 		= binutils_prefix.."/ranlib",
-		strip 		= binutils_prefix.."/strip",
-		dlltool 	= binutils_prefix.."/dlltool",
-	},
-	cmdctype =
-	{
-	},
-	cmdcxxtype =
-	{
-	},
-	stdcoption =
-	{
-		"-triple i686-pc-linux-gnu",
-	},
-	stdcxxoption =
-	{
-		"-triple i686-pc-linux-gnu",
-	},
-	stdcflags =
+	archcflags =
 	{
 		"-D__LINUX__",
 	},
-	stdcxxflags =
+	archcxxflags =
 	{
 		"-D__LINUX__",
 	},
 	stdinc =
 	{
---		clang_prefix.."/lib/clang/3.0/include",
-		stdc_prefix.."/include",
+		"-I"..stdc_prefix.."/include",
 	},
 	stdincxx =
 	{
---		clang_prefix.."/lib/clang/3.0/include",
---		stdc_prefix.."/include",
+		"-I"..stdcxx_prefix.."/include",
 	},
-	archinc =
+}
+
+toolchain = {
+---------------------------------------------------
+-- link time options.
+---------------------------------------------------
+	progs =
 	{
-	},
-	archincxx =
-	{
+		ar		    = binutils_prefix.."/ar",
+		as		    = binutils_prefix.."/as",
+		ld		    = binutils_prefix.."/ld",
+		ldxx		= binutils_prefix.."/ld",
+		nm		    = binutils_prefix.."/nm",
+		objcopy 	= binutils_prefix.."/objcopy",
+		objdump 	= binutils_prefix.."/objdump",
+		ranlib 		= binutils_prefix.."/ranlib",
+		strip 		= binutils_prefix.."/strip",
+		dlltool 	= binutils_prefix.."/dlltool",
 	},
 ---------------------------------------------------
 -- link time options. 

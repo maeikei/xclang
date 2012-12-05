@@ -22,7 +22,7 @@ XClangDriver::~XClangDriver()
 
 int XClangDriver::exce(void)
 {    
-    vector<string> actions = m_opt.getClangActions();
+    vector<string> actions = m_opt.getCC1Actions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
         string cmdline;
@@ -34,10 +34,10 @@ int XClangDriver::exce(void)
         {
             cmdline += m_config->getLLVMProgram("cc");
         }
-        cmdline += " -target ";
+        cmdline += " -triple ";
         cmdline += m_opt.gettarget();
         cmdline += " " + *it + " " ;
-//        cout << "cmdline=<" << cmdline << ">" << endl;
+        cout << "cmdline=<" << cmdline << ">" << endl;
         system(cmdline.c_str());
     }
     vector<string> linkActions = m_opt.getLinkActions();

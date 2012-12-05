@@ -50,6 +50,79 @@ XClangOptions::~XClangOptions()
 }
 
 
+
+vector<string> XClangOptions::getCC1Actions(void)
+{
+    string opts;
+    for(auto it = m_cc1_options.begin();it !=  m_cc1_options.end();it++)
+    {
+        opts += *it;
+        opts += " ";
+    }
+    
+    vector<string> actions;
+    // has no link action,whill use orignal o parameter.
+    if(has(o)&& ( has(c) || has(S)) )
+    {
+        opts += " -o ";
+        opts += m_out_file;
+        opts += " ";
+        opts += m_input_files_str;
+        actions.push_back(opts);
+        return actions;
+    }
+    if(has(E) )
+    {
+        if(has(o))
+        {
+            opts += " -o ";
+            opts += m_out_file;
+        }
+        opts += " ";
+        opts += m_input_files_str;
+        actions.push_back(opts);
+        return actions;
+    }
+    string extension(".o");
+    if(has(S))
+    {
+        extension = ".s";
+    }
+    
+    for(auto it = m_input_files.begin();it !=  m_input_files.end();it++)
+    {
+        if(has(c) || has(S))
+        {
+            string opt_elment(opts);
+            opt_elment += " ";
+            opt_elment += *it;
+            opt_elment += " -o ";
+            fs::path fileName(*it);
+            fileName.replace_extension(extension);
+            opt_elment += fileName.string();
+            actions.push_back(opt_elment);
+        }
+        if( not is_not_link() )
+        {
+            string opt_elment(opts);
+            opt_elment += " ";
+            opt_elment += *it;
+            opt_elment += " -o ";
+            fs::path fileName= fs::temp_directory_path();
+            boost::uuids::uuid uName = boost::uuids::random_generator()();
+            string name = boost::uuids::to_string(uName);
+            fileName += name;
+            fileName += extension;
+            opt_elment += fileName.string();
+            m_objects_files.push_back( fileName.string() );
+            actions.push_back(opt_elment);
+        }
+    }
+    return actions;
+}
+
+
+
 vector<string> XClangOptions::getClangActions(void)
 {
     adjustClangOptions();
