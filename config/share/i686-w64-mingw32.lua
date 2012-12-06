@@ -4,9 +4,8 @@
 if nil == globalXClangHome then
 	globalXClangHome = "C:/xclang-dev/xclang-obj/InstallRoot"
 end
-binutils_prefix = globalXClangHome.."/tools/binutils/i686-pc-linux-gnu/bin"
-clang_prefix = globalXClangHome.."/tools/llvm/"
-platform_prefix = globalXClangHome.."/platform/i686-pc-linux-gnu"
+binutils_prefix = globalXClangHome.."/binutils/i686-w64-mingw32/bin"
+platform_prefix = globalXClangHome.."/platform/i686-w64-mingw32"
 
 
 stdc_prefix = platform_prefix.."/usr"
@@ -16,68 +15,42 @@ stdc_prefix_ext = platform_prefix.."/"
 stdcxx_prefix_ext = platform_prefix.."/"
 
 
-globalXClangDefaultOutPutName = "a.out"
-globalXClangOutputObjExtension = ".o"
-globalXClangOutputAsmExtension = ".s"
-globalXClanglibgccName = stdc_prefix.."/lib/libCompilerRT-Generic.a"
-
-
 xclang =
 {
----------------------------------------------------
--- compile time options. 
----------------------------------------------------
-	arch= "x86",
-	triple= "i686-pc-linux-gnu",
-	toolchain =
+	archcflags =
 	{
-		ar		= binutils_prefix.."/ar",
-		as		= binutils_prefix.."/as",
-		ld		= binutils_prefix.."/ld",
-		nm		= binutils_prefix.."/nm",
+		"-D__MINGW__",
+	},
+	archcxxflags =
+	{
+		"-D__MINGW__",
+	},
+	stdinc =
+	{
+		"-I"..stdc_prefix.."/include",
+	},
+	stdincxx =
+	{
+		"-I"..stdcxx_prefix.."/include",
+	},
+}
+
+toolchain = {
+---------------------------------------------------
+-- link time options.
+---------------------------------------------------
+	progs =
+	{
+		ar		    = binutils_prefix.."/ar",
+		as		    = binutils_prefix.."/as",
+		ld		    = binutils_prefix.."/ld",
+		ldxx		= binutils_prefix.."/ld",
+		nm		    = binutils_prefix.."/nm",
 		objcopy 	= binutils_prefix.."/objcopy",
 		objdump 	= binutils_prefix.."/objdump",
 		ranlib 		= binutils_prefix.."/ranlib",
 		strip 		= binutils_prefix.."/strip",
 		dlltool 	= binutils_prefix.."/dlltool",
-	},
-	cmdctype =
-	{
-	},
-	cmdcxxtype =
-	{
-	},
-	stdcoption =
-	{
-		"-triple i686-pc-linux-gnu",
-	},
-	stdcxxoption =
-	{
-		"-triple i686-pc-linux-gnu",
-	},
-	stdcflags =
-	{
-		"-D__LINUX__",
-	},
-	stdcxxflags =
-	{
-		"-D__LINUX__",
-	},
-	stdinc =
-	{
---		clang_prefix.."/lib/clang/3.0/include",
-		stdc_prefix.."/include",
-	},
-	stdincxx =
-	{
---		clang_prefix.."/lib/clang/3.0/include",
---		stdc_prefix.."/include",
-	},
-	archinc =
-	{
-	},
-	archincxx =
-	{
 	},
 ---------------------------------------------------
 -- link time options. 

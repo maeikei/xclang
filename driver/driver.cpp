@@ -22,7 +22,7 @@ XClangDriver::~XClangDriver()
 
 int XClangDriver::exce(void)
 {    
-    vector<string> actions = m_opt.getCC1Actions();
+    list<string> actions = m_opt.getCC1Actions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
         string cmdline;
@@ -40,7 +40,7 @@ int XClangDriver::exce(void)
         cout << "cmdline=<" << cmdline << ">" << endl;
         system(cmdline.c_str());
     }
-    vector<string> linkActions = m_opt.getLinkActions();
+    list<string> linkActions = m_opt.getLinkActions();
     for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
     {
         string cmdline;

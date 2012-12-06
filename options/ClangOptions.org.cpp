@@ -2,6 +2,8 @@
 using namespace xclang;
 #include <iostream>
 using namespace std;
+#include <boost/filesystem.hpp>
+namespace fs = boost::filesystem;
 
 
 #define PREFIX(NAME, VALUE) const char *const NAME[] = VALUE;
@@ -170,10 +172,7 @@ void XClangOptions::splitArgs(void)
                 continue;
             }
         }
-        m_input_files.push_back(vStr);
-        m_input_files_str += vStr;
-        m_input_files_str += " ";
-        i++;
+        i = getNextArgsInputs(vStr,i);
     }
 #ifdef DEBUG
     for(auto it = m_clang_options.begin();it != m_clang_options.end();it++)
@@ -279,5 +278,23 @@ int XClangOptions::getNextArgsPrefixMatch(const string &opt,const string &prefix
         add_option(m_argv[i],prop);
     }
     m_real_ids.insert(pair<int,bool>(prop.id,true));
+    return ++i;
+}
+int XClangOptions::getNextArgsInputs(const string &opt,int i)
+{
+    fs::path fileName(opt);
+    string ext = fileName.extension().string();
+    if( ".o" == ext || ".obj" == ext || ".a" == ext )
+    {
+        m_input_objects.push_back(opt);
+        m_input_objects_str += opt;
+        m_input_objects_str += " ";        
+    }
+    else
+    {
+        m_input_files.push_back(opt);
+        m_input_files_str += opt;
+        m_input_files_str += " ";
+    }
     return ++i;
 }

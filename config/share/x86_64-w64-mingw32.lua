@@ -4,8 +4,8 @@
 if nil == globalXClangHome then
 	globalXClangHome = "C:/xclang-dev/xclang-obj/InstallRoot"
 end
-binutils_prefix = globalXClangHome.."/binutils/x86_64-pc-linux-gnueabi/bin"
-platform_prefix = globalXClangHome.."/platform/x86_64-pc-linux-gnueabi"
+binutils_prefix = globalXClangHome.."/binutils/x86_64-w64-mingw32/bin"
+platform_prefix = globalXClangHome.."/platform/x86_64-w64-mingw32"
 
 
 stdc_prefix = platform_prefix.."/usr"
@@ -19,11 +19,13 @@ xclang =
 {
 	archcflags =
 	{
-		"-D__LINUX__",
+		"-D__MINGW__",
+		"-D__MINGW64__",
 	},
 	archcxxflags =
 	{
-		"-D__LINUX__",
+		"-D__MINGW__",
+		"-D__MINGW64__",
 	},
 	stdinc =
 	{

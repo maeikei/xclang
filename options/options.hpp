@@ -3,7 +3,7 @@
 
 #include <string>
 #include <map>
-#include <vector>
+#include <list>
 using namespace std;
 
 #include "configreader.hpp"
@@ -34,12 +34,12 @@ OPT_##ID,
     public:
         XClangOptions(int argc,const char** argv,const XClangPrograms &_prog);
         ~XClangOptions();
-        vector<string> getCC1Actions(void);
-        vector<string> getClangActions(void);
-        vector<string> getLinkActions(void);
+        list<string> getCC1Actions(void);
+        list<string> getClangActions(void);
+        list<string> getLinkActions(void);
 
-        vector<string> getClangLuaActions(void);
-        vector<string> getLinkLuActions(void);
+        list<string> getClangLuaActions(void);
+        list<string> getLinkLuActions(void);
         
         string gettarget(void) const
         {
@@ -53,10 +53,12 @@ OPT_##ID,
         XClangOptions();
         int getNextArgsFullMatch(const string &opt,const OptProperty &prop,int i);
         int getNextArgsPrefixMatch(const string &opt,const string &prefix,const OptProperty &prop,int i);
+        int getNextArgsInputs(const string &opt,int i);
         void splitArgs(void);
         bool is_not_link(void) const;
         
         bool has_option(int opt_id) const;
+        void adjustCC1Options(void);
         void adjustClangOptions(void);
         void adjustLinkOptions(void);
     private:
@@ -70,6 +72,8 @@ OPT_##ID,
         map<int,bool> m_real_ids;
         vector<string> m_input_files;
         string m_input_files_str;
+        vector<string> m_input_objects;
+        string m_input_objects_str;
         vector<string> m_objects_files;
         string m_out_file;
         string m_target;

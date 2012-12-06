@@ -51,8 +51,15 @@ XClangOptions::~XClangOptions()
 
 
 
-vector<string> XClangOptions::getCC1Actions(void)
+list<string> XClangOptions::getCC1Actions(void)
 {
+    adjustCC1Options();
+    // multi options
+    if(has(o) && ( has(c) || has(S)) && m_input_files.size() > 1 )
+    {
+        list<string> actions;
+        return actions;
+    }
     string opts;
     for(auto it = m_cc1_options.begin();it !=  m_cc1_options.end();it++)
     {
@@ -60,51 +67,36 @@ vector<string> XClangOptions::getCC1Actions(void)
         opts += " ";
     }
     
-    vector<string> actions;
-    // has no link action,whill use orignal o parameter.
-    if(has(o)&& ( has(c) || has(S)) )
-    {
-        opts += " -o ";
-        opts += m_out_file;
-        opts += " ";
-        opts += m_input_files_str;
-        actions.push_back(opts);
-        return actions;
-    }
-    if(has(E) )
-    {
-        if(has(o))
-        {
-            opts += " -o ";
-            opts += m_out_file;
-        }
-        opts += " ";
-        opts += m_input_files_str;
-        actions.push_back(opts);
-        return actions;
-    }
     string extension(".o");
-    if(has(S))
+    list<string> actions;
+    if( has(S) )
     {
         extension = ".s";
     }
     
     for(auto it = m_input_files.begin();it !=  m_input_files.end();it++)
     {
-        if(has(c) || has(S))
+        string opt_elment(opts);
+        if( has(c) || has(S))
         {
-            string opt_elment(opts);
             opt_elment += " ";
             opt_elment += *it;
-            opt_elment += " -o ";
-            fs::path fileName(*it);
-            fileName.replace_extension(extension);
-            opt_elment += fileName.string();
-            actions.push_back(opt_elment);
+            if( not has(o) )
+            {
+                opt_elment += " -o ";
+                fs::path fileName(*it);
+                fileName.replace_extension(extension);
+                opt_elment += fileName.string();
+            }
+        }
+        else if( has(E) )
+        {
+            opt_elment += " ";
+            opt_elment += *it;
+            opt_elment += " -o -";
         }
         if( not is_not_link() )
         {
-            string opt_elment(opts);
             opt_elment += " ";
             opt_elment += *it;
             opt_elment += " -o ";
@@ -115,15 +107,19 @@ vector<string> XClangOptions::getCC1Actions(void)
             fileName += extension;
             opt_elment += fileName.string();
             m_objects_files.push_back( fileName.string() );
-            actions.push_back(opt_elment);
         }
+        if( not ( has(E) || has(S)))
+        {
+            opt_elment = " -emit-obj " + opt_elment;
+        }
+        actions.push_back(opt_elment);
     }
     return actions;
 }
 
 
 
-vector<string> XClangOptions::getClangActions(void)
+list<string> XClangOptions::getClangActions(void)
 {
     adjustClangOptions();
     string opts;
@@ -133,7 +129,7 @@ vector<string> XClangOptions::getClangActions(void)
         opts += " ";
     }
     
-    vector<string> actions;
+    list<string> actions;
     // has no link action,whill use orignal o parameter.
     if(has(o)&& ( has(c) || has(S)) )
     {
@@ -196,10 +192,10 @@ vector<string> XClangOptions::getClangActions(void)
 
 
 
-vector<string> XClangOptions::getLinkActions(void)
+list<string> XClangOptions::getLinkActions(void)
 {
     adjustLinkOptions();
-    vector<string> actions;
+    list<string> actions;
     if(  is_not_link() )
     {
         return actions;
@@ -222,7 +218,7 @@ vector<string> XClangOptions::getLinkActions(void)
 }
 
 
-vector<string> XClangOptions::getClangLuaActions(void)
+list<string> XClangOptions::getClangLuaActions(void)
 {
     string opts;
     for(auto it = m_clang_options.begin();it !=  m_clang_options.end();it++)
@@ -231,7 +227,7 @@ vector<string> XClangOptions::getClangLuaActions(void)
         opts += " ";
     }
     
-    vector<string> actions;
+    list<string> actions;
     // has no link action,whill use orignal o parameter.
     if(has(o)&& ( has(c) || has(S)) )
     {
@@ -291,9 +287,9 @@ vector<string> XClangOptions::getClangLuaActions(void)
     }
     return actions;
 }
-vector<string> XClangOptions::getLinkLuActions(void)
+list<string> XClangOptions::getLinkLuActions(void)
 {
-    vector<string> actions;
+    list<string> actions;
     if(  is_not_link() )
     {
         return actions;
@@ -354,6 +350,46 @@ bool XClangOptions::has_option(int opt_id) const
     }
     return false;
 }
+
+void XClangOptions::adjustCC1Options(void)
+{
+    for (auto it = m_config->m_defaultcflags.begin();it != m_config->m_defaultcflags.end();it++ )
+    {
+        m_cc1_options.push_back(*it);
+    }
+    for (auto it = m_config->m_archcflags.begin();it != m_config->m_archcflags.end();it++ )
+    {
+        m_cc1_options.push_back(*it);
+    }
+    if(not has(nostdinc))
+    {
+        for (auto it = m_config->m_stdinc.begin();it != m_config->m_stdinc.end();it++ )
+        {
+            m_cc1_options.push_back(*it);
+        }
+    }
+    if ( m_prog.iscxx())
+    {
+        for (auto it = m_config->m_defaultcxxflags.begin();it != m_config->m_defaultcxxflags.end();it++ )
+        {
+            m_cc1_options.push_back(*it);
+        }
+        for (auto it = m_config->m_archcxxflags.begin();it != m_config->m_archcxxflags.end();it++ )
+        {
+            m_cc1_options.push_back(*it);
+        }
+        if(not has(nostdincxx))
+        {
+            for (auto it = m_config->m_stdincxx.begin();it != m_config->m_stdincxx.end();it++ )
+            {
+                m_cc1_options.push_back(*it);
+            }
+        }
+    }
+}
+
+
+
 
 void XClangOptions::adjustClangOptions(void)
 {
