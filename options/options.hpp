@@ -61,6 +61,8 @@ OPT_##ID,
         void adjustCC1Options(void);
         void adjustClangOptions(void);
         void adjustLinkOptions(void);
+        
+        int checkLanguage(const string &input);
     private:
         const int m_argc;
         const char** m_argv;

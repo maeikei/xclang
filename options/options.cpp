@@ -26,6 +26,9 @@ using namespace std;
 
 
 
+static int const iConstLanguageCXX = 1;
+static int const iConstLanguageC = 2;
+
 
 XClangOptions::XClangOptions(int argc,const char** argv,const XClangPrograms &_prog)
 :m_argc(argc)
@@ -112,6 +115,18 @@ list<string> XClangOptions::getCC1Actions(void)
         {
             opt_elment = " -emit-obj " + opt_elment;
         }
+        opt_elment = "-triple " + opt_elment;
+        string act("cxx");
+        switch (checkLanguage(*it))
+        {
+            case iConstLanguageC:
+                act = "cc";
+                break;
+            case iConstLanguageCXX:
+            default:
+                break;
+        }
+        opt_elment =  m_config->getLLVMProgram(act) + " " + opt_elment;
         actions.push_back(opt_elment);
     }
     return actions;
@@ -386,6 +401,11 @@ void XClangOptions::adjustCC1Options(void)
             }
         }
     }
+}
+
+int XClangOptions::checkLanguage(const string &input)
+{
+    return iConstLanguageCXX;
 }
 
 

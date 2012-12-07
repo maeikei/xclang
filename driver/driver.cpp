@@ -26,14 +26,6 @@ int XClangDriver::exce(void)
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
         string cmdline;
-        if (m_program.iscxx())
-        {
-            cmdline += m_config->getLLVMProgram("cxx");
-        }
-        else
-        {
-            cmdline += m_config->getLLVMProgram("cc");
-        }
         cmdline += " -triple ";
         cmdline += m_opt.gettarget();
         cmdline += " " + *it + " " ;
