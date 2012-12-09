@@ -35,11 +35,7 @@ OPT_##ID,
         XClangOptions(int argc,const char** argv,const XClangPrograms &_prog);
         ~XClangOptions();
         list<string> getCC1Actions(void);
-        list<string> getClangActions(void);
         list<string> getLinkActions(void);
-
-        list<string> getClangLuaActions(void);
-        list<string> getLinkLuActions(void);
         
         string gettarget(void) const
         {

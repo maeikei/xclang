@@ -29,11 +29,15 @@ xclang =
 	},
 	stdinc =
 	{
-		"-I"..stdc_prefix.."/include",
+        "-isysroot "..platform_prefix,
+        "-isystem "..platform_prefix,
+        "-I "..platform_prefix.."/include",
 	},
 	stdincxx =
 	{
-		"-I"..stdcxx_prefix.."/include",
+        "-isysroot "..platform_prefix,
+        "-isystem "..platform_prefix,
+        "-I "..platform_prefix.."/include",
 	},
 }
 

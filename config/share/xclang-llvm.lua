@@ -13,8 +13,8 @@ clang =
 	llvm =
 	{
 		cc1as	    = clang_prefix.."/clang -cc1as",
-		cc		    = clang_prefix.."/clang -cc1",
-		cxx		    = clang_prefix.."/clang++ -cc1",
+		cc		    = clang_prefix.."/clang -cc1 -x c",
+		cxx		    = clang_prefix.."/clang -cc1 -x c++",
 		opt		    = clang_prefix.."/opt",
 		llc		    = clang_prefix.."/llc",
 		lli		    = clang_prefix.."/lli",
@@ -39,11 +39,11 @@ clang =
 	},
 	defaultcflags =
 	{
-		"-x c",
+		"",
 	},
 	defaultcxxflags =
 	{
-		"-x c++",
+		"",
 	},
 }
 

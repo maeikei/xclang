@@ -115,7 +115,7 @@ list<string> XClangOptions::getCC1Actions(void)
         {
             opt_elment = " -emit-obj " + opt_elment;
         }
-        opt_elment = "-triple " + opt_elment;
+        opt_elment = "-triple " + this->gettarget() + " " + opt_elment;
         string act("cxx");
         switch (checkLanguage(*it))
         {
@@ -131,81 +131,6 @@ list<string> XClangOptions::getCC1Actions(void)
     }
     return actions;
 }
-
-
-
-list<string> XClangOptions::getClangActions(void)
-{
-    adjustClangOptions();
-    string opts;
-    for(auto it = m_clang_options.begin();it !=  m_clang_options.end();it++)
-    {
-        opts += *it;
-        opts += " ";
-    }
-    
-    list<string> actions;
-    // has no link action,whill use orignal o parameter.
-    if(has(o)&& ( has(c) || has(S)) )
-    {
-        opts += " -o ";
-        opts += m_out_file;
-        opts += " ";
-        opts += m_input_files_str;
-        actions.push_back(opts);
-        return actions;
-    }
-    if(has(E) )
-    {
-        if(has(o))
-        {
-            opts += " -o ";
-            opts += m_out_file;
-        }
-        opts += " ";
-        opts += m_input_files_str;
-        actions.push_back(opts);
-        return actions;
-    }
-    string extension(".o");
-    if(has(S))
-    {
-       extension = ".s";
-    }
-
-    for(auto it = m_input_files.begin();it !=  m_input_files.end();it++)
-    {
-        if(has(c) || has(S))
-        {
-            string opt_elment(opts);
-            opt_elment += " ";
-            opt_elment += *it;
-            opt_elment += " -o ";
-            fs::path fileName(*it);
-            fileName.replace_extension(extension);
-            opt_elment += fileName.string();
-            actions.push_back(opt_elment);
-        }
-        if( not is_not_link() )
-        {
-            string opt_elment(opts);
-            opt_elment += " ";
-            opt_elment += *it;
-            opt_elment += " -o ";
-            fs::path fileName= fs::temp_directory_path();
-            boost::uuids::uuid uName = boost::uuids::random_generator()();
-            string name = boost::uuids::to_string(uName);
-            fileName += name;
-            fileName += extension;
-            opt_elment += fileName.string();
-            m_objects_files.push_back( fileName.string() );
-            actions.push_back(opt_elment);
-        }
-    }
-    return actions;
-}
-
-
 
 list<string> XClangOptions::getLinkActions(void)
 {
@@ -233,98 +158,6 @@ list<string> XClangOptions::getLinkActions(void)
 }
 
 
-list<string> XClangOptions::getClangLuaActions(void)
-{
-    string opts;
-    for(auto it = m_clang_options.begin();it !=  m_clang_options.end();it++)
-    {
-        opts += *it;
-        opts += " ";
-    }
-    
-    list<string> actions;
-    // has no link action,whill use orignal o parameter.
-    if(has(o)&& ( has(c) || has(S)) )
-    {
-        opts += " -o ";
-        opts += m_out_file;
-        opts += " ";
-        opts += m_input_files_str;
-        actions.push_back(opts);
-        return actions;
-    }
-    if(has(E) )
-    {
-        if(has(o))
-        {
-            opts += " -o ";
-            opts += m_out_file;
-        }
-        opts += " ";
-        opts += m_input_files_str;
-        actions.push_back(opts);
-        return actions;
-    }
-    string extension(".o");
-    if(has(S))
-    {
-        extension = ".s";
-    }
-    
-    for(auto it = m_input_files.begin();it !=  m_input_files.end();it++)
-    {
-        if(has(c) || has(S))
-        {
-            string opt_elment(opts);
-            opt_elment += " ";
-            opt_elment += *it;
-            opt_elment += " -o ";
-            fs::path fileName(*it);
-            fileName.replace_extension(extension);
-            opt_elment += fileName.string();
-            actions.push_back(opt_elment);
-        }
-        if( not is_not_link() )
-        {
-            string opt_elment(opts);
-            opt_elment += " ";
-            opt_elment += *it;
-            opt_elment += " -o ";
-            fs::path fileName= fs::temp_directory_path();
-            boost::uuids::uuid uName = boost::uuids::random_generator()();
-            string name = boost::uuids::to_string(uName);
-            fileName += name;
-            fileName += extension;
-            opt_elment += fileName.string();
-            m_objects_files.push_back( fileName.string() );
-            actions.push_back(opt_elment);
-        }
-    }
-    return actions;
-}
-list<string> XClangOptions::getLinkLuActions(void)
-{
-    list<string> actions;
-    if(  is_not_link() )
-    {
-        return actions;
-    }
-    string opts;
-    for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
-    {
-        opts += *it;
-        opts += " ";
-    }
-    opts += " -o ";
-    opts += m_out_file;
-    for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
-    {
-        opts += " ";
-        opts += *it;
-    }
-    actions.push_back(opts);
-    return actions;
-}
 
 
 

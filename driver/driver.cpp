@@ -25,12 +25,8 @@ int XClangDriver::exce(void)
     list<string> actions = m_opt.getCC1Actions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
-        string cmdline;
-        cmdline += " -triple ";
-        cmdline += m_opt.gettarget();
-        cmdline += " " + *it + " " ;
-        cout << "cmdline=<" << cmdline << ">" << endl;
-        system(cmdline.c_str());
+        cout << "cmdline=<" << *it << ">" << endl;
+        system(it->c_str());
     }
     list<string> linkActions = m_opt.getLinkActions();
     for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
