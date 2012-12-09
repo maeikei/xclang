@@ -216,7 +216,7 @@ void XClangOptions::adjustCC1Options(void)
             m_cc1_options.push_back(*it);
         }
     }
-    if ( m_prog.iscxx())
+//    if ( m_prog.iscxx())
     {
         for (auto it = m_config->m_defaultcxxflags.begin();it != m_config->m_defaultcxxflags.end();it++ )
         {

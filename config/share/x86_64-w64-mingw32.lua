@@ -19,13 +19,15 @@ xclang =
 {
 	archcflags =
 	{
-		"-D__MINGW__",
-		"-D__MINGW64__",
+		"-D __MINGW__",
+		"-D __MINGW64__",
+        "-D _STDIO_DEFINED",
 	},
 	archcxxflags =
 	{
-		"-D__MINGW__",
-		"-D__MINGW64__",
+		"-D __MINGW__",
+		"-D __MINGW64__",
+        "-D _STDIO_DEFINED",
 	},
 	stdinc =
 	{
@@ -39,6 +41,7 @@ xclang =
         "-isystem "..platform_prefix,
         "-I "..platform_prefix.."/include",
         "-I "..platform_prefix.."/include/c++/4.8.0",
+        "-I "..platform_prefix.."/include/c++/4.8.0/x86_64-w64-mingw32",
 	},
 }
 
