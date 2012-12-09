@@ -7,7 +7,7 @@ all:
 	$(CC) main.c -c -o main.c.o
 	$(CC) sub.c main.c -c
 	$(CC) sub.c main.c -S
-	$(CC) sub.c main.c -E
+#	$(CC) sub.c main.c -E
 	$(CXX) main.cpp -o main.cpp.o
 clean:
 	rm -f *.o *.s *.out

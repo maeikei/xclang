@@ -238,7 +238,14 @@ void XClangOptions::adjustCC1Options(void)
 
 int XClangOptions::checkLanguage(const string &input)
 {
-    return iConstLanguageCXX;
+    int ret = iConstLanguageCXX;
+    fs::path fileName(input);
+    string ext = fileName.extension().string();
+    if( ".c" == ext )
+    {
+        ret = iConstLanguageC;
+    }
+    return ret;
 }
 
 
