@@ -145,7 +145,7 @@ string XClangOptions::calcLinkCmd(void) const
     {
         if( iConstLanguageCXX == *it)
         {
-            ret += "xx";
+            ret = "ldxx";
             break;
         }
     }
@@ -211,6 +211,8 @@ bool XClangOptions::is_not_link(void) const
     }
     return false;
 }
+
+
 bool XClangOptions::has_option(int opt_id) const
 {
     auto it = m_real_ids.find(opt_id);
@@ -220,6 +222,9 @@ bool XClangOptions::has_option(int opt_id) const
     }
     return false;
 }
+
+
+
 string XClangOptions::adjustCC1Options(int lang) const
 {
     string ret;
@@ -300,45 +305,10 @@ int XClangOptions::checkLanguage(const string &input)
 
 void XClangOptions::adjustClangOptions(void)
 {
-    if (not has(c) && not has(E) && not has(S))
-    {
-        m_clang_options.push_back("-c");
-    }
-    for (auto it = m_config->m_defaultcflags.begin();it != m_config->m_defaultcflags.end();it++ )
-    {
-        m_clang_options.push_back(*it);
-    }
-    for (auto it = m_config->m_archcflags.begin();it != m_config->m_archcflags.end();it++ )
-    {
-        m_clang_options.push_back(*it);
-    }
-    if(not has(nostdinc))
-    {
-        for (auto it = m_config->m_stdinc.begin();it != m_config->m_stdinc.end();it++ )
-        {
-            m_clang_options.push_back(*it);
-        }
-    }
-    if ( m_prog.iscxx())
-    {
-        for (auto it = m_config->m_defaultcxxflags.begin();it != m_config->m_defaultcxxflags.end();it++ )
-        {
-            m_clang_options.push_back(*it);           
-        }
-        for (auto it = m_config->m_archcxxflags.begin();it != m_config->m_archcxxflags.end();it++ )
-        {
-            m_clang_options.push_back(*it);
-        }
-        if(not has(nostdincxx))
-        {
-            for (auto it = m_config->m_stdincxx.begin();it != m_config->m_stdincxx.end();it++ )
-            {
-                m_clang_options.push_back(*it);           
-            }
-        }
-    }
 }
+
 void XClangOptions::adjustLinkOptions(void)
 {
+    
 }
 

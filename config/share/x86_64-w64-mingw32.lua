@@ -15,6 +15,9 @@ stdc_prefix_ext = platform_prefix.."/"
 stdcxx_prefix_ext = platform_prefix.."/"
 
 
+---------------------------------------------------
+-- options for complication only (cc1).
+---------------------------------------------------
 xclang =
 {
 	master =
@@ -43,10 +46,10 @@ xclang =
 	},
 }
 
+---------------------------------------------------
+-- tool chain commands.
+---------------------------------------------------
 toolchain = {
----------------------------------------------------
--- link time options.
----------------------------------------------------
 	progs =
 	{
 		ar		    = binutils_prefix.."/ar",
@@ -60,20 +63,11 @@ toolchain = {
 		strip 		= binutils_prefix.."/strip",
 		dlltool 	= binutils_prefix.."/dlltool",
 	},
+}
 ---------------------------------------------------
--- link time options. 
----------------------------------------------------
-	arch_begin_shared =
-	{
-		"--build-id",
-		"--eh-frame-hdr",
-		"--hash-style=gnu",
-		"-shared",
-		" -z relro",
-	},
-	arch_end_shared =
-	{
-	},
+-- link time options of executable.
+---------------------------------------------------    
+link_exe = {
 	arch_begin_exe =
 	{
 		"--build-id",
@@ -85,15 +79,7 @@ toolchain = {
 	arch_end_exe =
 	{
 	},
-	object_begin_shared =
-	{
-		stdc_prefix.."/lib/crtbegin_so.o",
-	},
-	object_end_shared =
-	{
-		stdc_prefix.."/lib/crtend_so.o",
-	},
-	object_begin_exe_static =
+    object_begin_exe_static =
 	{
 		stdc_prefix.."/lib/crtbegin_static.o",
 	},
@@ -104,6 +90,30 @@ toolchain = {
 	object_end_exe =
 	{
 		stdc_prefix.."/lib/crtend.o",
+	},
+}
+---------------------------------------------------
+-- link time options of shared library.
+---------------------------------------------------
+link_shared = {
+	arch_begin_shared =
+	{
+		"--build-id",
+		"--eh-frame-hdr",
+		"--hash-style=gnu",
+		"-shared",
+		" -z relro",
+	},
+	arch_end_shared =
+	{
+	},
+	object_begin_shared =
+	{
+		stdc_prefix.."/lib/crtbegin_so.o",
+	},
+	object_end_shared =
+	{
+		stdc_prefix.."/lib/crtend_so.o",
 	},
 
 	stdcldflags_s1_static =
