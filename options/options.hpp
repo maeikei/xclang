@@ -59,6 +59,7 @@ OPT_##ID,
         void adjustLinkOptions(void);
         
         int checkLanguage(const string &input);
+        string calcLinkCmd(void) const;
     private:
         const int m_argc;
         const char** m_argv;

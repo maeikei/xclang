@@ -25,25 +25,15 @@ int XClangDriver::exce(void)
     list<string> actions = m_opt.getCC1Actions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
-        cout << "cmdline=<" << *it << ">" << endl;
+//        cout << "cmdline=<" << *it << ">" << endl;
         system(it->c_str());
     }
     list<string> linkActions = m_opt.getLinkActions();
     for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
     {
-        string cmdline;
-        if (m_program.iscxx())
-        {
-            cmdline += m_config->getToolChainProgram("ldxx");
-        }
-        else
-        {
-            cmdline += m_config->getToolChainProgram("ld");
-        }
-        cmdline += " " + *it + " " ;
-//        cout << "cmdline=<" << cmdline << ">" << endl;
-        system(cmdline.c_str());
-    }    
+        cout << "cmdline=<" << *it << ">" << endl;
+        system(it->c_str());
+    }
     return 0;
 }
 

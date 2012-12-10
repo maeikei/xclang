@@ -138,19 +138,35 @@ list<string> XClangOptions::getCC1Actions(void)
     return actions;
 }
 
+string XClangOptions::calcLinkCmd(void) const
+{
+    string ret("ld");
+    for (auto it = m_lang_flags.begin(); it != m_lang_flags.end(); it++)
+    {
+        if( iConstLanguageCXX == *it)
+        {
+            ret += "xx";
+            break;
+        }
+    }
+    return ret;
+}
+
 list<string> XClangOptions::getLinkActions(void)
 {
     adjustLinkOptions();
     list<string> actions;
     if(  is_not_link() )
     {
+        actions.empty();
         return actions;
     }
     string opts;
+    opts += m_config->getToolChainProgram(calcLinkCmd());
     for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
     {
-        opts += *it;
         opts += " ";
+        opts += *it;
     }
     opts += " -o ";
     opts += m_out_file;
