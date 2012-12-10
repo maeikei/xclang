@@ -17,6 +17,10 @@ stdcxx_prefix_ext = platform_prefix.."/"
 
 xclang =
 {
+	master =
+	{
+		triple		    = "x86_64-w64-mingw32",
+	},
 	archcflags =
 	{
 		"-D __MINGW__",
@@ -25,9 +29,6 @@ xclang =
 	},
 	archcxxflags =
 	{
-		"-D __MINGW__",
-		"-D __MINGW64__",
-        "-D _STDIO_DEFINED",
 	},
 	stdinc =
 	{
@@ -37,9 +38,6 @@ xclang =
 	},
 	stdincxx =
 	{
-        "-isysroot "..platform_prefix,
-        "-isystem "..platform_prefix,
-        "-I "..platform_prefix.."/include",
         "-I "..platform_prefix.."/include/c++/4.8.0",
         "-I "..platform_prefix.."/include/c++/4.8.0/x86_64-w64-mingw32",
 	},

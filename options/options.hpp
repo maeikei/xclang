@@ -54,7 +54,7 @@ OPT_##ID,
         bool is_not_link(void) const;
         
         bool has_option(int opt_id) const;
-        void adjustCC1Options(void);
+        string adjustCC1Options(int lang) const;
         void adjustClangOptions(void);
         void adjustLinkOptions(void);
         
@@ -75,6 +75,7 @@ OPT_##ID,
         vector<string> m_objects_files;
         string m_out_file;
         string m_target;
+        vector<int> m_lang_flags;
         static const map<string,OptProperty> m_xclang_options_full_match;
         static const map<string,OptProperty> m_xclang_options_prefix_match;
 //        static const map<string,int> m_clang_options;

@@ -28,6 +28,10 @@ using namespace std;
 
 static int const iConstLanguageCXX = 1;
 static int const iConstLanguageC = 2;
+static int const iConstLanguageASM = 3;
+static int const iConstLanguageObject = 4;
+
+
 
 
 XClangOptions::XClangOptions(int argc,const char** argv,const XClangPrograms &_prog)
@@ -56,7 +60,7 @@ XClangOptions::~XClangOptions()
 
 list<string> XClangOptions::getCC1Actions(void)
 {
-    adjustCC1Options();
+//    adjustCC1Options();
     // multi options
     if(has(o) && ( has(c) || has(S)) && m_input_files.size() > 1 )
     {
@@ -115,15 +119,17 @@ list<string> XClangOptions::getCC1Actions(void)
         {
             opt_elment = " -emit-obj " + opt_elment;
         }
-        opt_elment = "-triple " + this->gettarget() + " " + opt_elment;
+        opt_elment = "-triple " + m_config->getMaster("triple") + " " + opt_elment;
         string act("cxx");
         switch (checkLanguage(*it))
         {
             case iConstLanguageC:
                 act = "cc";
+                opt_elment += adjustCC1Options(iConstLanguageC);
                 break;
             case iConstLanguageCXX:
             default:
+                opt_elment += adjustCC1Options(iConstLanguageCXX);
                 break;
         }
         opt_elment =  m_config->getLLVMProgram(act) + " " + opt_elment;
@@ -198,43 +204,47 @@ bool XClangOptions::has_option(int opt_id) const
     }
     return false;
 }
-
-void XClangOptions::adjustCC1Options(void)
+string XClangOptions::adjustCC1Options(int lang) const
 {
+    string ret;
     for (auto it = m_config->m_defaultcflags.begin();it != m_config->m_defaultcflags.end();it++ )
     {
-        m_cc1_options.push_back(*it);
+        ret += " " + *it;
     }
     for (auto it = m_config->m_archcflags.begin();it != m_config->m_archcflags.end();it++ )
     {
-        m_cc1_options.push_back(*it);
+        ret += " " + *it;
     }
     if(not has(nostdinc))
     {
         for (auto it = m_config->m_stdinc.begin();it != m_config->m_stdinc.end();it++ )
         {
-            m_cc1_options.push_back(*it);
+            ret += " " + *it;
         }
     }
-//    if ( m_prog.iscxx())
+    if ( iConstLanguageCXX == lang)
     {
         for (auto it = m_config->m_defaultcxxflags.begin();it != m_config->m_defaultcxxflags.end();it++ )
         {
-            m_cc1_options.push_back(*it);
+            ret += " " + *it;
         }
         for (auto it = m_config->m_archcxxflags.begin();it != m_config->m_archcxxflags.end();it++ )
         {
-            m_cc1_options.push_back(*it);
+            ret += " " + *it;
         }
         if(not has(nostdincxx))
         {
             for (auto it = m_config->m_stdincxx.begin();it != m_config->m_stdincxx.end();it++ )
             {
-                m_cc1_options.push_back(*it);
+                ret += " " + *it;
             }
         }
     }
+    ret += " ";
+    return ret;
 }
+
+
 
 int XClangOptions::checkLanguage(const string &input)
 {
@@ -245,6 +255,27 @@ int XClangOptions::checkLanguage(const string &input)
     {
         ret = iConstLanguageC;
     }
+    if( ".o" == ext )
+    {
+        ret = iConstLanguageObject;
+    }
+    if( ".obj" == ext )
+    {
+        ret = iConstLanguageObject;
+    }
+    if( ".a" == ext )
+    {
+        ret = iConstLanguageObject;
+    }
+    if( ".s" == ext )
+    {
+        ret = iConstLanguageASM;
+    }
+    if( ".asm" == ext )
+    {
+        ret = iConstLanguageASM;
+    }
+    m_lang_flags.push_back(ret);
     return ret;
 }
 
@@ -293,14 +324,5 @@ void XClangOptions::adjustClangOptions(void)
 }
 void XClangOptions::adjustLinkOptions(void)
 {
-    m_link_options.push_back("-no-standard-libraries");
-    m_link_options.push_back("-nodefaultlibs");
-    m_link_options.push_back("-nolibc");
-    m_link_options.push_back("-nostartfiles");
-    m_link_options.push_back("-nostdlib");    
-    if (m_prog.iscxx())
-    {
-        m_link_options.push_back("");
-    }
 }
 
