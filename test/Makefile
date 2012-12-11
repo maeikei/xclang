@@ -10,4 +10,4 @@ all:
 #	$(CC) sub.c main.c -E
 	$(CXX) main.cpp -L./ -L ../ -I./ -I ../ -lc -o main.cpp.o
 clean:
-	rm -f *.o *.s *.out
+	rm -f *.o *.s *.out *.exe
