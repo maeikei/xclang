@@ -18,7 +18,6 @@ namespace xclang
         const int flags;
         const int id;
     };
-
     class XClangOptions
     {
     public:

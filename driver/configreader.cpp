@@ -18,6 +18,11 @@ using namespace xclang;
 #define readXClangMemberValue(x) readtable("xclang",#x,m_##x);
 #define readToolChainMemberValue(x) readtable("toolchain",#x,m_##x);
 
+#define readLinkExeValue(x) readtable("link_exe",#x,m_link_exe_##x);
+#define readLinkExeSValue(x) readtable("link_exe_s",#x,m_link_exe_s_##x);
+#define readLinkSharedValue(x) readtable("link_shared",#x,m_link_shared_##x);
+#define readLinkSharedSValue(x) readtable("link_shared_s",#x,m_link_shared_s_##x);
+
 
 ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt)
 :m_home(home )
@@ -86,7 +91,45 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
         
 // read confiure from lua.
         readToolChainMemberValue(progs);
+
+// read confiure from lua.
+        readLinkExeValue(arch);
+        readLinkExeValue(beginobject);
+        readLinkExeValue(stdxxdirs);
+        readLinkExeValue(stdxxlibs);
+        readLinkExeValue(stddirs);
+        readLinkExeValue(stdlibs);
+        readLinkExeValue(endobject);
+
+// read confiure from lua.
+        readLinkExeSValue(arch);
+        readLinkExeSValue(beginobject);
+        readLinkExeSValue(stdxxdirs);
+        readLinkExeSValue(stdxxlibs);
+        readLinkExeSValue(stddirs);
+        readLinkExeSValue(stdlibs);
+        readLinkExeSValue(endobject);
         
+        
+// read confiure from lua.
+        readLinkSharedValue(arch);
+        readLinkSharedValue(beginobject);
+        readLinkSharedValue(stdxxdirs);
+        readLinkSharedValue(stdxxlibs);
+        readLinkSharedValue(stddirs);
+        readLinkSharedValue(stdlibs);
+        readLinkSharedValue(endobject);
+        
+        
+// read confiure from lua.
+        readLinkSharedSValue(arch);
+        readLinkSharedSValue(beginobject);
+        readLinkSharedSValue(stdxxdirs);
+        readLinkSharedSValue(stdxxlibs);
+        readLinkSharedSValue(stddirs);
+        readLinkSharedSValue(stdlibs);
+        readLinkSharedSValue(endobject);
+
     }
     catch (string e)
     {

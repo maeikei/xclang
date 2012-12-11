@@ -74,7 +74,57 @@ namespace xclang
 
         map<string,string> m_progs;
 
-    
+
+        
+        vector<string> m_link_exe_arch;
+        vector<string> m_link_exe_beginobject;
+        vector<string> m_link_exe_stdxxdirs;
+        vector<string> m_link_exe_stdxxlibs;
+        vector<string> m_link_exe_stddirs;
+        vector<string> m_link_exe_stdlibs;
+        vector<string> m_link_exe_endobject;
+
+        
+        vector<string> m_link_exe_s_arch;
+        vector<string> m_link_exe_s_beginobject;
+        vector<string> m_link_exe_s_stdxxdirs;
+        vector<string> m_link_exe_s_stdxxlibs;
+        vector<string> m_link_exe_s_stddirs;
+        vector<string> m_link_exe_s_stdlibs;
+        vector<string> m_link_exe_s_endobject;
+
+        vector<string> m_link_shared_arch;
+        vector<string> m_link_shared_beginobject;
+        vector<string> m_link_shared_stdxxdirs;
+        vector<string> m_link_shared_stdxxlibs;
+        vector<string> m_link_shared_stddirs;
+        vector<string> m_link_shared_stdlibs;
+        vector<string> m_link_shared_endobject;
+        
+        vector<string> m_link_shared_s_arch;
+        vector<string> m_link_shared_s_beginobject;
+        vector<string> m_link_shared_s_stdxxdirs;
+        vector<string> m_link_shared_s_stdxxlibs;
+        vector<string> m_link_shared_s_stddirs;
+        vector<string> m_link_shared_s_stdlibs;
+        vector<string> m_link_shared_s_endobject;
+        
     };
+    
+    class linkConfig
+    {
+    public:
+        linkConfig(ConfigReader *_conf);
+        virtual string get_arch(void);
+        virtual string get_beginobject(void);
+        virtual string get_stdxxlddir(void);
+        virtual string get_stdxxlibs(void);
+        virtual string get_stddirs(void);
+        virtual string get_stdlibs(void);
+        virtual string get_endobject(void);
+    private:
+        ConfigReader m_conf;
+    };
+
 }
 #endif // __CONFIG_READER_HPP_

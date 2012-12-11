@@ -66,12 +66,12 @@ link_exe = {
         "-m i386pep",
         "-Bdynamic",
     },
-	begin_object =
+	beginobject =
 	{
         platform_prefix.."/lib/crt2.o",
         platform_prefix.."/lib/crtbegin.o",
 	},
-    stdxxlddir =
+    stdxxdirs =
 	{
 		"",
 	},
@@ -79,7 +79,7 @@ link_exe = {
 	{
 		"-lstdc++",
 	},
-    stdlddir =
+    stddirs =
 	{
 		"-L"..platform_prefix.."/lib",
 	},
@@ -89,7 +89,7 @@ link_exe = {
         "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
         "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
-	end_object =
+	endobject =
 	{
         platform_prefix.."/lib/crtend.o",
 	},
@@ -109,7 +109,7 @@ link_exe_s = {
         platform_prefix.."/lib/crt2.o",
         platform_prefix.."/lib/crtbegin.o",
 	},
-    stdxxlddir =
+    stdxxdirs =
 	{
 		"",
 	},
@@ -117,7 +117,7 @@ link_exe_s = {
 	{
 		"-lstdc++",
 	},
-    stdlddir =
+    stddirs =
 	{
 		"-L"..platform_prefix.."/lib",
 	},
@@ -127,7 +127,7 @@ link_exe_s = {
         "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
         "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
-	end_object =
+	endobject =
 	{
         platform_prefix.."/lib/crtend.o",
 	},
@@ -151,7 +151,7 @@ link_shared = {
         platform_prefix.."/lib/dllcrt2.o",
         platform_prefix.."/lib/crtbegin.o",
 	},
-    stdxxlddir =
+    stdxxdirs =
 	{
 		"",
 	},
@@ -159,7 +159,7 @@ link_shared = {
 	{
 		"-lstdc++",
 	},
-    stdlddir =
+    stddirs =
 	{
 		"-L"..platform_prefix.."/lib",
 	},
@@ -169,7 +169,7 @@ link_shared = {
         "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
         "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
-	end_object =
+	endobject =
 	{
         platform_prefix.."/lib/crtend.o",
 	},
@@ -193,7 +193,7 @@ link_shared_s = {
         platform_prefix.."/lib/dllcrt2.o",
         platform_prefix.."/lib/crtbegin.o",
 	},
-    stdxxlddir =
+    stdxxdirs =
 	{
 		"",
 	},
@@ -201,7 +201,7 @@ link_shared_s = {
 	{
 		"-lstdc++",
 	},
-    stdlddir =
+    stddirs =
 	{
 		"-L"..platform_prefix.."/lib",
 	},
@@ -211,7 +211,7 @@ link_shared_s = {
         "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
         "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
-	end_object =
+	endobject =
 	{
         platform_prefix.."/lib/crtend.o",
 	},
