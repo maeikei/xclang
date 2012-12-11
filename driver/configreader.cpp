@@ -160,7 +160,6 @@ void ConfigReader::readtable(const string &name,const string &item,map<string,st
         table.insert(pair<string, string>(lua_tostring(m_L, -1), lua_tostring(m_L, -2)));
         lua_pop(m_L, 2);
     }
-    lua_pop(m_L, 1);
     lua_settop(m_L, 0);
 #ifdef DEBUG
     for (auto it = table.begin(); it != table.end(); it++ )
@@ -182,7 +181,6 @@ void ConfigReader::readtable(const string &name,const string &item,vector<string
         table.push_back(lua_tostring(m_L, -2));
         lua_pop(m_L, 2);
     }
-    lua_pop(m_L, 1);
     lua_settop(m_L, 0);
 #ifdef DEBUG
     for (auto it = table.begin(); it != table.end(); it++ )
