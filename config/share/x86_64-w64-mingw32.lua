@@ -104,7 +104,7 @@ link_exe_s = {
         "-m i386pep",
         "-Bstatic",
     },
-	begin_object =
+	beginobject =
 	{
         platform_prefix.."/lib/crt2.o",
         platform_prefix.."/lib/crtbegin.o",
@@ -146,7 +146,7 @@ link_shared = {
         "-e DllMainCRTStartup",
         "--enable-auto-image-base",
     },
-	begin_object =
+	beginobject =
 	{
         platform_prefix.."/lib/dllcrt2.o",
         platform_prefix.."/lib/crtbegin.o",
@@ -188,7 +188,7 @@ link_shared_s = {
         "-e DllMainCRTStartup",
         "--enable-auto-image-base",
     },
-	begin_object =
+	beginobject =
 	{
         platform_prefix.."/lib/dllcrt2.o",
         platform_prefix.."/lib/crtbegin.o",

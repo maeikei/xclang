@@ -129,6 +129,7 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
         readLinkSharedSValue(stddirs);
         readLinkSharedSValue(stdlibs);
         readLinkSharedSValue(endobject);
+// r --xclang-target x86_64-w64-mingw32 sub.c main.c -L./ -L ../ -I./ -I ../ -lc -o main.out
 
     }
     catch (string e)
@@ -159,7 +160,8 @@ void ConfigReader::readtable(const string &name,const string &item,map<string,st
         table.insert(pair<string, string>(lua_tostring(m_L, -1), lua_tostring(m_L, -2)));
         lua_pop(m_L, 2);
     }
-    lua_pop(m_L, 1);    
+    lua_pop(m_L, 1);
+    lua_settop(m_L, 0);
 #ifdef DEBUG
     for (auto it = table.begin(); it != table.end(); it++ )
     {
@@ -181,6 +183,7 @@ void ConfigReader::readtable(const string &name,const string &item,vector<string
         lua_pop(m_L, 2);
     }
     lua_pop(m_L, 1);
+    lua_settop(m_L, 0);
 #ifdef DEBUG
     for (auto it = table.begin(); it != table.end(); it++ )
     {
