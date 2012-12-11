@@ -162,19 +162,41 @@ list<string> XClangOptions::getLinkActions(void)
         return actions;
     }
     string opts;
-    opts += m_config->getToolChainProgram(calcLinkCmd());
+    opts += m_config->getToolChainProgram("ld");
+    if(has(shared))
+    {
+        if (has(static))
+        {
+            
+        }
+        else
+        {
+            
+        }
+    }
+    else
+    {
+        if (has(static))
+        {
+            
+        }
+        else
+        {
+            
+        }
+    }
     for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
+    {
+        opts += " ";
+        opts += *it;
+    }
+    for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
     {
         opts += " ";
         opts += *it;
     }
     opts += " -o ";
     opts += m_out_file;
-    for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
-    {
-        opts += " ";
-        opts += *it;
-    }
     actions.push_back(opts);
     return actions;
 }

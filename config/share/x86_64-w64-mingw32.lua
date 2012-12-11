@@ -8,13 +8,6 @@ binutils_prefix = globalXClangHome.."/binutils/x86_64-w64-mingw32/bin"
 platform_prefix = globalXClangHome.."/platform/x86_64-w64-mingw32"
 
 
-stdc_prefix = platform_prefix.."/usr"
-stdcxx_prefix = platform_prefix.."/usr"
-
-stdc_prefix_ext = platform_prefix.."/"
-stdcxx_prefix_ext = platform_prefix.."/"
-
-
 ---------------------------------------------------
 -- options for complication only (cc1).
 ---------------------------------------------------
@@ -52,10 +45,9 @@ xclang =
 toolchain = {
 	progs =
 	{
+		ld		    = binutils_prefix.."/ld",
 		ar		    = binutils_prefix.."/ar",
 		as		    = binutils_prefix.."/as",
-		ld		    = binutils_prefix.."/ld",
-		ldxx		= binutils_prefix.."/ld",
 		nm		    = binutils_prefix.."/nm",
 		objcopy 	= binutils_prefix.."/objcopy",
 		objdump 	= binutils_prefix.."/objdump",
@@ -68,110 +60,160 @@ toolchain = {
 -- link time options of executable.
 ---------------------------------------------------    
 link_exe = {
-	arch_begin_exe =
+    arch =
+    {
+        "--sysroot="..platform_prefix,
+        "-m i386pep",
+        "-Bdynamic",
+    },
+	begin_object =
 	{
-		"--build-id",
-		"--eh-frame-hdr",
-		"--hash-style=gnu",
-		"-dynamic-linker /lib/ld-linux.so.2",
-		"-z relro",
+        platform_prefix.."/lib/crt2.o",
+        platform_prefix.."/lib/crtbegin.o",
 	},
-	arch_end_exe =
+    stdxxlddir =
 	{
+		"",
 	},
-    object_begin_exe_static =
+    stdxxlibs =
 	{
-		stdc_prefix.."/lib/crtbegin_static.o",
+		"-lstdc++",
 	},
-	object_begin_exe =
+    stdlddir =
 	{
-		stdc_prefix.."/lib/crtbegin_dynamic.o",
+		"-L"..platform_prefix.."/lib",
 	},
-	object_end_exe =
+    stdlibs =
 	{
-		stdc_prefix.."/lib/crtend.o",
+		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
+        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
+        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
+	},
+	end_object =
+	{
+        platform_prefix.."/lib/crtend.o",
 	},
 }
+---------------------------------------------------
+-- link time options of executable with -static.
+---------------------------------------------------    
+link_exe_s = {
+    arch =
+    {
+        "--sysroot="..platform_prefix,
+        "-m i386pep",
+        "-Bstatic",
+    },
+	begin_object =
+	{
+        platform_prefix.."/lib/crt2.o",
+        platform_prefix.."/lib/crtbegin.o",
+	},
+    stdxxlddir =
+	{
+		"",
+	},
+    stdxxlibs =
+	{
+		"-lstdc++",
+	},
+    stdlddir =
+	{
+		"-L"..platform_prefix.."/lib",
+	},
+    stdlibs =
+	{
+		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
+        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
+        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
+	},
+	end_object =
+	{
+        platform_prefix.."/lib/crtend.o",
+	},
+}
+
 ---------------------------------------------------
 -- link time options of shared library.
 ---------------------------------------------------
 link_shared = {
-	arch_begin_shared =
+    arch =
+    {
+        "--sysroot="..platform_prefix,
+        "-m i386pep",
+        "--shared",
+        "-Bdynamic",
+        "-e DllMainCRTStartup",
+        "--enable-auto-image-base",
+    },
+	begin_object =
 	{
-		"--build-id",
-		"--eh-frame-hdr",
-		"--hash-style=gnu",
-		"-shared",
-		" -z relro",
+        platform_prefix.."/lib/dllcrt2.o",
+        platform_prefix.."/lib/crtbegin.o",
 	},
-	arch_end_shared =
+    stdxxlddir =
 	{
+		"",
 	},
-	object_begin_shared =
+    stdxxlibs =
 	{
-		stdc_prefix.."/lib/crtbegin_so.o",
+		"-lstdc++",
 	},
-	object_end_shared =
+    stdlddir =
 	{
-		stdc_prefix.."/lib/crtend_so.o",
+		"-L"..platform_prefix.."/lib",
 	},
+    stdlibs =
+	{
+		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
+        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
+        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
+	},
+	end_object =
+	{
+        platform_prefix.."/lib/crtend.o",
+	},
+}
 
-	stdcldflags_s1_static =
+---------------------------------------------------
+-- link time options of shared library with -static.
+---------------------------------------------------
+link_shared_s = {
+    arch =
+    {
+        "--sysroot="..platform_prefix,
+        "-m i386pep",
+        "--shared",
+        "-Bstatic",
+        "-e DllMainCRTStartup",
+        "--enable-auto-image-base",
+    },
+	begin_object =
 	{
-		"-L"..stdc_prefix.."/lib",
-		"-L"..stdc_prefix_ext.."/lib",
+        platform_prefix.."/lib/dllcrt2.o",
+        platform_prefix.."/lib/crtbegin.o",
 	},
-	stdcldflags_s2_static =
+    stdxxlddir =
 	{
-		stdc_prefix.."/lib/libxclang-c-static.a",
-		stdc_prefix.."/lib/libxclang-m-static.a",
-		stdc_prefix.."/lib/libxclang-dl-static.a",
-		stdc_prefix.."/lib/libCompilerRT-Generic.a",
+		"",
 	},
-	stdcldflags_s1 =
+    stdxxlibs =
 	{
-		"-L"..stdc_prefix.."/lib",
-		"-L"..stdc_prefix_ext.."/lib",
+		"-lstdc++",
 	},
-	stdcldflags_s2 =
+    stdlddir =
 	{
-		"-lxclang-c -lCompilerRT-Generic ",
+		"-L"..platform_prefix.."/lib",
 	},
-	stdcxxldflags_s1_static =
+    stdlibs =
 	{
-		"-L"..stdc_prefix.."/lib",
-		"-L"..stdc_prefix_ext.."/lib",
+		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
+        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
+        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
-	stdcxxldflags_s2_static =
+	end_object =
 	{
-		stdc_prefix.."/lib/libstdcxx-static.a",
-		stdc_prefix.."/lib/libxclang-c-static.a",
-		stdc_prefix.."/lib/libxclang-m-static.a",
-		stdc_prefix.."/lib/libxclang-dl-static.a",
-		stdc_prefix.."/lib/libCompilerRT-Generic.a",
-	},
-	stdcxxldflags_s1 =
-	{
-		"-L"..stdc_prefix.."/lib",
-		"-L"..stdc_prefix_ext.."/lib",
-	},
-	stdcxxldflags_s2 =
-	{
-		"-lstdcxx -lxclang-c -lCompilerRT-Generic ",
-	},
-
-	archcldflags_s1 =
-	{
-	},
-	archcldflags_s2 =
-	{
-	},
-
-	archcxxldflags_s1 =
-	{
-	},
-	archcxxldflags_s2 =
-	{
+        platform_prefix.."/lib/crtend.o",
 	},
 }
 
