@@ -21,7 +21,10 @@ xclang =
 	{
 		"-D __MINGW__",
 		"-D __MINGW64__",
-        "-D _STDIO_DEFINED",
+--        "-D _STDIO_DEFINED",
+--        "-D __USE_MINGW_ANSI_STDIO=1",
+        "-D gnu_printf=printf",
+        "-D gnu_scanf=scanf",
 	},
 	archcxxflags =
 	{
@@ -30,12 +33,12 @@ xclang =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
-        "-I "..platform_prefix.."/include",
+        "-I "..platform_prefix.."/x86_64-w64-mingw32/include",
 	},
 	stdincxx =
 	{
-        "-I "..platform_prefix.."/include/c++/4.8.0",
-        "-I "..platform_prefix.."/include/c++/4.8.0/x86_64-w64-mingw32",
+        "-I "..platform_prefix.."/x86_64-w64-mingw32/include/c++/4.8.0",
+        "-I "..platform_prefix.."/x86_64-w64-mingw32/include/c++/4.8.0/x86_64-w64-mingw32",
 	},
 }
 
@@ -62,14 +65,13 @@ toolchain = {
 link_exe = {
     arch =
     {
-        "--sysroot="..platform_prefix,
         "-m i386pep",
         "-Bdynamic",
     },
 	beginobject =
 	{
-        platform_prefix.."/lib/crt2.o",
-        platform_prefix.."/lib/crtbegin.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crt2.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -81,7 +83,9 @@ link_exe = {
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib",
+		"-L"..platform_prefix.."/lib/x86_64",
+		"-L"..platform_prefix.."/lib/gcc/x86_64-w64-mingw32/4.8.0",
+		"-L"..platform_prefix.."/x86_64-w64-mingw32/lib",
 	},
     stdlibs =
 	{
@@ -91,7 +95,7 @@ link_exe = {
 	},
 	endobject =
 	{
-        platform_prefix.."/lib/crtend.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crtend.o",
 	},
 }
 ---------------------------------------------------
@@ -100,14 +104,13 @@ link_exe = {
 link_exe_s = {
     arch =
     {
-        "--sysroot="..platform_prefix,
         "-m i386pep",
         "-Bstatic",
     },
 	beginobject =
 	{
-        platform_prefix.."/lib/crt2.o",
-        platform_prefix.."/lib/crtbegin.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crt2.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -119,7 +122,9 @@ link_exe_s = {
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib",
+		"-L"..platform_prefix.."/lib/x86_64",
+		"-L"..platform_prefix.."/lib/gcc/x86_64-w64-mingw32/4.8.0",
+		"-L"..platform_prefix.."/x86_64-w64-mingw32/lib",
 	},
     stdlibs =
 	{
@@ -129,7 +134,7 @@ link_exe_s = {
 	},
 	endobject =
 	{
-        platform_prefix.."/lib/crtend.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crtend.o",
 	},
 }
 
@@ -139,7 +144,6 @@ link_exe_s = {
 link_shared = {
     arch =
     {
-        "--sysroot="..platform_prefix,
         "-m i386pep",
         "--shared",
         "-Bdynamic",
@@ -148,8 +152,8 @@ link_shared = {
     },
 	beginobject =
 	{
-        platform_prefix.."/lib/dllcrt2.o",
-        platform_prefix.."/lib/crtbegin.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/dllcrt2.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -161,7 +165,9 @@ link_shared = {
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib",
+		"-L"..platform_prefix.."/lib/x86_64",
+		"-L"..platform_prefix.."/lib/gcc/x86_64-w64-mingw32/4.8.0",
+		"-L"..platform_prefix.."/x86_64-w64-mingw32/lib",
 	},
     stdlibs =
 	{
@@ -181,7 +187,6 @@ link_shared = {
 link_shared_s = {
     arch =
     {
-        "--sysroot="..platform_prefix,
         "-m i386pep",
         "--shared",
         "-Bstatic",
@@ -190,8 +195,8 @@ link_shared_s = {
     },
 	beginobject =
 	{
-        platform_prefix.."/lib/dllcrt2.o",
-        platform_prefix.."/lib/crtbegin.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/dllcrt2.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -203,7 +208,9 @@ link_shared_s = {
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib",
+		"-L"..platform_prefix.."/lib/x86_64",
+		"-L"..platform_prefix.."/lib/gcc/x86_64-w64-mingw32/4.8.0",
+		"-L"..platform_prefix.."/x86_64-w64-mingw32/lib",
 	},
     stdlibs =
 	{
@@ -213,7 +220,7 @@ link_shared_s = {
 	},
 	endobject =
 	{
-        platform_prefix.."/lib/crtend.o",
+        platform_prefix.."/x86_64-w64-mingw32/lib/crtend.o",
 	},
 }
 

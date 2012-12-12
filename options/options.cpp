@@ -191,6 +191,10 @@ list<string> XClangOptions::getLinkActions(void)
             pLinker = new linkConfigExe(m_config);            
         }
     }
+    opts += pLinker->arch();
+    opts += pLinker->beginobject();
+    opts += pLinker->stdxxdirs();
+    opts += pLinker->stddirs();
     for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
     {
         opts += " ";
@@ -201,8 +205,11 @@ list<string> XClangOptions::getLinkActions(void)
         opts += " ";
         opts += *it;
     }
+    opts += pLinker->stdxxlibs();
+    opts += pLinker->stdlibs();
     opts += " -o ";
     opts += m_out_file;
+    opts += pLinker->endobject();
     actions.push_back(opts);
     return actions;
 }
