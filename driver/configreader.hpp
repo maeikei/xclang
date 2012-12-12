@@ -15,9 +15,18 @@ namespace xclang
 {
     class XClangPrograms;
     class XClangOptions;
+    class linkConfigExe;
+    class linkConfigExeStatic;
+    class linkConfigShared;
+    class linkConfigSharedStatic;
+    
     class ConfigReader
     {
         friend class XClangOptions;
+        friend class linkConfigExe;
+        friend class linkConfigExeStatic;
+        friend class linkConfigShared;
+        friend class linkConfigSharedStatic;
     public:
         ConfigReader(const string &home,const XClangPrograms &p,const XClangOptions &opt);
         ~ConfigReader();
@@ -114,17 +123,77 @@ namespace xclang
     class linkConfig
     {
     public:
+        virtual string arch(void) const = 0;
+        virtual string beginobject(void) const = 0;
+        virtual string stdxxdirs(void) const = 0;
+        virtual string stdxxlibs(void) const = 0;
+        virtual string stddirs(void) const = 0;
+        virtual string stdlibs(void) const = 0;
+        virtual string endobject(void) const = 0;
+    protected:
+        ConfigReader *m_conf;
+        linkConfig();
         linkConfig(ConfigReader *_conf);
-        virtual string get_arch(void);
-        virtual string get_beginobject(void);
-        virtual string get_stdxxlddir(void);
-        virtual string get_stdxxlibs(void);
-        virtual string get_stddirs(void);
-        virtual string get_stdlibs(void);
-        virtual string get_endobject(void);
-    private:
-        ConfigReader m_conf;
     };
 
+    
+    
+    
+
+    class linkConfigExe : public linkConfig
+    {
+    public:
+        linkConfigExe(ConfigReader *_conf);
+        virtual string arch(void) const;
+        virtual string beginobject(void) const;
+        virtual string stdxxdirs(void) const;
+        virtual string stdxxlibs(void) const;
+        virtual string stddirs(void) const;
+        virtual string stdlibs(void) const;
+        virtual string endobject(void) const;
+    };
+    
+    class linkConfigExeStatic : public linkConfig
+    {
+    public:
+        linkConfigExeStatic(ConfigReader *_conf);
+        virtual string arch(void) const;
+        virtual string beginobject(void) const;
+        virtual string stdxxdirs(void) const;
+        virtual string stdxxlibs(void) const;
+        virtual string stddirs(void) const;
+        virtual string stdlibs(void) const;
+        virtual string endobject(void) const;
+    };
+    
+
+    class linkConfigShared : public linkConfig
+    {
+    public:
+        linkConfigShared(ConfigReader *_conf);
+        virtual string arch(void) const;
+        virtual string beginobject(void) const;
+        virtual string stdxxdirs(void) const;
+        virtual string stdxxlibs(void) const;
+        virtual string stddirs(void) const;
+        virtual string stdlibs(void) const;
+        virtual string endobject(void) const;
+    };
+    
+    
+    class linkConfigSharedStatic : public linkConfig
+    {
+    public:
+        linkConfigSharedStatic(ConfigReader *_conf);
+        virtual string arch(void) const;
+        virtual string beginobject(void) const;
+        virtual string stdxxdirs(void) const;
+        virtual string stdxxlibs(void) const;
+        virtual string stddirs(void) const;
+        virtual string stdlibs(void) const;
+        virtual string endobject(void) const;
+    };
+    
+    
 }
 #endif // __CONFIG_READER_HPP_

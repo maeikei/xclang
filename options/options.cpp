@@ -60,7 +60,6 @@ XClangOptions::~XClangOptions()
 
 list<string> XClangOptions::getCC1Actions(void)
 {
-//    adjustCC1Options();
     // multi options
     if(has(o) && ( has(c) || has(S)) && m_input_files.size() > 1 )
     {
@@ -152,6 +151,12 @@ string XClangOptions::calcLinkCmd(void) const
     return ret;
 }
 
+
+
+
+
+
+
 list<string> XClangOptions::getLinkActions(void)
 {
     adjustLinkOptions();
@@ -163,26 +168,27 @@ list<string> XClangOptions::getLinkActions(void)
     }
     string opts;
     opts += m_config->getToolChainProgram("ld");
+    linkConfig *pLinker = nullptr;
     if(has(shared))
     {
         if (has(static))
         {
-            
+            pLinker = new linkConfigSharedStatic(m_config);
         }
         else
         {
-            
+            pLinker = new linkConfigShared(m_config);            
         }
     }
     else
     {
         if (has(static))
         {
-            
+            pLinker = new linkConfigExeStatic(m_config);
         }
         else
         {
-            
+            pLinker = new linkConfigExe(m_config);            
         }
     }
     for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
@@ -333,4 +339,247 @@ void XClangOptions::adjustLinkOptions(void)
 {
     
 }
+
+
+
+linkConfig::linkConfig()
+:m_conf(nullptr)
+{
+}
+
+
+linkConfig::linkConfig(ConfigReader *_conf)
+:m_conf(_conf)
+{
+}
+
+
+#define concatValuesExe(table) \
+{\
+for(auto it = m_conf->m_link_exe_##table.begin();it != m_conf->m_link_exe_##table.end();it++)\
+{ \
+ret += " "; \
+ret += *it; \
+}\
+}
+
+linkConfigExe::linkConfigExe(ConfigReader *_conf)
+:linkConfig(_conf)
+{
+}
+
+string linkConfigExe::arch(void) const
+{
+        string ret;
+        concatValuesExe(arch);
+        return ret;
+}
+string linkConfigExe::beginobject(void) const
+{
+    string ret;
+    concatValuesExe(beginobject);
+    return ret;
+}
+string linkConfigExe::stdxxdirs(void) const
+{
+    string ret;
+    concatValuesExe(stdxxdirs);
+    return ret;
+}
+string linkConfigExe::stdxxlibs(void) const
+{
+    string ret;
+    concatValuesExe(stdxxlibs);
+    return ret;
+}
+string linkConfigExe::stddirs(void) const
+{
+    string ret;
+    concatValuesExe(stddirs);
+    return ret;
+}
+string linkConfigExe::stdlibs(void) const
+{
+    string ret;
+    concatValuesExe(stdlibs);
+    return ret;
+}
+string linkConfigExe::endobject(void) const
+{
+    string ret;
+    concatValuesExe(endobject);
+    return ret;
+}
+
+
+#define concatValuesExeS(table) \
+{\
+for(auto it = m_conf->m_link_exe_s_##table.begin();it != m_conf->m_link_exe_s_##table.end();it++)\
+{ \
+ret += " "; \
+ret += *it; \
+}\
+}
+linkConfigExeStatic::linkConfigExeStatic(ConfigReader *_conf)
+:linkConfig(_conf)
+{
+}
+
+string linkConfigExeStatic::arch(void) const
+    {
+        string ret;
+        concatValuesExeS(arch);
+        return ret;
+    }
+string linkConfigExeStatic::beginobject(void) const
+    {
+        string ret;
+        concatValuesExeS(beginobject);
+        return ret;
+    }
+string linkConfigExeStatic::stdxxdirs(void) const
+    {
+        string ret;
+        concatValuesExeS(stdxxdirs);
+        return ret;
+    }
+string linkConfigExeStatic::stdxxlibs(void) const
+    {
+        string ret;
+        concatValuesExeS(stdxxlibs);
+        return ret;
+    }
+string linkConfigExeStatic::stddirs(void) const
+    {
+        string ret;
+        concatValuesExeS(stddirs);
+        return ret;
+    }
+string linkConfigExeStatic::stdlibs(void) const
+    {
+        string ret;
+        concatValuesExeS(stdlibs);
+        return ret;
+    }
+string linkConfigExeStatic::endobject(void) const
+    {
+        string ret;
+        concatValuesExeS(endobject);
+        return ret;
+    }
+
+
+#define concatValuesShared(table) \
+{\
+for(auto it = m_conf->m_link_shared_##table.begin();it != m_conf->m_link_shared_##table.end();it++)\
+{ \
+ret += " "; \
+ret += *it; \
+}\
+}
+linkConfigShared::linkConfigShared(ConfigReader *_conf)
+:linkConfig(_conf)
+{
+}
+
+string linkConfigShared::arch(void) const
+    {
+        string ret;
+        concatValuesShared(arch);
+        return ret;
+    }
+string linkConfigShared::beginobject(void) const
+    {
+        string ret;
+        concatValuesShared(beginobject);
+        return ret;
+    }
+string linkConfigShared::stdxxdirs(void) const
+    {
+        string ret;
+        concatValuesShared(stdxxdirs);
+        return ret;
+    }
+string linkConfigShared::stdxxlibs(void) const
+    {
+        string ret;
+        concatValuesShared(stdxxlibs);
+        return ret;
+    }
+string linkConfigShared::stddirs(void) const
+    {
+        string ret;
+        concatValuesShared(stddirs);
+        return ret;
+    }
+string linkConfigShared::stdlibs(void) const
+    {
+        string ret;
+        concatValuesShared(stdlibs);
+        return ret;
+    }
+string linkConfigShared::endobject(void) const
+    {
+        string ret;
+        concatValuesShared(endobject);
+        return ret;
+    }
+
+
+#define concatValuesSharedS(table) \
+{\
+for(auto it = m_conf->m_link_shared_s_##table.begin();it != m_conf->m_link_shared_s_##table.end();it++)\
+{ \
+ret += " "; \
+ret += *it; \
+}\
+}
+
+linkConfigSharedStatic::linkConfigSharedStatic(ConfigReader *_conf)
+:linkConfig(_conf)
+{
+}
+
+string linkConfigSharedStatic::arch(void) const
+    {
+        string ret;
+        concatValuesSharedS(arch);
+        return ret;
+    }
+string linkConfigSharedStatic::beginobject(void) const
+    {
+        string ret;
+        concatValuesSharedS(beginobject);
+        return ret;
+    }
+string linkConfigSharedStatic::stdxxdirs(void) const
+    {
+        string ret;
+        concatValuesSharedS(stdxxdirs);
+        return ret;
+    }
+string linkConfigSharedStatic::stdxxlibs(void) const
+    {
+        string ret;
+        concatValuesSharedS(stdxxlibs);
+        return ret;
+    }
+string linkConfigSharedStatic::stddirs(void) const
+    {
+        string ret;
+        concatValuesSharedS(stddirs);
+        return ret;
+    }
+string linkConfigSharedStatic::stdlibs(void) const
+    {
+        string ret;
+        concatValuesSharedS(stdlibs);
+        return ret;
+    }
+string linkConfigSharedStatic::endobject(void) const
+    {
+        string ret;
+        concatValuesSharedS(endobject);
+        return ret;
+    }
 
