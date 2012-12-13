@@ -25,7 +25,7 @@ int XClangDriver::exce(void)
     list<string> actions = m_opt.getCC1Actions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
-//        cout << "cmdline=<" << *it << ">" << endl;
+        cout << "cmdline=<" << *it << ">" << endl;
         system(it->c_str());
     }
     list<string> linkActions = m_opt.getLinkActions();

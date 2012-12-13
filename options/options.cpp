@@ -94,6 +94,11 @@ list<string> XClangOptions::getCC1Actions(void)
                 fileName.replace_extension(extension);
                 opt_elment += fileName.string();
             }
+            else
+            {
+                opt_elment += " -o ";                
+                opt_elment += m_out_file;
+            }
         }
         else if( has(E) )
         {
