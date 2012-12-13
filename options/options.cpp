@@ -152,6 +152,17 @@ string XClangOptions::calcLinkCmd(void) const
 }
 
 
+bool XClangOptions::calcLinkCXX(void) const
+{
+    for (auto it = m_lang_flags.begin(); it != m_lang_flags.end(); it++)
+    {
+        if( iConstLanguageCXX == *it)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 
@@ -192,6 +203,10 @@ list<string> XClangOptions::getLinkActions(void)
         }
     }
     opts += pLinker->arch();
+    opts += " -o ";
+    opts += m_out_file;
+    
+    
     opts += pLinker->beginobject();
     opts += pLinker->stdxxdirs();
     opts += pLinker->stddirs();
@@ -205,10 +220,14 @@ list<string> XClangOptions::getLinkActions(void)
         opts += " ";
         opts += *it;
     }
-    opts += pLinker->stdxxlibs();
-    opts += pLinker->stdlibs();
-    opts += " -o ";
-    opts += m_out_file;
+    if(calcLinkCXX())
+    {
+        opts += pLinker->stdxxlibs();
+    }
+    else
+    {
+        opts += pLinker->stdlibs();
+    }
     opts += pLinker->endobject();
     actions.push_back(opts);
     return actions;

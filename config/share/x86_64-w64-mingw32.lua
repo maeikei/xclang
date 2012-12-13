@@ -79,7 +79,10 @@ link_exe = {
 	},
     stdxxlibs =
 	{
-		"-lstdc++",
+        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
+        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
+        "-lshell32 -luser32 -lkernel32 -lmingw32",
+        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
     stddirs =
 	{
@@ -118,7 +121,10 @@ link_exe_s = {
 	},
     stdxxlibs =
 	{
-		"-lstdc++",
+        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
+        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
+        "-lshell32 -luser32 -lkernel32 -lmingw32",
+        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
     stddirs =
 	{
@@ -161,7 +167,10 @@ link_shared = {
 	},
     stdxxlibs =
 	{
-		"-lstdc++",
+        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
+        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
+        "-lshell32 -luser32 -lkernel32 -lmingw32",
+        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
     stddirs =
 	{
@@ -204,7 +213,10 @@ link_shared_s = {
 	},
     stdxxlibs =
 	{
-		"-lstdc++",
+        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
+        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
+        "-lshell32 -luser32 -lkernel32 -lmingw32",
+        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
     stddirs =
 	{
