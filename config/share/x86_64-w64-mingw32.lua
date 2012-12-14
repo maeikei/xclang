@@ -13,9 +13,11 @@ platform_prefix = globalXClangHome.."/platform/x86_64-w64-mingw32"
 ---------------------------------------------------
 xclang =
 {
-	master =
+	props =
 	{
 		triple		    = "x86_64-w64-mingw32",
+		objext		    = ".obj",
+		asmext		    = ".s",
 	},
 	archcflags =
 	{

@@ -50,10 +50,10 @@ namespace xclang
             }
             return name;
         }
-        string getMaster(const string &name) const
+        string getProperty(const string &name) const
         {
-            auto it = m_master.find(name);
-            if(it != m_master.end())
+            auto it = m_props.find(name);
+            if(it != m_props.end())
             {
                 return it->second;
             }
@@ -75,7 +75,7 @@ namespace xclang
         vector<string> m_defaultcflags;
         vector<string> m_defaultcxxflags;
         
-        map<string,string> m_master;
+        map<string,string> m_props;
         vector<string> m_archcflags;
         vector<string> m_archcxxflags;
         vector<string> m_stdinc;

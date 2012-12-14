@@ -73,11 +73,11 @@ list<string> XClangOptions::getCC1Actions(void)
         opts += " ";
     }
     
-    string extension(".o");
+    string extension(m_config->getProperty("objext"));
     list<string> actions;
     if( has(S) )
     {
-        extension = ".s";
+        extension = m_config->getProperty("asmext");
     }
     
     for(auto it = m_input_files.begin();it !=  m_input_files.end();it++)
@@ -123,7 +123,7 @@ list<string> XClangOptions::getCC1Actions(void)
         {
             opt_elment = " -emit-obj " + opt_elment;
         }
-        opt_elment = "-triple " + m_config->getMaster("triple") + " " + opt_elment;
+        opt_elment = "-triple " + m_config->getProperty("triple") + " " + opt_elment;
         string act("cxx");
         switch (checkLanguage(*it))
         {

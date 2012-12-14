@@ -83,7 +83,7 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
         readClangMemberValue(defaultcxxflags);
         
 // read confiure from lua.
-        readXClangMemberValue(master);
+        readXClangMemberValue(props);
         readXClangMemberValue(archcflags);
         readXClangMemberValue(archcxxflags);
         readXClangMemberValue(stdinc);
