@@ -11,4 +11,4 @@ all:
 	$(CXX) main.cpp -L./ -L ../ -I./ -I ../ -S -o main.cpp.clang.s
 	$(CXX) main.cpp gc.cpp -L./ -L ../ -I./ -I ../ -o main.cpp.o
 clean:
-	rm -f *.o *.s *.out *.exe
+	rm -f *.o *.s *.out *.exe *.obj
