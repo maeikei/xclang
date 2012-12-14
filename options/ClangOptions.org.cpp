@@ -288,7 +288,7 @@ int XClangOptions::getNextArgsInputs(const string &opt,int i)
     {
         m_input_objects.push_back(opt);
         m_input_objects_str += opt;
-        m_input_objects_str += " ";        
+        m_input_objects_str += " ";
     }
     else
     {

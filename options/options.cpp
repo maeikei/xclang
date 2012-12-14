@@ -232,6 +232,10 @@ list<string> XClangOptions::getLinkActions(void)
         opts += " ";
         opts += *it;
     }
+    if(not m_input_objects_str.empty())
+    {
+        opts += " " + m_input_objects_str;
+    }
     if(calcLinkCXX())
     {
         if( not has(nostdlib))
