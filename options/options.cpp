@@ -45,7 +45,7 @@ XClangOptions::XClangOptions(int argc,const char** argv,const XClangPrograms &_p
 ,m_input_files()
 ,m_input_files_str("")
 ,m_objects_files()
-,m_out_file("a.out")
+,m_out_file()
 ,m_target("")
 {
     splitArgs();
@@ -209,7 +209,14 @@ list<string> XClangOptions::getLinkActions(void)
     }
     opts += pLinker->arch();
     opts += " -o ";
-    opts += m_out_file;
+    if(m_out_file.empty())
+    {
+        opts += m_config->getProperty("defaultexe") + " ";
+    }
+    else
+    {
+        opts += m_out_file;
+    }
     
     
     opts += pLinker->beginobject();
@@ -227,11 +234,17 @@ list<string> XClangOptions::getLinkActions(void)
     }
     if(calcLinkCXX())
     {
-        opts += pLinker->stdxxlibs();
+        if( not has(nostdlib))
+        {
+            opts += pLinker->stdxxlibs();
+        }
     }
     else
     {
-        opts += pLinker->stdlibs();
+        if( not has(nostdlib) )
+        {
+            opts += pLinker->stdlibs();
+        }
     }
     opts += pLinker->endobject();
     actions.push_back(opts);

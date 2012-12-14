@@ -18,13 +18,12 @@ xclang =
 		triple		    = "x86_64-w64-mingw32",
 		objext		    = ".obj",
 		asmext		    = ".s",
+		defaultexe		= "a.exe",
 	},
 	archcflags =
 	{
 		"-D __MINGW__",
 		"-D __MINGW64__",
---        "-D _STDIO_DEFINED",
---        "-D __USE_MINGW_ANSI_STDIO=1",
         "-D gnu_printf=printf",
         "-D gnu_scanf=scanf",
 	},
