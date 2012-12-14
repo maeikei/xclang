@@ -18,14 +18,13 @@ xclang =
 	props =
 	{
 		triple		    = "x86_64-pc-linux-gnueabi",
-		objext		    = ".obj",
+		objext		    = ".o",
 		asmext		    = ".s",
-		defaultexe		= "a.exe",
+		defaultexe		= "a.out",
 	},
 	archcflags =
 	{
-		"-D __MINGW__",
-		"-D __MINGW64__",
+		"-D __Linux__",
         "-D gnu_printf=printf",
         "-D gnu_scanf=scanf",
 	},
