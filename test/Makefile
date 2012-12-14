@@ -9,6 +9,6 @@ all:
 	$(CC) sub.c main.c -S
 #	$(CC) sub.c main.c -E
 	$(CXX) main.cpp -L./ -L ../ -I./ -I ../ -S -o main.cpp.clang.s
-	$(CXX) main.cpp -L./ -L ../ -I./ -I ../ -o main.cpp.o
+	$(CXX) main.cpp gc.cpp -L./ -L ../ -I./ -I ../ -o main.cpp.o
 clean:
 	rm -f *.o *.s *.out *.exe
