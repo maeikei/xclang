@@ -5,7 +5,7 @@ if nil == globalXClangHome then
 	globalXClangHome = "C:/xclang-dev/xclang-obj/InstallRoot"
 end
 binutils_prefix = globalXClangHome.."/binutils/x86_64-apple-darwin/bin"
-platform_prefix = globalXClangHome.."/platform/x86_64-apple-darwin"
+platform_prefix = globalXClangHome.."/platform/MacOSX10.8.sdk"
 
 
 ---------------------------------------------------
@@ -34,12 +34,11 @@ xclang =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
-        "-I "..platform_prefix.."/x86_64-apple-darwin/include",
+        "-I "..platform_prefix.."/usr/include",
 	},
 	stdincxx =
 	{
-        "-I "..platform_prefix.."/x86_64-apple-darwin/include/c++/4.8.0",
-        "-I "..platform_prefix.."/x86_64-apple-darwin/include/c++/4.8.0/x86_64-apple-darwin",
+        "-I "..platform_prefix.."/usr/include/c++/4.2.1",
 	},
 }
 
