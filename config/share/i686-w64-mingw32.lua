@@ -65,7 +65,7 @@ toolchain = {
 link_exe = {
     arch =
     {
-        "-m i386pep",
+        "-m i386pe",
         "-Bdynamic",
     },
 	beginobject =
@@ -107,7 +107,7 @@ link_exe = {
 link_exe_s = {
     arch =
     {
-        "-m i386pep",
+        "-m i386pe",
         "-Bstatic",
     },
 	beginobject =
@@ -150,7 +150,7 @@ link_exe_s = {
 link_shared = {
     arch =
     {
-        "-m i386pep",
+        "-m i386pe",
         "--shared",
         "-Bdynamic",
         "-e DllMainCRTStartup",
@@ -196,7 +196,7 @@ link_shared = {
 link_shared_s = {
     arch =
     {
-        "-m i386pep",
+        "-m i386pe",
         "--shared",
         "-Bstatic",
         "-e DllMainCRTStartup",
