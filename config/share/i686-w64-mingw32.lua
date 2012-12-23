@@ -23,7 +23,6 @@ xclang =
 	archcflags =
 	{
 		"-D __MINGW__",
-		"-D __MINGW64__",
         "-D gnu_printf=printf",
         "-D gnu_scanf=scanf",
 	},
