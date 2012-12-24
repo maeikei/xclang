@@ -15,9 +15,10 @@ install :=$(shell pwd)/install/binutils
 MKDIR := mkdir
 MAKE  := make
 CD    := cd
+RM    := rm
 
 
-.PHONY: targets $(target)
+.PHONY: $(target)
 
 all:$(target)
 
@@ -25,3 +26,7 @@ $(target):
 	$(MKDIR) -p ./objects/$@
 	$(CD) ./objects/$@;../../$(SRC)/configure --target=$@ --prefix=$(install)
 	$(MAKE) -C ./objects/$@ all install
+
+clean:
+	$(RM) -rf objects
+	$(RM) -rf $(install)
