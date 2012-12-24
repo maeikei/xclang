@@ -67,13 +67,9 @@ toolchain = {
 link_exe = {
     arch =
     {
-        "-m i386pep",
-        "-Bdynamic",
     },
 	beginobject =
 	{
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crt2.o",
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -81,26 +77,15 @@ link_exe = {
 	},
     stdxxlibs =
 	{
-        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
-        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
-        "-lshell32 -luser32 -lkernel32 -lmingw32",
-        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib/x86_64",
-		"-L"..platform_prefix.."/lib/gcc/x86_64-pc-linux-gnueabi/4.8.0",
-		"-L"..platform_prefix.."/x86_64-pc-linux-gnueabi/lib",
 	},
     stdlibs =
 	{
-		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
-        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
-        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
 	endobject =
 	{
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crtend.o",
 	},
 }
 ---------------------------------------------------
@@ -109,13 +94,9 @@ link_exe = {
 link_exe_s = {
     arch =
     {
-        "-m i386pep",
-        "-Bstatic",
     },
 	beginobject =
 	{
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crt2.o",
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -123,26 +104,15 @@ link_exe_s = {
 	},
     stdxxlibs =
 	{
-        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
-        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
-        "-lshell32 -luser32 -lkernel32 -lmingw32",
-        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib/x86_64",
-		"-L"..platform_prefix.."/lib/gcc/x86_64-pc-linux-gnueabi/4.8.0",
-		"-L"..platform_prefix.."/x86_64-pc-linux-gnueabi/lib",
 	},
     stdlibs =
 	{
-		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
-        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
-        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
 	endobject =
 	{
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crtend.o",
 	},
 }
 
@@ -152,16 +122,9 @@ link_exe_s = {
 link_shared = {
     arch =
     {
-        "-m i386pep",
-        "--shared",
-        "-Bdynamic",
-        "-e DllMainCRTStartup",
-        "--enable-auto-image-base",
     },
 	beginobject =
 	{
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/dllcrt2.o",
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -169,26 +132,15 @@ link_shared = {
 	},
     stdxxlibs =
 	{
-        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
-        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
-        "-lshell32 -luser32 -lkernel32 -lmingw32",
-        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib/x86_64",
-		"-L"..platform_prefix.."/lib/gcc/x86_64-pc-linux-gnueabi/4.8.0",
-		"-L"..platform_prefix.."/x86_64-pc-linux-gnueabi/lib",
 	},
     stdlibs =
 	{
-		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
-        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
-        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
 	endobject =
 	{
-        platform_prefix.."/lib/crtend.o",
 	},
 }
 
@@ -198,16 +150,9 @@ link_shared = {
 link_shared_s = {
     arch =
     {
-        "-m i386pep",
-        "--shared",
-        "-Bstatic",
-        "-e DllMainCRTStartup",
-        "--enable-auto-image-base",
     },
 	beginobject =
 	{
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/dllcrt2.o",
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -215,26 +160,15 @@ link_shared_s = {
 	},
     stdxxlibs =
 	{
-        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
-        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
-        "-lshell32 -luser32 -lkernel32 -lmingw32",
-        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib/x86_64",
-		"-L"..platform_prefix.."/lib/gcc/x86_64-pc-linux-gnueabi/4.8.0",
-		"-L"..platform_prefix.."/x86_64-pc-linux-gnueabi/lib",
 	},
     stdlibs =
 	{
-		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
-        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
-        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
 	},
 	endobject =
 	{
-        platform_prefix.."/x86_64-pc-linux-gnueabi/lib/crtend.o",
 	},
 }
 

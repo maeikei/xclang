@@ -60,17 +60,25 @@ XClangOptions::~XClangOptions()
 
 list<string> XClangOptions::getCC1Actions(void)
 {
-    // multi options
-    if(has(o) && ( has(c) || has(S)) && m_input_files.size() > 1 )
-    {
-        list<string> actions;
-        return actions;
-    }
     string opts;
     for(auto it = m_cc1_options.begin();it !=  m_cc1_options.end();it++)
     {
         opts += *it;
         opts += " ";
+    }
+
+    //
+    if(has(_version))
+    {
+        list<string> actions;
+        actions.push_back(m_config->getLLVMProgram("clang") + " " + opts) ;
+        return actions;        
+    }
+    // multi options
+    if(has(o) && ( has(c) || has(S)) && m_input_files.size() > 1 )
+    {
+        list<string> actions;
+        return actions;
     }
     
     string extension(m_config->getProperty("objext"));
@@ -281,7 +289,7 @@ bool XClangOptions::is_not_link(void) const
     {
         return true;
     }
-    if (has(version))
+    if (has(_version))
     {
         return true;
     }

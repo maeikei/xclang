@@ -12,6 +12,7 @@ clang =
 {
 	llvm =
 	{
+		clang	    = clang_prefix.."/clang",
 		cc1as	    = clang_prefix.."/clang -cc1as",
 		cc		    = clang_prefix.."/clang -cc1 -x c",
 		cxx		    = clang_prefix.."/clang -cc1 -x c++",

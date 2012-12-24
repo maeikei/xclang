@@ -113,11 +113,11 @@ static map<string,OptProperty> genSplitMap(int kind)
 
 
 
-//#define DEBUG
+// #define DEBUG
 
 void XClangOptions::splitArgs(void)
 {
-#ifdef DEBUG
+#ifdef DEBUG_DETAILS
     for(auto it = m_xclang_options_full_match.begin();it != m_xclang_options_full_match.end();it++)
     {
         cout << "key=<" << it->first << ">" << endl;
@@ -128,7 +128,7 @@ void XClangOptions::splitArgs(void)
         cout << "key=<" << it->first << ">" << endl;
     }
     cout << "m_xclang_options_prefix_match end" << endl;
-#endif
+#endif // DEBUG_DETAILS
 
     int i = 1;
     while(i < m_argc)
@@ -175,6 +175,11 @@ void XClangOptions::splitArgs(void)
         i = getNextArgsInputs(vStr,i);
     }
 #ifdef DEBUG
+    for(auto it = m_cc1_options.begin();it != m_cc1_options.end();it++)
+    {
+        cout << "*it=<" << *it << ">" << endl;
+    }
+    cout << "m_cc1_options end" << endl;
     for(auto it = m_clang_options.begin();it != m_clang_options.end();it++)
     {
         cout << "*it=<" << *it << ">" << endl;
@@ -189,6 +194,8 @@ void XClangOptions::splitArgs(void)
 }
 
 
+
+// #undef DEBUG
 
 #ifdef DEBUG
 #define add_option(opt,prop) \
