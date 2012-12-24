@@ -80,7 +80,8 @@ OPTION(prefix_1, "E", E, Flag, Action_Group, INVALID, DriverOption | CC1Option, 
        "Only run the preprocessor", 0)
 OPTION(prefix_1, "F", F, JoinedOrSeparate, INVALID, INVALID, RenderJoined | CC1Option, 0,
        "Add directory to framework include search path", 0)
-OPTION(prefix_1, "G", G, Separate, INVALID, INVALID, DriverOption, 0, 0, 0)
+OPTION(prefix_1, "G=", G_EQ, Joined, INVALID, INVALID, DriverOption, 0, 0, 0)
+OPTION(prefix_1, "G", G, JoinedOrSeparate, INVALID, INVALID, DriverOption, 0, 0, 0)
 OPTION(prefix_1, "H", H, Flag, INVALID, INVALID, CC1Option, 0,
        "Show header includes and nesting depth", 0)
 OPTION(prefix_1, "I-", I_, Flag, I_Group, INVALID, 0, 0, 0, 0)
@@ -452,7 +453,7 @@ OPTION(prefix_1, "fapple-kext", fapple_kext, Flag, f_Group, INVALID, CC1Option, 
        "Use Apple's kernel extensions ABI", 0)
 OPTION(prefix_1, "fapple-pragma-pack", fapple_pragma_pack, Flag, f_Group, INVALID, CC1Option, 0,
        "Enable Apple gcc-compatible #pragma pack handling", 0)
-OPTION(prefix_1, "fasm-blocks", fasm_blocks, Flag, f_Group, INVALID, 0, 0, 0, 0)
+OPTION(prefix_1, "fasm-blocks", fasm_blocks, Flag, f_Group, INVALID, CC1Option, 0, 0, 0)
 OPTION(prefix_1, "fasm", fasm, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fassociative-math", fassociative_math, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fassume-sane-operator-new", fassume_sane_operator_new, Flag, f_Group, INVALID, 0, 0, 0, 0)
@@ -734,6 +735,8 @@ OPTION(prefix_1, "fno-reciprocal-math", fno_reciprocal_math, Flag, f_Group, INVA
 OPTION(prefix_1, "fno-rewrite-includes", fno_rewrite_includes, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-rtti", fno_rtti, Flag, f_Group, INVALID, CC1Option, 0,
        "Disable generation of rtti information", 0)
+OPTION(prefix_1, "fno-sanitize-blacklist", fno_sanitize_blacklist, Flag, f_clang_Group, INVALID, 0, 0,
+       "Don't use blacklist file for sanitizers", 0)
 OPTION(prefix_1, "fno-sanitize=", fno_sanitize_EQ, CommaJoined, f_clang_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-short-enums", fno_short_enums, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-show-column", fno_show_column, Flag, f_Group, INVALID, CC1Option, 0,
@@ -744,6 +747,7 @@ OPTION(prefix_1, "fno-signaling-math", fno_signaling_math, Flag, f_Group, INVALI
 OPTION(prefix_1, "fno-signed-char", fno_signed_char, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Char is unsigned", 0)
 OPTION(prefix_1, "fno-signed-zeros", fno_signed_zeros, Flag, f_Group, INVALID, 0, 0, 0, 0)
+OPTION(prefix_1, "fno-slp-vectorize", fno_slp_vectorize, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-spell-checking", fno_spell_checking, Flag, f_Group, INVALID, CC1Option, 0,
        "Disable spell-checking", 0)
 OPTION(prefix_1, "fno-stack-protector", fno_stack_protector, Flag, f_Group, INVALID, 0, 0, 0, 0)
@@ -754,13 +758,18 @@ OPTION(prefix_1, "fno-thread-sanitizer", fno_thread_sanitizer, Flag, f_Group, IN
 OPTION(prefix_1, "fno-threadsafe-statics", fno_threadsafe_statics, Flag, f_Group, INVALID, CC1Option, 0,
        "Do not emit code to make initialization of local statics thread safe", 0)
 OPTION(prefix_1, "fno-trapping-math", fno_trapping_math, Flag, f_Group, INVALID, 0, 0, 0, 0)
+OPTION(prefix_1, "fno-tree-slp-vectorize", fno_tree_slp_vectorize, Flag, INVALID, fno_slp_vectorize, 0, 0, 0, 0)
+OPTION(prefix_1, "fno-tree-vectorize", fno_tree_vectorize, Flag, INVALID, fno_vectorize, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-unit-at-a-time", fno_unit_at_a_time, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-unsafe-math-optimizations", fno_unsafe_math_optimizations, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-unwind-tables", fno_unwind_tables, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-use-cxa-atexit", fno_use_cxa_atexit, Flag, f_Group, INVALID, CC1Option, 0,
        "Don't use __cxa_atexit for calling destructors", 0)
+OPTION(prefix_1, "fno-use-init-array", fno_use_init_array, Flag, f_Group, INVALID, CC1Option, 0,
+       "Don't use .init_array instead of .ctors", 0)
 OPTION(prefix_1, "fno-validate-pch", fno_validate_pch, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Disable validation of precompiled headers", 0)
+OPTION(prefix_1, "fno-vectorize", fno_vectorize, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-verbose-asm", fno_verbose_asm, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-wchar", fno_wchar, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Disable C++ builtin type wchar_t", 0)
@@ -828,6 +837,10 @@ OPTION(prefix_1, "freorder-blocks", freorder_blocks, Flag, clang_ignored_f_Group
 OPTION(prefix_1, "fretain-comments-from-system-headers", fretain_comments_from_system_headers, Flag, f_Group, INVALID, CC1Option, 0, 0, 0)
 OPTION(prefix_1, "frewrite-includes", frewrite_includes, Flag, f_Group, INVALID, CC1Option, 0, 0, 0)
 OPTION(prefix_1, "frtti", frtti, Flag, f_Group, INVALID, 0, 0, 0, 0)
+OPTION(prefix_1, "fsanitize-blacklist=", fsanitize_blacklist, Joined, f_clang_Group, INVALID, CC1Option, 0,
+       "Path to blacklist file for sanitizers", 0)
+OPTION(prefix_1, "fsanitize-recover", fsanitize_recover, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
+       "Attempt to recover from failed sanitizer checks when possible", 0)
 OPTION(prefix_1, "fsanitize=", fsanitize_EQ, CommaJoined, f_clang_Group, INVALID, CC1Option, 0,
        "Enable runtime instrumentation for bug detection: address (memory errors) | thread (race detection) | undefined (miscellaneous undefined behavior)", "<check>")
 OPTION(prefix_1, "fsched-interblock", fsched_interblock, Flag, clang_ignored_f_Group, INVALID, 0, 0, 0, 0)
@@ -845,6 +858,8 @@ OPTION(prefix_1, "fsigned-char", fsigned_char, Flag, f_Group, INVALID, 0, 0, 0, 
 OPTION(prefix_1, "fsigned-zeros", fsigned_zeros, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fsjlj-exceptions", fsjlj_exceptions, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Use SjLj style exceptions", 0)
+OPTION(prefix_1, "fslp-vectorize", fslp_vectorize, Flag, f_Group, INVALID, 0, 0,
+       "Enable the superword-level parallelism vectorization passes", 0)
 OPTION(prefix_1, "fspell-checking", fspell_checking, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fstack-protector-all", fstack_protector_all, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fstack-protector", fstack_protector, Flag, f_Group, INVALID, 0, 0, 0, 0)
@@ -877,6 +892,8 @@ OPTION(prefix_1, "ftrapv-handler=", ftrapv_handler_EQ, Joined, f_Group, INVALID,
 OPTION(prefix_1, "ftrapv-handler", ftrapv_handler, Separate, f_Group, INVALID, CC1Option, 0, 0, 0)
 OPTION(prefix_1, "ftrapv", ftrapv, Flag, f_Group, INVALID, CC1Option, 0,
        "Trap on integer overflow", 0)
+OPTION(prefix_1, "ftree-slp-vectorize", ftree_slp_vectorize, Flag, INVALID, fslp_vectorize, 0, 0, 0, 0)
+OPTION(prefix_1, "ftree-vectorize", ftree_vectorize, Flag, INVALID, fvectorize, 0, 0, 0, 0)
 OPTION(prefix_1, "funit-at-a-time", funit_at_a_time, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "funknown-anytype", funknown_anytype, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Enable parser support for the __unknown_anytype type; for testing purposes only", 0)
@@ -887,10 +904,12 @@ OPTION(prefix_1, "funsigned-bitfields", funsigned_bitfields, Flag, f_Group, INVA
 OPTION(prefix_1, "funsigned-char", funsigned_char, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "funwind-tables", funwind_tables, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fuse-cxa-atexit", fuse_cxa_atexit, Flag, f_Group, INVALID, 0, 0, 0, 0)
-OPTION(prefix_1, "fuse-init-array", fuse_init_array, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
+OPTION(prefix_1, "fuse-init-array", fuse_init_array, Flag, f_Group, INVALID, CC1Option, 0,
        "Use .init_array instead of .ctors", 0)
 OPTION(prefix_1, "fuse-register-sized-bitfield-access", fuse_register_sized_bitfield_access, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Use register sized accesses to bit-fields, when possible.", 0)
+OPTION(prefix_1, "fvectorize", fvectorize, Flag, f_Group, INVALID, 0, 0,
+       "Enable the loop vectorization passes", 0)
 OPTION(prefix_1, "fverbose-asm", fverbose_asm, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fvisibility-inlines-hidden", fvisibility_inlines_hidden, Flag, f_Group, INVALID, CC1Option, 0,
        "Give inline C++ member functions default visibility by default", 0)
@@ -1132,6 +1151,7 @@ OPTION(prefix_1, "mno-ssse3", mno_ssse3, Flag, m_x86_Features_Group, INVALID, 0,
 OPTION(prefix_1, "mno-stackrealign", mno_stackrealign, Flag, m_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "mno-thumb", mno_thumb, Flag, m_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "mno-warn-nonportable-cfstrings", mno_warn_nonportable_cfstrings, Flag, m_Group, INVALID, 0, 0, 0, 0)
+OPTION(prefix_1, "mno-xgot", mno_xgot, Flag, m_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "mno-xop", mno_xop, Flag, m_x86_Features_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "mno-zero-initialized-in-bss", mno_zero_initialized_in_bss, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Do not put zero initialized data in the BSS", 0)
@@ -1139,6 +1159,7 @@ OPTION(prefix_1, "mnoexecstack", mno_exec_stack, Flag, INVALID, INVALID, CC1Opti
        "Mark the file as not needing an executable stack", 0)
 OPTION(prefix_1, "momit-leaf-frame-pointer", momit_leaf_frame_pointer, Flag, m_Group, INVALID, CC1Option, 0,
        "Omit frame pointer setup for leaf functions", 0)
+OPTION(prefix_1, "moslib=", moslib_EQ, Joined, m_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "mpascal-strings", mpascal_strings, Flag, m_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "mpclmul", mpclmul, Flag, m_x86_Features_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "mpopcnt", mpopcnt, Flag, m_x86_Features_Group, INVALID, 0, 0, 0, 0)
@@ -1185,6 +1206,7 @@ OPTION(prefix_1, "multiply_defined", multiply__defined, Separate, INVALID, INVAL
 OPTION(prefix_1, "munwind-tables", munwind_tables, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Generate unwinding tables for all functions", 0)
 OPTION(prefix_1, "mwarn-nonportable-cfstrings", mwarn_nonportable_cfstrings, Flag, m_Group, INVALID, 0, 0, 0, 0)
+OPTION(prefix_1, "mxgot", mxgot, Flag, m_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "mxop", mxop, Flag, m_x86_Features_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "m", m_Separate, Separate, m_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "m", m_Joined, Joined, m_Group, INVALID, 0, 0, 0, 0)
