@@ -1,7 +1,11 @@
 target += i686-w64-mingw32
-target += x86_64-apple-darwin
-target += x86_64-pc-linux-gnueabi
 target += x86_64-w64-mingw32
+
+target += x86_64-pc-linux-gnueabi
+
+#target += x86_64-apple-darwin
+
+
 
 SRC   := binutils-2.23.1
 install :=$(shell pwd)/install/binutils
