@@ -26,7 +26,8 @@ all:$(target)
 $(target):
 	$(MKDIR) -p ./objects/$@
 	$(CD) ./objects/$@;../../$(SRC)/configure --target=$@ --prefix=$(install)
-	$(MAKE) -C ./objects/$@ all install
+	$(MAKE) -C ./objects/$@ all -j4
+	$(MAKE) -C ./objects/$@ install
 
 clean:
 	$(RM) -rf objects
