@@ -260,6 +260,10 @@ list<string> XClangOptions::getLinkActions(void)
     }
     opts += pLinker->endobject();
     actions.push_back(opts);
+    if(m_objects_files.empty() && m_input_objects_str.empty())
+    {
+        actions.clear();
+    }
     return actions;
 }
 

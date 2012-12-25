@@ -77,6 +77,7 @@ OPT_##ID,
         string m_out_file;
         string m_target;
         vector<int> m_lang_flags;
+        vector<string> m_unknown_options;
         static const map<string,OptProperty> m_xclang_options_full_match;
         static const map<string,OptProperty> m_xclang_options_prefix_match;
 //        static const map<string,int> m_clang_options;

@@ -264,13 +264,17 @@ int XClangOptions::getNextArgsFullMatch(const string &opt,const OptProperty &pro
     add_option(opt,prop);
     if ( prop.kind & Separate )
     {
-        ++i;
-        add_option(m_argv[i],prop);
+        if(++i < m_argc)
+        {
+            add_option(m_argv[i],prop);
+        }
     }
     if ( prop.kind & JoinedOrSeparate )
     {
-        ++i;
-        add_option(m_argv[i],prop);
+        if(++i < m_argc)
+        {
+            add_option(m_argv[i],prop);
+        }
     }
     m_real_ids.insert(pair<int,bool>(prop.id,true));
     return ++i;
@@ -281,14 +285,21 @@ int XClangOptions::getNextArgsPrefixMatch(const string &opt,const string &prefix
     add_option(opt,prop);
     if ( prop.kind & JoinedAndSeparate )
     {
-        ++i;
-        add_option(m_argv[i],prop);
+        if(++i < m_argc)
+        {
+            add_option(m_argv[i],prop);
+        }
     }
     m_real_ids.insert(pair<int,bool>(prop.id,true));
     return ++i;
 }
 int XClangOptions::getNextArgsInputs(const string &opt,int i)
 {
+    if( opt.at(0) == '-' )
+    {
+        m_unknown_options.push_back(opt);
+        return ++i;
+    }
     fs::path fileName(opt);
     string ext = fileName.extension().string();
     if( ".o" == ext || ".obj" == ext || ".a" == ext )
