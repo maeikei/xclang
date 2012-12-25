@@ -21,19 +21,20 @@ XClangDriver::~XClangDriver()
 }
 
 int XClangDriver::exce(void)
-{    
+{
+    int ret = 0;
     list<string> actions = m_opt.getCC1Actions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
 //        cout << "cmdline=<" << *it << ">" << endl;
-        system(it->c_str());
+        ret = system(it->c_str());
     }
     list<string> linkActions = m_opt.getLinkActions();
     for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
     {
 //        cout << "cmdline=<" << *it << ">" << endl;
-        system(it->c_str());
+        ret = system(it->c_str());
     }
-    return 0;
+    return ret;
 }
 
