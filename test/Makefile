@@ -1,5 +1,5 @@
 XCLANG_PATH = /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/bin
-CC = $(XCLANG_PATH)/i686-w64-mingw32-xclang
+CC = $(XCLANG_PATH)/arm-linux-androideabi-xclang
 CXX = $(CC)++
 all:
 	$(CC) sub.c main.c -L./ -L ../ -I./ -I ../  -o main.out
