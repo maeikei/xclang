@@ -737,6 +737,8 @@ OPTION(prefix_1, "fno-rtti", fno_rtti, Flag, f_Group, INVALID, CC1Option, 0,
        "Disable generation of rtti information", 0)
 OPTION(prefix_1, "fno-sanitize-blacklist", fno_sanitize_blacklist, Flag, f_clang_Group, INVALID, 0, 0,
        "Don't use blacklist file for sanitizers", 0)
+OPTION(prefix_1, "fno-sanitize-memory-track-origins", fno_sanitize_memory_track_origins, Flag, f_clang_Group, INVALID, 0, 0,
+       "Disable origins tracking in MemorySanitizer", 0)
 OPTION(prefix_1, "fno-sanitize=", fno_sanitize_EQ, CommaJoined, f_clang_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-short-enums", fno_short_enums, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fno-show-column", fno_show_column, Flag, f_Group, INVALID, CC1Option, 0,
@@ -839,6 +841,8 @@ OPTION(prefix_1, "frewrite-includes", frewrite_includes, Flag, f_Group, INVALID,
 OPTION(prefix_1, "frtti", frtti, Flag, f_Group, INVALID, 0, 0, 0, 0)
 OPTION(prefix_1, "fsanitize-blacklist=", fsanitize_blacklist, Joined, f_clang_Group, INVALID, CC1Option, 0,
        "Path to blacklist file for sanitizers", 0)
+OPTION(prefix_1, "fsanitize-memory-track-origins", fsanitize_memory_track_origins, Flag, f_clang_Group, INVALID, CC1Option, 0,
+       "Enable origins tracking in MemorySanitizer", 0)
 OPTION(prefix_1, "fsanitize-recover", fsanitize_recover, Flag, INVALID, INVALID, CC1Option | NoDriverOption, 0,
        "Attempt to recover from failed sanitizer checks when possible", 0)
 OPTION(prefix_1, "fsanitize=", fsanitize_EQ, CommaJoined, f_clang_Group, INVALID, CC1Option, 0,
