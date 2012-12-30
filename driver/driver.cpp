@@ -33,6 +33,10 @@ int XClangDriver::exce(void)
     for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
     {
 //        cout << "cmdline=<" << *it << ">" << endl;
+        if(m_opt.showcommand())
+        {
+            cout << *it << endl;
+        }
         ret = system(it->c_str());
     }
     return ret;

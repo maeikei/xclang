@@ -22,8 +22,6 @@ xclang =
 	},
 	archcflags =
 	{
-		"-D __MINGW__",
-		"-D __MINGW64__",
         "-D gnu_printf=printf",
         "-D gnu_scanf=scanf",
 	},
@@ -48,7 +46,7 @@ xclang =
 toolchain = {
 	progs =
 	{
-		ld		    = binutils_prefix.."/ld",
+		ld		    = "/usr/bin/ld",
 		ar		    = binutils_prefix.."/ar",
 		as		    = binutils_prefix.."/as",
 		nm		    = binutils_prefix.."/nm",
@@ -56,7 +54,6 @@ toolchain = {
 		objdump 	= binutils_prefix.."/objdump",
 		ranlib 		= binutils_prefix.."/ranlib",
 		strip 		= binutils_prefix.."/strip",
-		dlltool 	= binutils_prefix.."/dlltool",
 	},
 }
 ---------------------------------------------------
@@ -65,13 +62,12 @@ toolchain = {
 link_exe = {
     arch =
     {
-        "-m i386pep",
-        "-Bdynamic",
+        "-demangle",
+        "-dynamic",
+        "-arch x86_64 -macosx_version_min 10.8.0",
     },
 	beginobject =
 	{
-        platform_prefix.."/x86_64-apple-darwin/lib/crt2.o",
-        platform_prefix.."/x86_64-apple-darwin/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -79,26 +75,19 @@ link_exe = {
 	},
     stdxxlibs =
 	{
-        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
-        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
-        "-lshell32 -luser32 -lkernel32 -lmingw32",
-        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
+        "-lstdc++",
+        "-lSystem",
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib/x86_64",
-		"-L"..platform_prefix.."/lib/gcc/x86_64-apple-darwin/4.8.0",
-		"-L"..platform_prefix.."/x86_64-apple-darwin/lib",
 	},
     stdlibs =
 	{
-		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
-        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
-        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
+        "-lSystem",
 	},
 	endobject =
 	{
-        platform_prefix.."/x86_64-apple-darwin/lib/crtend.o",
+        "/usr/lib/clang/4.0/lib/darwin/libclang_rt.osx.a",
 	},
 }
 ---------------------------------------------------
@@ -107,13 +96,12 @@ link_exe = {
 link_exe_s = {
     arch =
     {
-        "-m i386pep",
-        "-Bstatic",
+        "-demangle",
+        "-static",
+        "-arch x86_64 -macosx_version_min 10.8.0",
     },
 	beginobject =
 	{
-        platform_prefix.."/x86_64-apple-darwin/lib/crt2.o",
-        platform_prefix.."/x86_64-apple-darwin/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -121,26 +109,19 @@ link_exe_s = {
 	},
     stdxxlibs =
 	{
-        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
-        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
-        "-lshell32 -luser32 -lkernel32 -lmingw32",
-        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
+        "-lstdc++",
+        "-lSystem",
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib/x86_64",
-		"-L"..platform_prefix.."/lib/gcc/x86_64-apple-darwin/4.8.0",
-		"-L"..platform_prefix.."/x86_64-apple-darwin/lib",
 	},
     stdlibs =
 	{
-		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
-        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
-        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
+        "-lSystem",
 	},
 	endobject =
 	{
-        platform_prefix.."/x86_64-apple-darwin/lib/crtend.o",
+        "/usr/lib/clang/4.0/lib/darwin/libclang_rt.osx.a",
 	},
 }
 
@@ -150,16 +131,9 @@ link_exe_s = {
 link_shared = {
     arch =
     {
-        "-m i386pep",
-        "--shared",
-        "-Bdynamic",
-        "-e DllMainCRTStartup",
-        "--enable-auto-image-base",
     },
 	beginobject =
 	{
-        platform_prefix.."/x86_64-apple-darwin/lib/dllcrt2.o",
-        platform_prefix.."/x86_64-apple-darwin/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -167,26 +141,19 @@ link_shared = {
 	},
     stdxxlibs =
 	{
-        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
-        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
-        "-lshell32 -luser32 -lkernel32 -lmingw32",
-        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
+        "-lstdc++",
+        "-lSystem",
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib/x86_64",
-		"-L"..platform_prefix.."/lib/gcc/x86_64-apple-darwin/4.8.0",
-		"-L"..platform_prefix.."/x86_64-apple-darwin/lib",
 	},
     stdlibs =
 	{
-		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
-        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
-        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
+        "-lSystem",
 	},
 	endobject =
 	{
-        platform_prefix.."/lib/crtend.o",
+        "/usr/lib/clang/4.0/lib/darwin/libclang_rt.osx.a",
 	},
 }
 
@@ -196,16 +163,13 @@ link_shared = {
 link_shared_s = {
     arch =
     {
-        "-m i386pep",
-        "--shared",
-        "-Bstatic",
-        "-e DllMainCRTStartup",
-        "--enable-auto-image-base",
+        "-demangle",
+        "-dylib",
+        "-static",
+        "-arch x86_64 -macosx_version_min 10.8.0",
     },
 	beginobject =
 	{
-        platform_prefix.."/x86_64-apple-darwin/lib/dllcrt2.o",
-        platform_prefix.."/x86_64-apple-darwin/lib/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -213,26 +177,19 @@ link_shared_s = {
 	},
     stdxxlibs =
 	{
-        "-lstdc++ -lmingw32 -lgcc_s -lgcc", 
-        "-lmoldname -lmingwex -lmsvcrt -ladvapi32",
-        "-lshell32 -luser32 -lkernel32 -lmingw32",
-        "-lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt",
+        "-lstdc++",
+        "-lSystem",
 	},
     stddirs =
 	{
-		"-L"..platform_prefix.."/lib/x86_64",
-		"-L"..platform_prefix.."/lib/gcc/x86_64-apple-darwin/4.8.0",
-		"-L"..platform_prefix.."/x86_64-apple-darwin/lib",
 	},
     stdlibs =
 	{
-		"-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex",
-        "-lmsvcrt -ladvapi32 -lshell32 -luser32 -lkernel32",
-        "-lmingw32 -lgcc_eh -lgcc -lmoldname -lmingwex -lmsvcrt",
+        "-lSystem",
 	},
 	endobject =
 	{
-        platform_prefix.."/x86_64-apple-darwin/lib/crtend.o",
+        "/usr/lib/clang/4.0/lib/darwin/libclang_rt.osx.a",
 	},
 }
 

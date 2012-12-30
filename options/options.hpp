@@ -44,6 +44,10 @@ OPT_##ID,
         {
             m_config = _config;
         }
+        bool showcommand(void) const
+        {
+            return has_option(OPT_v);
+        }
     private:
         XClangOptions();
         int getNextArgsFullMatch(const string &opt,const OptProperty &prop,int i);
