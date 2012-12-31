@@ -46,9 +46,9 @@ XClangPrograms::XClangPrograms(const string &argv0)
         boost::regex re2(string("-xclang"));
         boost::sregex_token_iterator i(filename.begin(),filename.end(), re2, -1);
         boost::sregex_token_iterator j;
-        if (++i != j)
+        if (i != j)
         {
-            m_suffix = *i;
+            m_suffix = string(*i,string("xclang").size());
         }
     }
     catch (...)
@@ -57,7 +57,7 @@ XClangPrograms::XClangPrograms(const string &argv0)
 #if 0
     cout << "m_fullpath=<" << m_fullpath << ">" << endl;
     cout << "m_home=<" << m_home << ">" << endl;
-    cout << "m_target=<" << m_target << ">" << endl;
+//    cout << "m_target=<" << m_target << ">" << endl;
     cout << "m_suffix=<" << m_suffix << ">" << endl;
 #endif
 }

@@ -167,6 +167,10 @@ string XClangOptions::calcLinkCmd(void) const
 
 bool XClangOptions::calcLinkCXX(void) const
 {
+    if( m_prog.iscxx())
+    {
+        return true;
+    }
     for (auto it = m_lang_flags.begin(); it != m_lang_flags.end(); it++)
     {
         if( iConstLanguageCXX == *it)
