@@ -6,6 +6,7 @@ if nil == globalXClangHome then
 end
 binutils_prefix = globalXClangHome.."/binutils/x86_64-pc-linux-gnueabi/bin"
 platform_prefix = globalXClangHome.."/platform/x86_64-pc-linux-gnueabi"
+llvm_prefix     = globalXClangHome.."/llvm"
 
 
 
@@ -25,8 +26,6 @@ xclang =
 	archcflags =
 	{
 		"-D __Linux__",
-        "-D gnu_printf=printf",
-        "-D gnu_scanf=scanf",
 	},
 	archcxxflags =
 	{
@@ -35,12 +34,10 @@ xclang =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
-        "-I "..platform_prefix.."/x86_64-pc-linux-gnueabi/include",
+        "-I "..llvm_prefix.."/lib/clang/*/include",
 	},
 	stdincxx =
 	{
-        "-I "..platform_prefix.."/x86_64-pc-linux-gnueabi/include/c++/4.8.0",
-        "-I "..platform_prefix.."/x86_64-pc-linux-gnueabi/include/c++/4.8.0/x86_64-pc-linux-gnueabi",
 	},
 }
 
