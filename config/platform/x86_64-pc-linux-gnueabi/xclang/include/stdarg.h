@@ -29,6 +29,7 @@
 #ifndef _VA_LIST
 typedef __builtin_va_list va_list;
 #define _VA_LIST
+#define _VA_LIST_DEFINED
 #endif
 #define va_start(ap, param) __builtin_va_start(ap, param)
 #define va_end(ap)          __builtin_va_end(ap)

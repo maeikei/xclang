@@ -35,7 +35,7 @@ xclang =
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
         "-I "..platform_prefix.."/include",
-        "-I "..platform_prefix.."/clang/include",
+        "-I "..platform_prefix.."/xclang/include",
 	},
 	stdincxx =
 	{

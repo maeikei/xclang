@@ -4,8 +4,14 @@ install(FILES ${LUA_SCRIPT} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/share)
 
 
 # install prebuild file.
-FILE(GLOB TAR_BALL platform/*.7z)
-install(FILES ${TAR_BALL} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform)
+#FILE(GLOB TAR_BALL platform/*.7z)
+#install(FILES ${TAR_BALL} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform)
+
+
+# install header files.
+FILE(GLOB HEADERS platform/x86_64-pc-linux-gnueabi/xclang/include/*.h)
+install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/x86_64-pc-linux-gnueabi/xclang/include)
+
 
 # install shell or bat.
 if(WIN32)
