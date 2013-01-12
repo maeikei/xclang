@@ -6,7 +6,6 @@ if nil == globalXClangHome then
 end
 binutils_prefix = globalXClangHome.."/binutils/arm-linux-androideabi/bin"
 platform_prefix = globalXClangHome.."/platform/android-14/arch-arm"
-llvm_prefix = globalXClangHome.."/llvm"
 
 
 
@@ -34,8 +33,8 @@ xclang =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
-        "-I "..llvm_prefix.."/lib/clang/*/include",
         "-I "..platform_prefix.."/usr/include",
+        "-I "..platform_prefix.."/xclang/include",
 	},
 	stdincxx =
 	{

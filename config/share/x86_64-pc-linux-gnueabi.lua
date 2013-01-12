@@ -6,7 +6,6 @@ if nil == globalXClangHome then
 end
 binutils_prefix = globalXClangHome.."/binutils/x86_64-pc-linux-gnueabi/bin"
 platform_prefix = globalXClangHome.."/platform/x86_64-pc-linux-gnueabi"
-llvm_prefix     = globalXClangHome.."/llvm"
 
 
 
