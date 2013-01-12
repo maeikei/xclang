@@ -38,8 +38,6 @@ xclang =
 	},
 	stdincxx =
 	{
-        "-I "..platform_prefix.."/arm-linux-androideabi/include/c++/4.8.0",
-        "-I "..platform_prefix.."/arm-linux-androideabi/include/c++/4.8.0/arm-linux-androideabi",
 	},
 }
 
@@ -69,6 +67,7 @@ link_exe = {
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/lib/crtbegin_dynamic.o",
 	},
     stdxxdirs =
 	{
@@ -79,12 +78,15 @@ link_exe = {
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/lib",
 	},
     stdlibs =
 	{
+        "-lc",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/crtend_android.o",
 	},
 }
 ---------------------------------------------------
@@ -96,6 +98,7 @@ link_exe_s = {
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/lib/crtbegin_static.o",
 	},
     stdxxdirs =
 	{
@@ -106,12 +109,15 @@ link_exe_s = {
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/lib",
 	},
     stdlibs =
 	{
+        "-lc",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/crtend_android.o",
 	},
 }
 
@@ -124,6 +130,7 @@ link_shared = {
     },
 	beginobject =
 	{
+         platform_prefix.."/usr/lib/crtbegin_so.o",
 	},
     stdxxdirs =
 	{
@@ -134,12 +141,15 @@ link_shared = {
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/lib",
 	},
     stdlibs =
 	{
+        "-lc",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/crtend_so.o",
 	},
 }
 
@@ -149,6 +159,7 @@ link_shared = {
 link_shared_s = {
     arch =
     {
+         platform_prefix.."/usr/lib/crtbegin_so.o",
     },
 	beginobject =
 	{
@@ -162,12 +173,15 @@ link_shared_s = {
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/lib",
 	},
     stdlibs =
 	{
+        "-lc",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/crtend_so.o",
 	},
 }
 

@@ -67,6 +67,7 @@ link_exe = {
     },
 	beginobject =
 	{
+        platform_prefix.."/lib/crti.o",
 	},
     stdxxdirs =
 	{
@@ -77,9 +78,11 @@ link_exe = {
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/lib",
 	},
     stdlibs =
 	{
+        "-lc",
 	},
 	endobject =
 	{

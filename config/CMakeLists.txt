@@ -16,9 +16,10 @@ FILE(GLOB HEADERS platform/android/xclang/include/*.h)
 install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-14/arch-arm/xclang/include)
 install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-14/arch-mips/xclang/include)
 install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-14/arch-x86/xclang/include)
-install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-9/arch-arm/xclang/include)
-install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-9/arch-mips/xclang/include)
-install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-9/arch-x86/xclang/include)
+
+#install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-9/arch-arm/xclang/include)
+#install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-9/arch-mips/xclang/include)
+#install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-9/arch-x86/xclang/include)
 
 
 
