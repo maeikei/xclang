@@ -4,7 +4,7 @@ set(XCLANG xclang${XCLANG_SUFFIX})
 add_executable(${XCLANG}
   main.cpp
   )
-target_link_libraries( ${XCLANG} lua driver options)
+target_link_libraries( ${XCLANG} options driver lua driver options)
 target_link_libraries( ${XCLANG} 
 	boost_filesystem 
 	boost_system 
@@ -18,7 +18,7 @@ set(XCLANG xclang${XCLANG_SUFFIX})
 add_executable(${XCLANG}
   main.cpp
   )
-target_link_libraries( ${XCLANG} lua driver options)
+target_link_libraries( ${XCLANG} options driver lua driver options)
 target_link_libraries( ${XCLANG} 
 	boost_filesystem 
 	boost_system 
