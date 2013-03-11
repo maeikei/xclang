@@ -1,1 +1,9 @@
-A cross compiler use clang ,change to command lines
+A cross compiler use clang(llvm).
+Here Do Not introduce clang. please see 
+ http://clang.llvm.org/
+Now clang is not designed like a cross compiler,but a host compiler.
+I want to create a cross compliler of clang.
+Use the orignal clang,some script and some configure file(lua script).
+
+Limit.
+ Simple to add new cross target.
