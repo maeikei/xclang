@@ -1,13 +1,8 @@
 XCLANG_PATH = /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/bin
 
-#target += x86_64-w64-mingw32
+target += x86_64-w64-mingw32
 #target += x86_64-pc-linux-gnueabi
-target += arm-linux-androideabi
-
-
-
-CC = $(XCLANG_PATH)/x86_64-pc-linux-gnueabi-xclang
-CXX = $(CC)++
+#target += arm-linux-androideabi
 
 
 
