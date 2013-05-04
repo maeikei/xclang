@@ -38,7 +38,18 @@ $PACKAGES.each do |arch,packs|
 	end
 end
 `find sdk -type f -name *.deb`.split(/\n/).each do |deb|
-	#`cd #{File.dirname(deb)} && dpkg-deb --show #{File.basename(deb)}
 	`dpkg-deb -x #{deb} #{File::dirname(deb)}/`
 	`rm -f #{deb} `
+end
+
+$ARCHS=
+{
+	'x86_64' => 'x86_64-linux-gnu',
+	'i386' => 'i386-linux-gnu',
+	'armel' => 'arm-linux-gnueabi',
+	'armhf' => 'arm-linux-gnueabihf',
+}
+$ARCHS.each do |name,arch|
+	namedir= `find sdk -type d -name "#{name}"`.gsub(/\n/,"")
+	`tar -cjvf #{arch}.tar.bz2 -C #{namedir} .`
 end
