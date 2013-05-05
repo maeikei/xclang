@@ -1,0 +1,3 @@
+#!/bin/bash
+xclang_path='echo $0 | sed -e "s/arm-linux-gnueabi-//"'
+${xclang_path} --xclang-target arm-linux-gnueabi $*
