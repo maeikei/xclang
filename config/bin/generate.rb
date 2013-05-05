@@ -16,16 +16,16 @@ EOS
 	run_shell.gsub!(/\(/,"{")
 	run_shell.gsub!(/\)/,"}")
 	run_shell.gsub!(/dollar/,"$")
-	open("shell/#{prefix}-clang","w") { |f| f.write run_shell }
-	open("shell/#{prefix}-clang++","w") { |f| f.write run_shell }
+	open("shell/#{prefix}-xclang","w") { |f| f.write run_shell }
+	open("shell/#{prefix}-xclang++","w") { |f| f.write run_shell }
 
 run_bat = <<EOS
 @set pwd_path=%~dp0
 @set xclang_path=%pwd_path%xclang.exe
 @"%xclang_path%" --xclang-target x86_64-pc-linux-gnueabi %*
 EOS
-        open("bat/#{prefix}-clang.bat","w") { |f| f.write run_bat }
-        open("bat/#{prefix}-clang++.bat","w") { |f| f.write run_bat }
+        open("bat/#{prefix}-xclang.bat","w") { |f| f.write run_bat }
+        open("bat/#{prefix}-xclang++.bat","w") { |f| f.write run_bat }
 
 
 
