@@ -1,11 +1,14 @@
 target += i686-w64-mingw32
 target += x86_64-w64-mingw32
 
-target += x86_64-pc-linux-gnueabi
+target += i386-linux-gnu
+target += x86_64-linux-gnu
+target += arm-linux-gnueabi
+target += arm-linux-gnueabihf
 
-target += arm-linux-androideabi
-target += mipsel-linux-android
-target += i686-linux-android
+#target += arm-linux-androideabi
+#target += mipsel-linux-android
+#target += i686-linux-android
 
 
 SRC   := binutils-2.23.1

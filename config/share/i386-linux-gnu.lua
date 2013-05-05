@@ -4,8 +4,8 @@
 if nil == globalXClangHome then
 	globalXClangHome = "C:/xclang-dev/xclang-obj/InstallRoot"
 end
-binutils_prefix = globalXClangHome.."/binutils/x86_64-pc-linux-gnueabi/bin"
-platform_prefix = globalXClangHome.."/platform/x86_64-pc-linux-gnueabi"
+binutils_prefix = globalXClangHome.."/binutils/i386-linux-gnu/bin"
+platform_prefix = globalXClangHome.."/platform/i386-linux-gnu"
 
 
 
@@ -17,7 +17,7 @@ xclang =
 {
 	props =
 	{
-		triple		    = "x86_64-pc-linux-gnueabi",
+		triple		    = "i386-linux-gnu",
 		objext		    = ".o",
 		asmext		    = ".s",
 		defaultexe		= "a.out",

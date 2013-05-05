@@ -11,8 +11,8 @@ run_shell = <<EOS
 xclang_path=<echo dollar0 | sed -e "s/#{prefix}-//">
 dollar(xclang_path) --xclang-target #{prefix} dollar*
 EOS
-	run_shell.gsub!(/</,"'")
-	run_shell.gsub!(/>/,"'")
+	run_shell.gsub!(/</,"`")
+	run_shell.gsub!(/>/,"`")
 	run_shell.gsub!(/\(/,"{")
 	run_shell.gsub!(/\)/,"}")
 	run_shell.gsub!(/dollar/,"$")
