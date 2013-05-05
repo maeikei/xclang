@@ -33,7 +33,8 @@ xclang =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
-        "-I "..platform_prefix.."/include",
+        "-I "..platform_prefix.."/usr/include",
+        "-I "..platform_prefix.."/usr/include/i386-linux-gnu",
         "-I "..platform_prefix.."/xclang/include",
 	},
 	stdincxx =
@@ -67,7 +68,7 @@ link_exe = {
     },
 	beginobject =
 	{
-        platform_prefix.."/lib/crti.o",
+        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
 	},
     stdxxdirs =
 	{
@@ -78,7 +79,7 @@ link_exe = {
 	},
     stddirs =
 	{
-        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/usr/lib",
 	},
     stdlibs =
 	{
@@ -97,6 +98,7 @@ link_exe_s = {
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/lib/crti.o",
 	},
     stdxxdirs =
 	{
@@ -107,6 +109,7 @@ link_exe_s = {
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/lib",
 	},
     stdlibs =
 	{

@@ -9,8 +9,15 @@ install(FILES ${LUA_SCRIPT} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/share)
 
 
 # install header files.
-FILE(GLOB HEADERS platform/x86_64-pc-linux-gnueabi/xclang/include/*.h)
-install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/x86_64-pc-linux-gnueabi/xclang/include)
+FILE(GLOB HEADERS platform/i386-linux-gnu/xclang/include/*.h)
+install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/i386-linux-gnu/xclang/include)
+FILE(GLOB HEADERS platform/x86_64-linux-gnu/xclang/include/*.h)
+install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/x86_64-linux-gnu/xclang/include)
+FILE(GLOB HEADERS platform/arm-linux-gnueabi/xclang/include/*.h)
+install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/arm-linux-gnueabi/xclang/include)
+FILE(GLOB HEADERS platform/arm-linux-gnueabihf/xclang/include/*.h)
+install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/arm-linux-gnueabihf/xclang/include)
+
 
 FILE(GLOB HEADERS platform/android/xclang/include/*.h)
 install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/android-14/arch-arm/xclang/include)
