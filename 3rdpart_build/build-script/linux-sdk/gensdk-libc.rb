@@ -21,7 +21,7 @@ $PACKAGES =
 	],
 	'i386' =>
 	[
-        ['main/g/gcc-4.7','libgcc1_4.7.3-1ubuntu1_amd64.deb'],
+        ['main/g/gcc-4.7','libgcc1_4.7.3-1ubuntu1_i386.deb'],
         ['main/g/gcc-4.7','libgcc-4.7-dev_4.7.3-1ubuntu1_i386.deb'],
         ['main/l/linux','linux-libc-dev_3.8.0-19.29_i386.deb'],
 		['main/e/eglibc','libc6_2.17-0ubuntu5_i386.deb'],
