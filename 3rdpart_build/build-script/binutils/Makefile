@@ -15,7 +15,8 @@ SRC   := binutils-2.23.2
 install :=$(shell pwd)/install/binutils
 
 
-CROSS_ROOT  := /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/
+#CROSS_ROOT  := /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/
+CROSS_ROOT  := /home/ma/workspace/xclang-dev/obj/InstallRoot/
 
 MKDIR := mkdir
 MAKE  := make
