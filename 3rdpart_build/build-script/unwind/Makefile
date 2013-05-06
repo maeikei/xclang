@@ -29,7 +29,9 @@ all:$(target)
 
 $(target):
 	$(MKDIR) -p ./objects/$@
-	$(CD) ./objects/$@;../../$(SRC)/configure --target=$@ --prefix=$(CROSS_ROOT)/platform/$@\
+	$(CD) $(SRC) && autoreconf -i
+	$(CD) ./objects/$@;\
+	../../$(SRC)/configure --target=$@ --prefix=$(CROSS_ROOT)/platform/$@\
 	CC=$(CROSS_ROOT)/bin/$@-xclang CXX=$(CROSS_ROOT)/bin/$@-xclang++ 
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
