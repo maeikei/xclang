@@ -7,7 +7,7 @@ using namespace xclang;
 
 //#define DEBUG_ACTIONS
 //#define DEBUG_ACTIONS_CC
-#define DEBUG_ACTIONS_LINKER
+//#define DEBUG_ACTIONS_LINKER
 
 XClangDriver::XClangDriver(const int argc,const char *argv[])
 :m_program(argv[0])
