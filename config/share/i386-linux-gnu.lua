@@ -71,7 +71,7 @@ link_exe = {
     },
 	beginobject =
 	{
-        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
+        platform_prefix.."/usr/lib/i386-linux-gnu/crt1.o",
 	},
     stdxxdirs =
 	{
@@ -94,6 +94,7 @@ link_exe = {
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/i386-linux-gnu/crtn.o",
 	},
 }
 ---------------------------------------------------
@@ -105,7 +106,7 @@ link_exe_s = {
     },
 	beginobject =
 	{
-        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
+        platform_prefix.."/usr/lib/i386-linux-gnu/crt1.o",
 	},
     stdxxdirs =
 	{
@@ -125,6 +126,7 @@ link_exe_s = {
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/i386-linux-gnu/crtn.o",
 	},
 }
 
@@ -160,6 +162,7 @@ link_shared = {
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/i386-linux-gnu/crtn.o",
 	},
 }
 
@@ -192,6 +195,7 @@ link_shared_s = {
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/i386-linux-gnu/crtn.o",
 	},
 }
 

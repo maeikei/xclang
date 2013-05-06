@@ -284,12 +284,9 @@ list<string> XClangOptions::getLinkActions(void)
             opts += pLinker->stdxxlibs();
         }
     }
-    else
+    if( not has(nostdlib) )
     {
-        if( not has(nostdlib) )
-        {
-            opts += pLinker->stdlibs();
-        }
+        opts += pLinker->stdlibs();
     }
     opts += pLinker->endobject();
     actions.push_back(opts);
