@@ -18,6 +18,9 @@ MAKE  := make
 CD    := cd
 RM    := rm
 
+CROSS_ROOT  := /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/
+
+
 .PHONY: $(target)
 
 all:$(target)
@@ -26,7 +29,7 @@ $(target):
 	$(MKDIR) -p ./objects/$@
 	-$(CD) ./objects/$@ &&\
 		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
-		-DCMAKE_INSTALL_PREFIX=$(install)
+		-DCMAKE_INSTALL_PREFIX=$(CROSS_ROOT)/platform/$@/cxx
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
 

@@ -38,6 +38,7 @@ xclang =
         "-isystem "..platform_prefix,
         "-I "..platform_prefix.."/usr/include",
         "-I "..platform_prefix.."/usr/include/i386-linux-gnu",
+        "-I "..platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/include/",
         "-I "..platform_prefix.."/xclang/include",
 	},
 	stdincxx =
@@ -85,7 +86,7 @@ link_exe = {
 	},
     stdxxlibs =
 	{
---        "-lcxxrt",
+        "-lc++abi",
         "-lc++",
  	},
     stddirs =
@@ -93,13 +94,14 @@ link_exe = {
         "-L"..platform_prefix.."/lib",
         "-L"..platform_prefix.."/lib/i386-linux-gnu",
         "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
-		"-L"..platform_prefix.."/cxx/lib",
+		"-L"..platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7",
 	},
     stdlibs =
 	{
         "-lc",
         "-lpthread",
-        "-lCompilerRT",
+        "-lgcc_s",
+--        "-lCompilerRT",
 --        "-lcxxstub",
 	},
 	endobject =
@@ -124,7 +126,7 @@ link_exe_s = {
 	},
     stdxxlibs =
 	{
-        "-lcxxrt",
+        "-lc++abi",
         "-lc++",
 	},
     stddirs =
@@ -132,14 +134,15 @@ link_exe_s = {
         "-L"..platform_prefix.."/lib",
         "-L"..platform_prefix.."/lib/i386-linux-gnu",
         "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
-		"-L"..platform_prefix.."/cxx/lib",
+		"-L"..platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7",
 	},
     stdlibs =
 	{
         "-lc",
         "-lpthread",
-        "-lCompilerRT",
-        "-lcxxstub",
+        "-lgcc",
+--        "-lCompilerRT",
+--        "-lcxxstub",
 	},
 	endobject =
 	{
@@ -168,7 +171,7 @@ link_shared = {
 	},
     stdxxlibs =
 	{
-        "-lcxxrt",
+        "-lc++abi",
         "-lc++",
 	},
     stddirs =
@@ -176,14 +179,15 @@ link_shared = {
         "-L"..platform_prefix.."/lib",
         "-L"..platform_prefix.."/lib/i386-linux-gnu",
         "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
-		"-L"..platform_prefix.."/cxx/lib",
+		"-L"..platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7",
 	},
     stdlibs =
 	{
         "-lc",
         "-lpthread",
-        "-lCompilerRT",
-        "-lcxxstub",
+        "-lgcc_s",
+--        "-lCompilerRT",
+--        "-lcxxstub",
 	},
 	endobject =
 	{
@@ -208,7 +212,7 @@ link_shared_s = {
 	},
     stdxxlibs =
 	{
-        "-lcxxrt",
+        "-lc++abi",
         "-lc++",
 	},
     stddirs =
@@ -216,14 +220,15 @@ link_shared_s = {
         "-L"..platform_prefix.."/lib",
         "-L"..platform_prefix.."/lib/i386-linux-gnu",
         "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
-		"-L"..platform_prefix.."/cxx/lib",
+		"-L"..platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7",
 	},
     stdlibs =
 	{
         "-lc",
         "-lpthread",
-        "-lCompilerRT",
-        "-lcxxstub",
+        "-lgcc",
+--        "-lCompilerRT",
+--        "-lcxxstub",
 	},
 	endobject =
 	{

@@ -32,7 +32,7 @@ $(target):
 		-DLIBCXX_CXX_ABI=libcxxabi\
 		-DLIBCXX_LIBCXXABI_INCLUDE_PATHS="$(ABISRC)/include"\
 		-DLIBCXX_ENABLE_SHARED=0\
-		-DCMAKE_INSTALL_PREFIX=$(install)
+		-DCMAKE_INSTALL_PREFIX=$(CROSS_ROOT)/platform/$@/cxx
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
 
