@@ -15,6 +15,7 @@ SRC   := binutils-2.23.1
 install :=$(shell pwd)/install/binutils
 
 
+SYSROOT :=/Users/maeikei/workspace/xclang-dev/obj/InstallRoot/platform
 
 MKDIR := mkdir
 MAKE  := make
@@ -28,7 +29,8 @@ all:$(target)
 
 $(target):
 	$(MKDIR) -p ./objects/$@
-	$(CD) ./objects/$@;../../$(SRC)/configure --target=$@ --prefix=$(install)
+	$(CD) ./objects/$@;../../$(SRC)/configure --target=$@ --prefix=$(install)\
+		--with-build-sysroot=$(SYSROOT)/$@
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
 

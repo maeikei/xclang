@@ -26,6 +26,7 @@ xclang =
 	{
 		"-D __Linux__",
         "-fexceptions",
+		"-pthread",
 	},
 	archcxxflags =
 	{
@@ -68,10 +69,15 @@ toolchain = {
 link_exe = {
     arch =
     {
+--        "--sysroot="..platform_prefix.."/",
+        "--build-id --eh-frame-hdr -m elf_i386",
+        "-dynamic-linker /lib/ld-linux.so.2",
+        "-z relro",
     },
 	beginobject =
 	{
         platform_prefix.."/usr/lib/i386-linux-gnu/crt1.o",
+        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
 	},
     stdxxdirs =
 	{
@@ -79,18 +85,21 @@ link_exe = {
 	},
     stdxxlibs =
 	{
-        "-lc++",
         "-lcxxrt",
-	},
+        "-lc++",
+ 	},
     stddirs =
 	{
         "-L"..platform_prefix.."/lib",
         "-L"..platform_prefix.."/lib/i386-linux-gnu",
         "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdlibs =
 	{
         "-lc",
+        "-lpthread",
+        "-lCompilerRT",
 	},
 	endobject =
 	{
@@ -114,15 +123,21 @@ link_exe_s = {
 	},
     stdxxlibs =
 	{
-        "-lc++",
         "-lcxxrt",
+        "-lc++",
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/lib/i386-linux-gnu",
         "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdlibs =
 	{
+        "-lc",
+        "-lpthread",
+        "-lCompilerRT",
 	},
 	endobject =
 	{
@@ -136,6 +151,10 @@ link_exe_s = {
 link_shared = {
     arch =
     {
+--        "--sysroot="..platform_prefix.."/",
+        "--build-id --eh-frame-hdr -m elf_i386",
+        "-dynamic-linker /lib/ld-linux.so.2",
+        "-z relro",
     },
 	beginobject =
 	{
@@ -147,18 +166,21 @@ link_shared = {
 	},
     stdxxlibs =
 	{
-        "-lc++",
         "-lcxxrt",
+        "-lc++",
 	},
     stddirs =
 	{
         "-L"..platform_prefix.."/lib",
         "-L"..platform_prefix.."/lib/i386-linux-gnu",
         "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdlibs =
 	{
         "-lc",
+        "-lpthread",
+        "-lCompilerRT",
 	},
 	endobject =
 	{
@@ -172,10 +194,10 @@ link_shared = {
 link_shared_s = {
     arch =
     {
-        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
 	},
     stdxxdirs =
 	{
@@ -183,15 +205,21 @@ link_shared_s = {
 	},
     stdxxlibs =
 	{
-        "-lc++",
         "-lcxxrt",
+        "-lc++",
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/lib/i386-linux-gnu",
         "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdlibs =
 	{
+        "-lc",
+        "-lpthread",
+        "-lCompilerRT",
 	},
 	endobject =
 	{

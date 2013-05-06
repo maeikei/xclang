@@ -8,7 +8,7 @@ target += i386-linux-gnu
 
 
 PWD     := $(shell pwd)
-SRC     := $(PWD)/compiler-rt
+SRC     := $(PWD)/libcxxstub
 install := $(PWD)/install
 
 
@@ -27,8 +27,7 @@ all:$(target)
 $(target):
 	$(MKDIR) -p ./objects/$@
 	-$(CD) ./objects/$@ &&\
-		cmake $(SRC)/crossbuild -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
-		-DCMAKE_INSTALL_PREFIX=$(install)
+		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake -DCMAKE_INSTALL_PREFIX=$(install)
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
 
