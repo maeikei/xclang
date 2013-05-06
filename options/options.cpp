@@ -156,6 +156,10 @@ list<string> XClangOptions::getCC1Actions(void)
                 act = "cc";
                 opt_elment += adjustCC1Options(iConstLanguageC);
                 break;
+            case iConstLanguageASM:
+                act = "cc1as";
+                opt_elment += adjustCC1Options(iConstLanguageASM);
+                break;
             case iConstLanguageCXX:
             default:
                 opt_elment += adjustCC1Options(iConstLanguageCXX);
@@ -359,6 +363,14 @@ bool XClangOptions::has_option(int opt_id) const
 string XClangOptions::adjustCC1Options(int lang) const
 {
     string ret;
+    if ( iConstLanguageASM == lang)
+    {
+        for (auto it = m_config->m_defaultasmcppcflags.begin();it != m_config->m_defaultasmcppcflags.end();it++ )
+        {
+            ret += " " + *it;
+        }
+        return ret + " ";
+    }
     for (auto it = m_config->m_defaultcflags.begin();it != m_config->m_defaultcflags.end();it++ )
     {
         ret += " " + *it;
@@ -394,6 +406,9 @@ string XClangOptions::adjustCC1Options(int lang) const
                 ret += " " + *it;
             }
         }
+    }
+    if ( iConstLanguageASM == lang)
+    {
     }
     ret += " ";
     return ret;
