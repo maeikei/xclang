@@ -18,5 +18,8 @@
 3rdpart_build/build-script/cxxstub/objects
 3rdpart_build/build-script/cxxstub/install
 
+3rdpart_build/build-script/cxxabi/libcxxabi
+3rdpart_build/build-script/cxxabi/objects
+3rdpart_build/build-script/cxxabi/install
                                                                                                                                   
 

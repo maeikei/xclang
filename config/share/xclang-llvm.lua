@@ -44,7 +44,7 @@ clang =
 	},
 	defaultcxxflags =
 	{
-		"",
+		"-stdlib=libc++",
 	},
 }
 

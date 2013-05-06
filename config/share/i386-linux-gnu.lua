@@ -85,7 +85,7 @@ link_exe = {
 	},
     stdxxlibs =
 	{
-        "-lcxxrt",
+--        "-lcxxrt",
         "-lc++",
  	},
     stddirs =
@@ -100,6 +100,7 @@ link_exe = {
         "-lc",
         "-lpthread",
         "-lCompilerRT",
+--        "-lcxxstub",
 	},
 	endobject =
 	{
@@ -138,6 +139,7 @@ link_exe_s = {
         "-lc",
         "-lpthread",
         "-lCompilerRT",
+        "-lcxxstub",
 	},
 	endobject =
 	{
@@ -181,6 +183,7 @@ link_shared = {
         "-lc",
         "-lpthread",
         "-lCompilerRT",
+        "-lcxxstub",
 	},
 	endobject =
 	{
@@ -220,6 +223,7 @@ link_shared_s = {
         "-lc",
         "-lpthread",
         "-lCompilerRT",
+        "-lcxxstub",
 	},
 	endobject =
 	{

@@ -10,7 +10,6 @@ target += i386-linux-gnu
 PWD     := $(shell pwd)
 SRC     := $(PWD)/libcxx
 install := $(PWD)/install
-ABISRC   := $(PWD)/../cxxabi/libcxxabi
 
 
 
@@ -18,8 +17,6 @@ MKDIR := mkdir
 MAKE  := make
 CD    := cd
 RM    := rm
-
-CROSS_ROOT  := /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/
 
 .PHONY: $(target)
 
@@ -29,9 +26,6 @@ $(target):
 	$(MKDIR) -p ./objects/$@
 	-$(CD) ./objects/$@ &&\
 		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
-		-DLIBCXX_CXX_ABI=libcxxabi\
-		-DLIBCXX_LIBCXXABI_INCLUDE_PATHS="$(ABISRC)/include"\
-		-DLIBCXX_ENABLE_SHARED=0\
 		-DCMAKE_INSTALL_PREFIX=$(install)
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
