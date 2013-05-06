@@ -83,6 +83,7 @@ const map<string,OptProperty> XClangOptions::m_xclang_options_prefix_match = gen
 
 
 //#define DEBUG
+//#define DEBUG_INPUTS
 
 #define dout std::cout << __func__ << ":" << __LINE__ << ":"
 
@@ -160,8 +161,14 @@ void XClangOptions::splitArgs(void)
                 itpre != m_xclang_options_prefix_match.rend();itpre++ )
             {
                 auto pos = vStr.find(itpre->first);
-                if ( string::npos != pos)
+                if ( string::npos != pos && 0 == pos)
                 {
+#ifdef DEBUG_INPUTS
+                    dout << "pos=<" << pos << ">" << endl;
+                    dout << "vStr=<" << vStr << ">" << endl;
+                    dout << "itpre->first=<" << itpre->first << ">" << endl;
+//                    dout << "itpre->second=<" << itpre->second << ">" << endl;
+#endif
                     i = getNextArgsPrefixMatch(vStr,itpre->first,itpre->second,i);
                     prefix_match = true;
                     break;
@@ -295,6 +302,9 @@ int XClangOptions::getNextArgsPrefixMatch(const string &opt,const string &prefix
 }
 int XClangOptions::getNextArgsInputs(const string &opt,int i)
 {
+#ifdef DEBUG_INPUTS
+    dout << "opt=<" << opt << ">" << endl;
+#endif
     if( opt.at(0) == '-' )
     {
         m_unknown_options.push_back(opt);

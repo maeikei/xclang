@@ -20,6 +20,9 @@ using namespace boost::assign;
 using namespace std;
 
 
+//#define DEBUG_CC1
+//#define DEBUG_CC1_LUA
+
 
 #define has(x) has_option(OPT_##x)
 
@@ -66,7 +69,9 @@ list<string> XClangOptions::getCC1Actions(void)
         opts += *it;
         opts += " ";
     }
-
+#ifdef DEBUG_CC1
+    cout <<__func__<< " opts=<"<< opts <<">"<< endl;
+#endif
     //
     if(has(_version))
     {
@@ -87,9 +92,16 @@ list<string> XClangOptions::getCC1Actions(void)
     {
         extension = m_config->getProperty("asmext");
     }
+#ifdef DEBUG_CC1
+    cout <<__func__<< " extension=<"<< extension <<">"<< endl;
+    cout <<__func__<< " m_input_files.size()=<"<< m_input_files.size() <<">"<< endl;
+#endif
     
     for(auto it = m_input_files.begin();it !=  m_input_files.end();it++)
     {
+#ifdef DEBUG_CC1
+        cout <<__func__<< " it=<"<< *it <<">"<< endl;
+#endif
         string opt_elment(opts);
         if( has(c) || has(S))
         {
@@ -335,6 +347,9 @@ string XClangOptions::adjustCC1Options(int lang) const
             ret += " " + *it;
         }
     }
+#ifdef DEBUG_CC1_LUA
+    cout << "lang=<" << lang << ">" << endl;
+#endif
     if ( iConstLanguageCXX == lang)
     {
         for (auto it = m_config->m_defaultcxxflags.begin();it != m_config->m_defaultcxxflags.end();it++ )

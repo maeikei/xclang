@@ -25,9 +25,11 @@ xclang =
 	archcflags =
 	{
 		"-D __Linux__",
+        "-fexceptions",
 	},
 	archcxxflags =
 	{
+        "-fcxx-exceptions",
 	},
 	stdinc =
 	{

@@ -8,8 +8,9 @@ using namespace xclang;
 
 #include "boost/filesystem.hpp"
 namespace fs = boost::filesystem;
-
 #include <boost/regex.hpp>
+
+//#define DEBUG_PATH
 
 XClangPrograms::XClangPrograms(const string &argv0)
 :m_argv0(argv0)
@@ -54,7 +55,7 @@ XClangPrograms::XClangPrograms(const string &argv0)
     catch (...)
     {
     }
-#if 0
+#ifdef DEBUG_PATH
     cout << "m_fullpath=<" << m_fullpath << ">" << endl;
     cout << "m_home=<" << m_home << ">" << endl;
 //    cout << "m_target=<" << m_target << ">" << endl;
