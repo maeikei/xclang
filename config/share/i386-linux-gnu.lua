@@ -81,7 +81,9 @@ link_exe = {
 	},
     stddirs =
 	{
-        "-L"..platform_prefix.."/usr/lib",
+        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/lib/i386-linux-gnu",
+        "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
 	},
     stdlibs =
 	{
@@ -100,7 +102,7 @@ link_exe_s = {
     },
 	beginobject =
 	{
-        platform_prefix.."/usr/lib/crti.o",
+        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
 	},
     stdxxdirs =
 	{
@@ -111,7 +113,7 @@ link_exe_s = {
 	},
     stddirs =
 	{
-        "-L"..platform_prefix.."/usr/lib",
+        "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
 	},
     stdlibs =
 	{
@@ -130,6 +132,7 @@ link_shared = {
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
 	},
     stdxxdirs =
 	{
@@ -140,9 +143,13 @@ link_shared = {
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/lib/i386-linux-gnu",
+        "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
 	},
     stdlibs =
 	{
+        "-lc",
 	},
 	endobject =
 	{
@@ -155,6 +162,7 @@ link_shared = {
 link_shared_s = {
     arch =
     {
+        platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
     },
 	beginobject =
 	{
@@ -168,6 +176,7 @@ link_shared_s = {
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/lib/i386-linux-gnu",
 	},
     stdlibs =
 	{

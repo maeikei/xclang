@@ -5,20 +5,15 @@ using namespace std;
 #include "driver.hpp"
 using namespace xclang;
 
-//#define DEBUG_CMDLINE
 //#define DEBUG_ACTIONS
+//#define DEBUG_ACTIONS_CC
+#define DEBUG_ACTIONS_LINKER
 
 XClangDriver::XClangDriver(const int argc,const char *argv[])
 :m_program(argv[0])
 ,m_opt(argc,argv,m_program)
 ,m_config(nullptr)
 {
-#ifdef DEBUG_CMDLINE
-    for(auto it = 0; it < argc  ;it++ )
-    {
-        cout << "argv=<" << argv[it] << ">" << endl;
-    }
-#endif
     m_config = new ConfigReader(m_program.gethome(),m_program,m_opt);
     m_program.setConfig(m_config);
     m_opt.setConfig(m_config);
@@ -36,7 +31,7 @@ int XClangDriver::exce(void)
     list<string> actions = m_opt.getCC1Actions();
     for(auto it = actions.begin(); it != actions.end()  ;it++ )
     {
-#ifdef DEBUG_ACTIONS
+#ifdef DEBUG_ACTIONS_CC
         cout << "cmdline=<" << *it << ">" << endl;
 #endif
         ret = system(it->c_str());
@@ -44,7 +39,7 @@ int XClangDriver::exce(void)
     list<string> linkActions = m_opt.getLinkActions();
     for(auto it = linkActions.begin(); it != linkActions.end()  ;it++ )
     {
-#ifdef DEBUG_ACTIONS
+#ifdef DEBUG_ACTIONS_LINKER
         cout << "cmdline=<" << *it << ">" << endl;
 #endif
         if(m_opt.showcommand())

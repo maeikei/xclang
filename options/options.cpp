@@ -14,6 +14,8 @@ namespace fs = boost::filesystem;
 #include "options.hpp"
 using namespace xclang;
 #include <boost/assign/list_of.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/regex.hpp>
 using namespace boost::assign;
 #include <iostream>
 #include <iterator>
@@ -23,6 +25,7 @@ using namespace std;
 //#define DEBUG_CC1
 //#define DEBUG_CC1_LUA
 
+#define DEBUG_LINK
 
 #define has(x) has_option(OPT_##x)
 
@@ -217,7 +220,7 @@ list<string> XClangOptions::getLinkActions(void)
         }
         else
         {
-            pLinker = new linkConfigShared(m_config);            
+            pLinker = new linkConfigShared(m_config);
         }
     }
     else
@@ -249,7 +252,21 @@ list<string> XClangOptions::getLinkActions(void)
     for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
     {
         opts += " ";
-        opts += *it;
+        string ldOption(*it);
+        boost::algorithm::replace_all(ldOption, "Wl,", "");
+        boost::regex reg("--soname.*");
+        if(boost::regex_match(ldOption,reg))
+        {
+            if (has(o))
+            {
+                continue;
+            }
+            else
+            {
+                boost::algorithm::replace_all(ldOption, "--soname,", " -o ");
+            }
+        }
+        opts += ldOption;
     }
     for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
     {
@@ -481,6 +498,9 @@ string linkConfigExe::stdlibs(void) const
 {
     string ret;
     concatValuesExe(stdlibs);
+#ifdef DEBUG_LINK
+    cout << typeid(*this).name() <<"::"<< __func__ << " ret=<" << ret << ">"<< endl;
+#endif
     return ret;
 }
 string linkConfigExe::endobject(void) const
@@ -538,6 +558,9 @@ string linkConfigExeStatic::stdlibs(void) const
     {
         string ret;
         concatValuesExeS(stdlibs);
+#ifdef DEBUG_LINK
+        cout << typeid(*this).name() <<"::"<< __func__ << " ret=<" << ret << ">"<< endl;
+#endif
         return ret;
     }
 string linkConfigExeStatic::endobject(void) const
@@ -595,6 +618,9 @@ string linkConfigShared::stdlibs(void) const
     {
         string ret;
         concatValuesShared(stdlibs);
+#ifdef DEBUG_LINK
+        cout << typeid(*this).name() <<"::"<< __func__ << " ret=<" << ret << ">"<< endl;
+#endif
         return ret;
     }
 string linkConfigShared::endobject(void) const
@@ -653,6 +679,9 @@ string linkConfigSharedStatic::stdlibs(void) const
     {
         string ret;
         concatValuesSharedS(stdlibs);
+#ifdef DEBUG_LINK
+        cout << typeid(*this).name() <<"::"<< __func__ << " ret=<" << ret << ">"<< endl;
+#endif
         return ret;
     }
 string linkConfigSharedStatic::endobject(void) const
