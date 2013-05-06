@@ -8,8 +8,9 @@ target += i386-linux-gnu
 
 
 PWD     := $(shell pwd)
-SRC     := $(PWD)/libcxxrt
+SRC     := $(PWD)/libcxx
 install := $(PWD)/install
+RTSRC   := $(PWD)/../cxxrt/libcxxrt
 
 
 
@@ -27,9 +28,13 @@ all:$(target)
 $(target):
 	$(MKDIR) -p ./objects/$@
 	-$(CD) ./objects/$@ &&\
-		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/$@.cmake -DCMAKE_INSTALL_PREFIX=$(install)
+		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
+		-DLIBCXX_CXX_ABI=libcxxrt\
+		-DLIBCXX_LIBCXXRT_INCLUDE_PATHS="$(RTSRC)/src"\
+		-DLIBCXX_ENABLE_SHARED=0\
+		-DCMAKE_INSTALL_PREFIX=$(install)
 	$(MAKE) -C ./objects/$@ all -j4
-	#$(MAKE) -C ./objects/$@ install
+	$(MAKE) -C ./objects/$@ install
 
 clean:
 	$(RM) -rf objects
