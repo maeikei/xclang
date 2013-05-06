@@ -8,7 +8,7 @@ target += i386-linux-gnu
 
 
 PWD     := $(shell pwd)
-SRC     := $(PWD)/libcxx
+SRC     := $(PWD)/libcxxabi
 install := $(PWD)/install
 
 
