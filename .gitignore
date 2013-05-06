@@ -6,3 +6,9 @@
 3rdpart_build/build-script/cxxrt/libcxxrt
 3rdpart_build/build-script/cxxrt/objects
 3rdpart_build/build-script/cxxrt/install
+
+3rdpart_build/build-script/cxx/libcxx
+3rdpart_build/build-script/cxx/objects
+3rdpart_build/build-script/cxx/install
+~                                                                                                                                  
+
