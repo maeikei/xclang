@@ -21,7 +21,8 @@ $(target):
 	$(XCLANG_PATH)/$@-xclang sub.c main.c -S
 #	$(XCLANG_PATH)/$@-xclang sub.c main.c -E
 	$(XCLANG_PATH)/$@-xclang++ main.cpp -L./ -L ../ -I./ -I ../ -S -o main.cpp.clang.s
-	$(XCLANG_PATH)/$@-xclang++ main.cpp gc.cpp -L./ -L ../ -I./ -I ../ -o main.cpp.o
+#	$(XCLANG_PATH)/$@-xclang++ main.cpp gc.cpp -L./ -L ../ -I./ -I ../ -o main.cpp.o
+	$(XCLANG_PATH)/$@-xclang++ main.cpp -L./ -L ../ -I./ -I ../ -o main.cpp.o
 
 
 clean:

@@ -41,6 +41,7 @@ xclang =
 	},
 	stdincxx =
 	{
+        "-I "..platform_prefix.."/cxx/include/c++/v1",
 	},
 }
 
@@ -74,10 +75,12 @@ link_exe = {
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
+        "-lc++",
+        "-lcxxrt",
 	},
     stddirs =
 	{
@@ -106,10 +109,12 @@ link_exe_s = {
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
+        "-lc++",
+        "-lcxxrt",
 	},
     stddirs =
 	{
@@ -136,10 +141,12 @@ link_shared = {
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
+        "-lc++",
+        "-lcxxrt",
 	},
     stddirs =
 	{
@@ -169,10 +176,12 @@ link_shared_s = {
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
+        "-lc++",
+        "-lcxxrt",
 	},
     stddirs =
 	{

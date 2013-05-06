@@ -10,5 +10,11 @@
 3rdpart_build/build-script/cxx/libcxx
 3rdpart_build/build-script/cxx/objects
 3rdpart_build/build-script/cxx/install
-~                                                                                                                                  
+
+3rdpart_build/build-script/compiler-rt/compiler-rt
+3rdpart_build/build-script/compiler-rt/objects
+3rdpart_build/build-script/compiler-rt/install
+
+
+                                                                                                                                  
 

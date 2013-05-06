@@ -25,7 +25,7 @@ using namespace std;
 //#define DEBUG_CC1
 //#define DEBUG_CC1_LUA
 
-#define DEBUG_LINK
+//#define DEBUG_LINK
 
 #define has(x) has_option(OPT_##x)
 
