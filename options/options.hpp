@@ -84,8 +84,6 @@ OPT_##ID,
         vector<string> m_unknown_options;
         static const map<string,OptProperty> m_xclang_options_full_match;
         static const map<string,OptProperty> m_xclang_options_prefix_match;
-//        static const map<string,int> m_clang_options;
-//        static const map<string,int> m_clang_cc1_options;
     };
 }
 #endif // __OPTIONS_HPP_

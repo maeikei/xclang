@@ -26,6 +26,8 @@ using namespace std;
 //#define DEBUG_CC1_LUA
 
 //#define DEBUG_LINK
+//#define DEBUG_LANG
+
 
 #define has(x) has_option(OPT_##x)
 
@@ -105,15 +107,20 @@ list<string> XClangOptions::getCC1Actions(void)
 #ifdef DEBUG_CC1
         cout <<__func__<< " it=<"<< *it <<">"<< endl;
 #endif
+        string input(*it);
+        if ( string::npos != it->find(" "))
+        {
+            input = "\"" + input + "\"";
+        }
         string opt_elment(opts);
         if( has(c) || has(S))
         {
             opt_elment += " ";
-            opt_elment += *it;
+            opt_elment += input;
             if( not has(o) )
             {
                 opt_elment += " -o ";
-                fs::path fileName(*it);
+                fs::path fileName(input);
                 fileName.replace_extension(extension);
                 opt_elment += fileName.string();
             }
@@ -126,13 +133,13 @@ list<string> XClangOptions::getCC1Actions(void)
         else if( has(E) )
         {
             opt_elment += " ";
-            opt_elment += *it;
+            opt_elment += input;
             opt_elment += " -o -";
         }
         if( not is_not_link() )
         {
             opt_elment += " ";
-            opt_elment += *it;
+            opt_elment += input;
             opt_elment += " -o ";
             fs::path fileName= fs::temp_directory_path();
             boost::uuids::uuid uName = boost::uuids::random_generator()();
@@ -143,7 +150,7 @@ list<string> XClangOptions::getCC1Actions(void)
             m_objects_files.push_back( fileName.string() );
         }
         string act("cxx");
-        switch (checkLanguage(*it))
+        switch (checkLanguage(input))
         {
             case iConstLanguageC:
                 act = "cc";
@@ -244,6 +251,26 @@ list<string> XClangOptions::getLinkActions(void)
     opts += pLinker->beginobject();
     opts += pLinker->stdxxdirs();
     opts += pLinker->stddirs();
+    
+    for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
+    {
+        if ( string::npos == it->find(" "))
+        {
+            opts += " ";
+            opts += *it;
+        }
+        else
+        {
+            opts += " \"";
+            opts += *it;
+            opts += "\"";
+        }
+    }
+    if(not m_input_objects_str.empty())
+    {
+        opts += " " + m_input_objects_str;
+    }
+
     for(auto it = m_link_options.begin();it !=  m_link_options.end();it++)
     {
         opts += " ";
@@ -263,23 +290,14 @@ list<string> XClangOptions::getLinkActions(void)
         }
         opts += ldOption;
     }
-    for(auto it = m_objects_files.begin();it != m_objects_files.end();it++)
-    {
-        opts += " ";
-        opts += *it;
-    }
-    if(not m_input_objects_str.empty())
-    {
-        opts += " " + m_input_objects_str;
-    }
     if(calcLinkCXX())
     {
-        if( not has(nostdlib))
+        if( not has(nostdlib)and not has(nodefaultlibs) )
         {
             opts += pLinker->stdxxlibs();
         }
     }
-    if( not has(nostdlib) )
+    if( not has(nostdlib) and not has(nodefaultlibs))
     {
         opts += pLinker->stdlibs();
     }
@@ -388,6 +406,13 @@ int XClangOptions::checkLanguage(const string &input)
     int ret = iConstLanguageCXX;
     fs::path fileName(input);
     string ext = fileName.extension().string();
+#ifdef DEBUG_LANG
+    cout << "ext=<" << ext << ">" << endl;
+#endif
+    boost::algorithm::replace_all(ext, "\"", "");
+#ifdef DEBUG_LANG
+    cout << "ext=<" << ext << ">" << endl;
+#endif
     if( ".c" == ext )
     {
         ret = iConstLanguageC;

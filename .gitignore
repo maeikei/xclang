@@ -1,5 +1,5 @@
 *.DS_Store
-3rdpart_build/build-script/binutils/binutils-2.23.1
+3rdpart_build/build-script/binutils/binutils-2.23.*
 3rdpart_build/build-script/binutils/objects
 3rdpart_build/build-script/binutils/install
 

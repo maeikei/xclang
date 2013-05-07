@@ -97,13 +97,11 @@ link_exe = {
 	},
     stdlibs =
 	{
-        "-lc",
         "-lpthread",
-        "-lgcc",
+        "-lm",
+        "-lc",
+        "-lrt",
         "-lgcc_s",
---        "-lgcc_eh",
---        "-lCompilerRT",
---        "-lcxxstub",
 	},
 	endobject =
 	{
@@ -142,13 +140,11 @@ link_exe_s = {
 	},
     stdlibs =
 	{
-        "-lc",
         "-lpthread",
-        "-lgcc",
+        "-lm",
+        "-lc",
+        "-lrt",
         "-lgcc_s",
---        "-lgcc_eh",
---        "-lCompilerRT",
---        "-lcxxstub",
 	},
 	endobject =
 	{
@@ -163,12 +159,12 @@ link_exe_s = {
 link_shared = {
     arch =
     {
-         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_i386 -dynamic-linker /lib/ld-linux.so.2",
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_i386 -shared",
     },
 	beginobject =
 	{
         platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
-        platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/crtbegin.o",
+        platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/crtbeginS.o",
 	},
     stdxxdirs =
 	{
@@ -176,8 +172,6 @@ link_shared = {
 	},
     stdxxlibs =
 	{
-        "-lc++",
-        "-lc++abi",
 	},
     stddirs =
 	{
@@ -188,17 +182,15 @@ link_shared = {
 	},
     stdlibs =
 	{
-        "-lc",
         "-lpthread",
-        "-lgcc",
+        "-lm",
+        "-lc",
+        "-lrt",
         "-lgcc_s",
---        "-lgcc_eh",
---        "-lCompilerRT",
---        "-lcxxstub",
 	},
 	endobject =
 	{
-        platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/crtend.o",
+        platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/crtendS.o",
         platform_prefix.."/usr/lib/i386-linux-gnu/crtn.o",
 	},
 }
@@ -209,12 +201,12 @@ link_shared = {
 link_shared_s = {
     arch =
     {
-         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_i386 -dynamic-linker /lib/ld-linux.so.2",
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_i386 -shared",
     },
 	beginobject =
 	{
         platform_prefix.."/usr/lib/i386-linux-gnu/crti.o",
-        platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/crtbegin.o",
+        platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/crtbeginS.o",
 	},
     stdxxdirs =
 	{
@@ -222,8 +214,6 @@ link_shared_s = {
 	},
     stdxxlibs =
 	{
-        "-lc++",
-        "-lc++abi",
 	},
     stddirs =
 	{
@@ -234,17 +224,15 @@ link_shared_s = {
 	},
     stdlibs =
 	{
-        "-lc",
         "-lpthread",
-        "-lgcc",
+        "-lm",
+        "-lc",
+        "-lrt",
         "-lgcc_s",
---        "-lgcc_eh",
---        "-lCompilerRT",
---        "-lcxxstub",
 	},
 	endobject =
 	{
-        platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/crtend.o",
+        platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/crtendS.o",
         platform_prefix.."/usr/lib/i386-linux-gnu/crtn.o",
 	},
 }

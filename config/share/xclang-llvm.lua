@@ -40,11 +40,13 @@ clang =
 	},
 	defaultcflags =
 	{
-		"",
+		"-nostdinc",
+		"-std=c11",
 	},
 	defaultcxxflags =
 	{
-		"-stdlib=libc++",
+		"-nostdinc++",
+		"-std=c++11",
 	},
 }
 

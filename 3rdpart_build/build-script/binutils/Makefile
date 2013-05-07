@@ -11,11 +11,11 @@ target += arm-linux-gnueabihf
 #target += i686-linux-android
 
 
-SRC   := binutils-2.23.1
+SRC   := binutils-2.23.2
 install :=$(shell pwd)/install/binutils
 
 
-SYSROOT :=/Users/maeikei/workspace/xclang-dev/obj/InstallRoot/platform
+CROSS_ROOT  := /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/
 
 MKDIR := mkdir
 MAKE  := make
@@ -29,8 +29,9 @@ all:$(target)
 
 $(target):
 	$(MKDIR) -p ./objects/$@
-	$(CD) ./objects/$@;../../$(SRC)/configure --target=$@ --prefix=$(install)\
-		--with-build-sysroot=$(SYSROOT)/$@
+	$(CD) ./objects/$@;../../$(SRC)/configure --target=$@ --prefix=$(CROSS_ROOT)/binutils\
+		--with-build-sysroot=$(CROSS_ROOT)/platform/$@\
+		--with-sysroot=$(CROSS_ROOT)/platform/$@
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
 
