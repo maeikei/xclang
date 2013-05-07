@@ -17,13 +17,14 @@ xclang =
 {
 	props =
 	{
-		triple		    = "i386-linux-gnu",
 		objext		    = ".o",
 		asmext		    = ".s",
 		defaultexe		= "a.out",
 	},
 	archcflags =
 	{
+        "-c -integrated-as ",
+        "-target i386-linux-gnu",
 		"-D __Linux__",
         "-fexceptions",
 		"-pthread",
@@ -70,10 +71,7 @@ toolchain = {
 link_exe = {
     arch =
     {
---        "--sysroot="..platform_prefix.."/",
-        "--build-id --eh-frame-hdr -m elf_i386",
-        "-dynamic-linker /lib/ld-linux.so.2",
-        "-z relro",
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_i386 -dynamic-linker /lib/ld-linux.so.2",
     },
 	beginobject =
 	{
@@ -102,7 +100,8 @@ link_exe = {
         "-lc",
         "-lpthread",
         "-lgcc",
-        "-lgcc_eh",
+        "-lgcc_s",
+--        "-lgcc_eh",
 --        "-lCompilerRT",
 --        "-lcxxstub",
 	},
@@ -118,6 +117,7 @@ link_exe = {
 link_exe_s = {
     arch =
     {
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_i386 -dynamic-linker /lib/ld-linux.so.2",
     },
 	beginobject =
 	{
@@ -145,7 +145,8 @@ link_exe_s = {
         "-lc",
         "-lpthread",
         "-lgcc",
-        "-lgcc_eh",
+        "-lgcc_s",
+--        "-lgcc_eh",
 --        "-lCompilerRT",
 --        "-lcxxstub",
 	},
@@ -162,10 +163,7 @@ link_exe_s = {
 link_shared = {
     arch =
     {
---        "--sysroot="..platform_prefix.."/",
-        "--build-id --eh-frame-hdr -m elf_i386",
-        "-dynamic-linker /lib/ld-linux.so.2",
-        "-z relro",
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_i386 -dynamic-linker /lib/ld-linux.so.2",
     },
 	beginobject =
 	{
@@ -193,7 +191,8 @@ link_shared = {
         "-lc",
         "-lpthread",
         "-lgcc",
-        "-lgcc_eh",
+        "-lgcc_s",
+--        "-lgcc_eh",
 --        "-lCompilerRT",
 --        "-lcxxstub",
 	},
@@ -210,6 +209,7 @@ link_shared = {
 link_shared_s = {
     arch =
     {
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_i386 -dynamic-linker /lib/ld-linux.so.2",
     },
 	beginobject =
 	{
@@ -237,7 +237,8 @@ link_shared_s = {
         "-lc",
         "-lpthread",
         "-lgcc",
-        "-lgcc_eh",
+        "-lgcc_s",
+--        "-lgcc_eh",
 --        "-lCompilerRT",
 --        "-lcxxstub",
 	},

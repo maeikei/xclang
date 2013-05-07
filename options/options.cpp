@@ -142,11 +142,6 @@ list<string> XClangOptions::getCC1Actions(void)
             opt_elment += fileName.string();
             m_objects_files.push_back( fileName.string() );
         }
-        if( not ( has(E) || has(S)))
-        {
-            opt_elment = " -emit-obj " + opt_elment;
-        }
-        opt_elment = "-triple " + m_config->getProperty("triple") + " " + opt_elment;
         string act("cxx");
         switch (checkLanguage(*it))
         {

@@ -13,9 +13,9 @@ clang =
 	llvm =
 	{
 		clang	    = clang_prefix.."/clang",
-		cc1as	    = clang_prefix.."/clang -cc1as",
-		cc		    = clang_prefix.."/clang -cc1 -x c",
-		cxx		    = clang_prefix.."/clang -cc1 -x c++",
+		cc1as	    = clang_prefix.."/clang ",
+		cc		    = clang_prefix.."/clang -x c",
+		cxx		    = clang_prefix.."/clang -x c++",
 		opt		    = clang_prefix.."/opt",
 		llc		    = clang_prefix.."/llc",
 		lli		    = clang_prefix.."/lli",
