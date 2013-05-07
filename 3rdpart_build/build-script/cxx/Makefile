@@ -29,6 +29,7 @@ $(target):
 	$(MKDIR) -p ./objects/$@
 	-$(CD) ./objects/$@ &&\
 		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
+		--debug-trycompile\
 		-DLIBCXX_CXX_ABI=libcxxabi\
 		-DLIBCXX_LIBCXXABI_INCLUDE_PATHS="$(ABISRC)/include"\
 		-DLIBCXX_ENABLE_SHARED=0\
