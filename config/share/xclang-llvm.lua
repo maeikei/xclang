@@ -42,11 +42,13 @@ clang =
 	{
 		"-nostdinc",
 		"-std=c11",
+        "-fPIC",
 	},
 	defaultcxxflags =
 	{
 		"-nostdinc++",
 		"-std=c++11",
+        "-fPIC",
 	},
 }
 
