@@ -23,8 +23,10 @@ xclang =
 	},
 	archcflags =
 	{
+        "-fuse-init-array",
         "-c -integrated-as ",
-        "-target i386-linux-gnu",
+        "-target i386-pc-linux-gnu",
+        "-B"..binutils_prefix,
 		"-D __Linux__",
         "-fexceptions",
 		"-pthread",

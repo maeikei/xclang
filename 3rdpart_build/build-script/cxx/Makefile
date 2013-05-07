@@ -21,6 +21,7 @@ RM    := rm
 
 CROSS_ROOT  := /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/
 
+
 .PHONY: $(target)
 
 all:$(target)
@@ -31,7 +32,23 @@ $(target):
 		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
 		-DLIBCXX_CXX_ABI=libcxxabi\
 		-DLIBCXX_LIBCXXABI_INCLUDE_PATHS="$(ABISRC)/include"\
+		-DLIBCXX_ENABLE_SHARED=OFF\
+		-DLIBCXX_ENABLE_CXX0X=OFF\
+		-DCMAKE_BUILD_TYPE=Debug\
 		-DCMAKE_INSTALL_PREFIX=$(CROSS_ROOT)/platform/$@/cxx
+	$(MAKE) -C ./objects/$@ all -j4
+	$(MAKE) -C ./objects/$@ install
+	$(RM) -rf ./objects/$@
+	$(MKDIR) -p ./objects/$@
+	-$(CD) ./objects/$@ &&\
+		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
+		-DLIBCXX_CXX_ABI=libcxxabi\
+		-DLIBCXX_LIBCXXABI_INCLUDE_PATHS="$(ABISRC)/include"\
+		-DLIBCXX_ENABLE_SHARED=ON\
+		-DLIBCXX_ENABLE_CXX0X=OFF\
+		-DCMAKE_BUILD_TYPE=Debug\
+		-DCMAKE_INSTALL_PREFIX=$(CROSS_ROOT)/platform/$@/cxx
+
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
 

@@ -29,6 +29,7 @@ $(target):
 	$(MKDIR) -p ./objects/$@
 	-$(CD) ./objects/$@ &&\
 		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
+		-DCMAKE_BUILD_TYPE=Debug\
 		-DCMAKE_INSTALL_PREFIX=$(CROSS_ROOT)/platform/$@/cxx
 	$(MAKE) -C ./objects/$@ all -j4
 	$(MAKE) -C ./objects/$@ install
