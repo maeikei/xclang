@@ -48,6 +48,7 @@ xclang =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
+        "-I "..platform_prefix.."/xclang/include",
         "-I "..platform_prefix.."/usr/include",
         "-I "..platform_prefix.."/usr/include/x86_64-linux-gnu",
         "-I "..platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/include/",

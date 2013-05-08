@@ -4,8 +4,8 @@
 if nil == globalXClangHome then
 	globalXClangHome = "C:/xclang-dev/xclang-obj/InstallRoot"
 end
-binutils_prefix = globalXClangHome.."/binutils/x86_64-pc-linux-gnueabi/bin"
-platform_prefix = globalXClangHome.."/platform/x86_64-pc-linux-gnueabi"
+binutils_prefix = globalXClangHome.."/binutils/arm-linux-gnueabihf/bin"
+platform_prefix = globalXClangHome.."/platform/arm-linux-gnueabihf"
 
 
 
@@ -17,27 +17,55 @@ xclang =
 {
 	props =
 	{
-		triple		    = "x86_64-pc-linux-gnueabi",
 		objext		    = ".o",
 		asmext		    = ".s",
 		defaultexe		= "a.out",
 	},
+	archascppflags =
+	{
+        "-D __arm__",
+        "-march=armv7-a",
+        "-mcpu=cortex-a9",
+        "-mfloat-abi=hard",
+        "-mfpu=vfpv3-d16",
+        "-mthumb",
+        "-mtls-dialect=gnu",
+        "-D __ARM_EABI_UNWINDER__",
+		"-D __linux__",
+		"-D __Linux__",
+        "-fexceptions",
+        "-integrated-as ",
+        "-target arm-pc-linux-gnueabihf",
+	},
 	archcflags =
 	{
+        "-D __arm__",
+        "-D __ARM_EABI_UNWINDER__",
+        "-fuse-init-array",
+        "-c -integrated-as ",
+        "-target arm-pc-linux-gnueabihf",
+        "-B"..binutils_prefix,
+		"-D __linux__",
 		"-D __Linux__",
+        "-fexceptions",
+		"-pthread",
 	},
 	archcxxflags =
 	{
+        "-fcxx-exceptions",
 	},
 	stdinc =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
-        "-I "..platform_prefix.."/include",
         "-I "..platform_prefix.."/xclang/include",
+        "-I "..platform_prefix.."/usr/arm-linux-gnueabihf/include",
+        "-I "..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/include",
+        "-I "..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/include-fixed",
 	},
 	stdincxx =
 	{
+        "-I "..platform_prefix.."/cxx/include/c++/v1",
 	},
 }
 
@@ -64,28 +92,43 @@ toolchain = {
 link_exe = {
     arch =
     {
+        "-z relro -X --hash-style=gnu --build-id --eh-frame-hdr ",
+        "--as-needed -m armelf_linux_eabi -dynamic-linker /lib/ld-linux-armhf.so.3",
+--        "-mcpu=cortex-a9",
+--        "-mfloat-abi=hard",
     },
 	beginobject =
 	{
-        platform_prefix.."/lib/crti.o",
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crt1.o",
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib//crti.o",
+        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtbegin.o",
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
-	},
+        "-lc++",
+        "-lc++abi",
+ 	},
     stddirs =
 	{
-        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/usr/arm-linux-gnueabihf/lib",
+        "-L"..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7",
 	},
     stdlibs =
 	{
+        "-lpthread",
+        "-lm",
         "-lc",
+        "-lrt",
+        "-lgcc_s",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtend.o",
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
 	},
 }
 ---------------------------------------------------
@@ -94,25 +137,41 @@ link_exe = {
 link_exe_s = {
     arch =
     {
+        "-z relro -X --hash-style=gnu --build-id --eh-frame-hdr ",
+        "--as-needed -m armelf_linux_eabi -dynamic-linker /lib/ld-linux-armhf.so.3",
+--        "-mfloat-abi=hard",
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crt1.o",
+        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtbegin.o",
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
+        "-lc++",
+        "-lc++abi",
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/arm-linux-gnueabihf/lib",
+        "-L"..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7",
 	},
     stdlibs =
 	{
+        "-lpthread",
+        "-lm",
+        "-lc",
+        "-lrt",
+        "-lgcc_s",
 	},
 	endobject =
 	{
+        platform_prefix.."usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtend.o",
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
 	},
 }
 
@@ -122,25 +181,39 @@ link_exe_s = {
 link_shared = {
     arch =
     {
+        "-z relro -X --hash-style=gnu --build-id --eh-frame-hdr ",
+        "--as-needed -m armelf_linux_eabi -shared -dynamic-linker /lib/ld-linux-armhf.so.3",
+--        "-mfloat-abi=hard",
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crti.o",
+        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtbeginS.o",
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/arm-linux-gnueabihf/lib",
+        "-L"..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7",
 	},
     stdlibs =
 	{
+        "-lpthread",
+        "-lm",
+        "-lc",
+        "-lrt",
+        "-lgcc_s",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtendS.o",
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
 	},
 }
 
@@ -150,26 +223,38 @@ link_shared = {
 link_shared_s = {
     arch =
     {
+        "-z relro -X --hash-style=gnu --build-id --eh-frame-hdr ",
+        "--as-needed -m armelf_linux_eabi -shared -dynamic-linker /lib/ld-linux-armhf.so.3",
+--        "-mfloat-abi=hard",
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crti.o",
+        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtbeginS.o",
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/usr/arm-linux-gnueabihf/lib",
+        "-L"..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7",
 	},
     stdlibs =
 	{
+        "-lpthread",
+        "-lm",
+        "-lc",
+        "-lrt",
+        "-lgcc_s",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtendS.o",
+        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
 	},
 }
-
-

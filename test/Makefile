@@ -3,20 +3,20 @@ XCLANG_PATH = /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/bin
 #target += x86_64-w64-mingw32
 #target += arm-linux-androideabi
 
-#target += i386-linux-gnu
+target += i386-linux-gnu
 target += x86_64-linux-gnu
-#target += arm-linux-gnueabi
-#target += arm-linux-gnueabihf
+target += arm-linux-gnueabi
+target += arm-linux-gnueabihf
 
 .PHONY: $(target)
 
 all:$(target)
 
 $(target):
-	$(XCLANG_PATH)/$@-xclang main.asm
-	$(XCLANG_PATH)/$@-xclang main.asm -o main.asm.out
-	$(XCLANG_PATH)/$@-xclang sub.asm -c
-	$(XCLANG_PATH)/$@-xclang sub.asm -c -o sum.asm.o
+#	$(XCLANG_PATH)/$@-xclang main.asm
+#	$(XCLANG_PATH)/$@-xclang main.asm -o main.asm.out
+#	$(XCLANG_PATH)/$@-xclang sub.asm -c
+#	$(XCLANG_PATH)/$@-xclang sub.asm -c -o sum.asm.o
 	$(XCLANG_PATH)/$@-xclang sub.c main.c -L./ -L ../ -I./ -I ../  -o main.c.out
 	$(XCLANG_PATH)/$@-xclang sub.c main.c
 	$(XCLANG_PATH)/$@-xclang main.c -c -o main.c.o

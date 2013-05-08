@@ -2,9 +2,9 @@
 #target += x86_64-w64-mingw32
 
 #target += i386-linux-gnu
-target += x86_64-linux-gnu
+#target += x86_64-linux-gnu
 #target += arm-linux-gnueabi
-#target += arm-linux-gnueabihf
+target += arm-linux-gnueabihf
 
 
 PWD     := $(shell pwd)

@@ -44,10 +44,10 @@ xclang =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
+        "-I "..platform_prefix.."/xclang/include",
         "-I "..platform_prefix.."/usr/include",
         "-I "..platform_prefix.."/usr/include/i386-linux-gnu",
         "-I "..platform_prefix.."/usr/lib/gcc/i686-linux-gnu/4.7/include/",
-        "-I "..platform_prefix.."/xclang/include",
 	},
 	stdincxx =
 	{
