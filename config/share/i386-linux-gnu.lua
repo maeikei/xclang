@@ -238,5 +238,3 @@ link_shared_s = {
         platform_prefix.."/usr/lib/i386-linux-gnu/crtn.o",
 	},
 }
-
-

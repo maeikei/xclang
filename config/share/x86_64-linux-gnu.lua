@@ -4,8 +4,8 @@
 if nil == globalXClangHome then
 	globalXClangHome = "C:/xclang-dev/xclang-obj/InstallRoot"
 end
-binutils_prefix = globalXClangHome.."/binutils/x86_64-pc-linux-gnueabi/bin"
-platform_prefix = globalXClangHome.."/platform/x86_64-pc-linux-gnueabi"
+binutils_prefix = globalXClangHome.."/binutils/x86_64-linux-gnu/bin"
+platform_prefix = globalXClangHome.."/platform/x86_64-linux-gnu"
 
 
 
@@ -17,27 +17,36 @@ xclang =
 {
 	props =
 	{
-		triple		    = "x86_64-pc-linux-gnueabi",
 		objext		    = ".o",
 		asmext		    = ".s",
 		defaultexe		= "a.out",
 	},
 	archcflags =
 	{
+        "-fuse-init-array",
+        "-c -integrated-as ",
+        "-target x86_64-pc-linux-gnu",
+        "-B"..binutils_prefix,
 		"-D __Linux__",
+        "-fexceptions",
+		"-pthread",
 	},
 	archcxxflags =
 	{
+        "-fcxx-exceptions",
 	},
 	stdinc =
 	{
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
-        "-I "..platform_prefix.."/include",
-        "-I "..platform_prefix.."/xclang/include",
+        "-I "..platform_prefix.."/usr/include",
+        "-I "..platform_prefix.."/usr/include/x86_64-linux-gnu",
+        "-I "..platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/include/",
+        "-I "..platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/include-fixed",
 	},
 	stdincxx =
 	{
+        "-I "..platform_prefix.."/cxx/include/c++/v1",
 	},
 }
 
@@ -64,28 +73,43 @@ toolchain = {
 link_exe = {
     arch =
     {
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr ",
+         "-m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2",
     },
 	beginobject =
 	{
-        platform_prefix.."/lib/crti.o",
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crt1.o",
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crti.o",
+        platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/crtbegin.o",
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
-	},
+        "-lc++",
+        "-lc++abi",
+ 	},
     stddirs =
 	{
         "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/lib/x86_64-linux-gnu",
+        "-L"..platform_prefix.."/usr/lib/x86_64-linux-gnu",
+		"-L"..platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7",
 	},
     stdlibs =
 	{
+        "-lpthread",
+        "-lm",
         "-lc",
+        "-lrt",
+        "-lgcc_s",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/crtend.o",
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crtn.o",
 	},
 }
 ---------------------------------------------------
@@ -94,25 +118,42 @@ link_exe = {
 link_exe_s = {
     arch =
     {
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr ",
+         "-m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2",
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crt1.o",
+        platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/crtbegin.o",
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
+        "-lc++",
+        "-lc++abi",
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/lib/x86_64-linux-gnu",
+        "-L"..platform_prefix.."/usr/lib/x86_64-linux-gnu",
+		"-L"..platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7",
 	},
     stdlibs =
 	{
+        "-lpthread",
+        "-lm",
+        "-lc",
+        "-lrt",
+        "-lgcc_s",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/crtend.o",
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crtn.o",
 	},
 }
 
@@ -122,25 +163,39 @@ link_exe_s = {
 link_shared = {
     arch =
     {
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -shared",
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crti.o",
+        platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/crtbeginS.o",
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/lib/x86_64-linux-gnu",
+        "-L"..platform_prefix.."/usr/lib/x86_64-linux-gnu",
+		"-L"..platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7",
 	},
     stdlibs =
 	{
+        "-lpthread",
+        "-lm",
+        "-lc",
+        "-lrt",
+        "-lgcc_s",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/crtendS.o",
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crtn.o",
 	},
 }
 
@@ -150,26 +205,38 @@ link_shared = {
 link_shared_s = {
     arch =
     {
+         "-z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -shared",
     },
 	beginobject =
 	{
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crti.o",
+        platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/crtbeginS.o",
 	},
     stdxxdirs =
 	{
-		"",
+		"-L"..platform_prefix.."/cxx/lib",
 	},
     stdxxlibs =
 	{
 	},
     stddirs =
 	{
+        "-L"..platform_prefix.."/lib",
+        "-L"..platform_prefix.."/lib/x86_64-linux-gnu",
+        "-L"..platform_prefix.."/usr/lib/x86_64-linux-gnu",
+		"-L"..platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7",
 	},
     stdlibs =
 	{
+        "-lpthread",
+        "-lm",
+        "-lc",
+        "-lrt",
+        "-lgcc_s",
 	},
 	endobject =
 	{
+        platform_prefix.."/usr/lib/gcc/x86_64-linux-gnu/4.7/crtendS.o",
+        platform_prefix.."/usr/lib/x86_64-linux-gnu/crtn.o",
 	},
 }
-
-

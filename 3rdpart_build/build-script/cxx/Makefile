@@ -1,8 +1,8 @@
 #target += i686-w64-mingw32
 #target += x86_64-w64-mingw32
 
-target += i386-linux-gnu
-#target += x86_64-linux-gnu
+#target += i386-linux-gnu
+target += x86_64-linux-gnu
 #target += arm-linux-gnueabi
 #target += arm-linux-gnueabihf
 

@@ -1,8 +1,8 @@
 #target += i686-w64-mingw32
 #target += x86_64-w64-mingw32
 
-target += i386-linux-gnu
-#target += x86_64-linux-gnu
+#target += i386-linux-gnu
+target += x86_64-linux-gnu
 #target += arm-linux-gnueabi
 #target += arm-linux-gnueabihf
 
@@ -29,6 +29,16 @@ $(target):
 	$(MKDIR) -p ./objects/$@
 	-$(CD) ./objects/$@ &&\
 		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
+		-DLIBCXX_ENABLE_SHARED=OFF\
+		-DCMAKE_BUILD_TYPE=Debug\
+		-DCMAKE_INSTALL_PREFIX=$(CROSS_ROOT)/platform/$@/cxx
+	$(MAKE) -C ./objects/$@ all -j4
+	$(MAKE) -C ./objects/$@ install
+	$(RM) -rf ./objects/$@
+	$(MKDIR) -p ./objects/$@
+	-$(CD) ./objects/$@ &&\
+		cmake $(SRC) -DCMAKE_TOOLCHAIN_FILE=$(PWD)/../$@.cmake\
+		-DLIBCXX_ENABLE_SHARED=ON\
 		-DCMAKE_BUILD_TYPE=Debug\
 		-DCMAKE_INSTALL_PREFIX=$(CROSS_ROOT)/platform/$@/cxx
 	$(MAKE) -C ./objects/$@ all -j4
