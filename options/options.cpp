@@ -406,6 +406,7 @@ int XClangOptions::checkLanguage(const string &input)
     int ret = iConstLanguageCXX;
     fs::path fileName(input);
     string ext = fileName.extension().string();
+    std::transform(ext.begin(), ext.end(),ext.begin(), ::tolower);
 #ifdef DEBUG_LANG
     cout << "ext=<" << ext << ">" << endl;
 #endif
