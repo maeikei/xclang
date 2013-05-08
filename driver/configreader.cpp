@@ -79,11 +79,14 @@ ConfigReader::ConfigReader(const string &home,const XClangPrograms &p,const XCla
 // read confiure from lua.
         readClangMemberValue(llvm);
         readClangMemberValue(defaultasmcppcflags);
+        readClangMemberValue(defaultcc1ascflags);
         readClangMemberValue(defaultcflags);
         readClangMemberValue(defaultcxxflags);
         
 // read confiure from lua.
         readXClangMemberValue(props);
+        readXClangMemberValue(archascppflags);
+        readXClangMemberValue(archcc1ascflags);
         readXClangMemberValue(archcflags);
         readXClangMemberValue(archcxxflags);
         readXClangMemberValue(stdinc);

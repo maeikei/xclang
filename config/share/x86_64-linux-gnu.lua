@@ -21,6 +21,15 @@ xclang =
 		asmext		    = ".s",
 		defaultexe		= "a.out",
 	},
+	archascppflags =
+	{
+        "-target i386-pc-linux-gnu",
+	},
+	archcc1ascflags =
+	{
+        "-integrated-as ",
+        "-trimple i386-pc-linux-gnu",
+	},
 	archcflags =
 	{
         "-fuse-init-array",

@@ -38,6 +38,7 @@ static int const iConstLanguageCXX = 1;
 static int const iConstLanguageC = 2;
 static int const iConstLanguageASM = 3;
 static int const iConstLanguageObject = 4;
+static int const iConstLanguageASMCC1 = 5;
 
 
 
@@ -157,7 +158,7 @@ list<string> XClangOptions::getCC1Actions(void)
                 opt_elment += adjustCC1Options(iConstLanguageC);
                 break;
             case iConstLanguageASM:
-                act = "cc1as";
+                act = "ascpp";
                 opt_elment += adjustCC1Options(iConstLanguageASM);
                 break;
             case iConstLanguageCXX:
@@ -167,6 +168,12 @@ list<string> XClangOptions::getCC1Actions(void)
         }
         opt_elment =  m_config->getLLVMProgram(act) + " " + opt_elment;
         actions.push_back(opt_elment);
+        if( "ascpp" == act)
+        {
+            opt_elment =  m_config->getLLVMProgram("cc1as");
+            opt_elment += adjustCC1Options(iConstLanguageASMCC1);
+            actions.push_back(opt_elment);
+        }
     }
     return actions;
 }
@@ -366,6 +373,10 @@ string XClangOptions::adjustCC1Options(int lang) const
     if ( iConstLanguageASM == lang)
     {
         for (auto it = m_config->m_defaultasmcppcflags.begin();it != m_config->m_defaultasmcppcflags.end();it++ )
+        {
+            ret += " " + *it;
+        }
+        for (auto it = m_config->m_archascppflags.begin();it != m_config->m_archascppflags.end();it++ )
         {
             ret += " " + *it;
         }

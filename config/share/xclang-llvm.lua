@@ -13,9 +13,10 @@ clang =
 	llvm =
 	{
 		clang	    = clang_prefix.."/clang",
-		cc1as	    = clang_prefix.."/clang -x assembler-with-cpp",
 		cc		    = clang_prefix.."/clang -x c",
 		cxx		    = clang_prefix.."/clang -x c++",
+		ascpp	    = clang_prefix.."/clang -x assembler-with-cpp",
+		cc1as	    = clang_prefix.."/clang -cc1as",
 		opt		    = clang_prefix.."/opt",
 		llc		    = clang_prefix.."/llc",
 		lli		    = clang_prefix.."/lli",
@@ -36,7 +37,9 @@ clang =
 	},
 	defaultasmcppcflags =
 	{
-		"-E -masm-verbose",
+	},
+	defaultcc1ascflags =
+	{
 	},
 	defaultcflags =
 	{
