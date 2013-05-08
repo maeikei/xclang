@@ -144,7 +144,7 @@ list<string> XClangOptions::getCC1Actions(void)
             fs::path fileName= fs::temp_directory_path();
             boost::uuids::uuid uName = boost::uuids::random_generator()();
             string name = boost::uuids::to_string(uName);
-            fileName += name;
+            fileName += "/" + name;
             fileName += extension;
             opt_elment += fileName.string();
             m_objects_files.push_back( fileName.string() );
