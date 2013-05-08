@@ -22,4 +22,7 @@
 3rdpart_build/build-script/cxxabi/objects
 3rdpart_build/build-script/cxxabi/install
                                                                                                                                   
+3rdpart_build/build-script/unwind/libunwind
+3rdpart_build/build-script/unwind/objects
+3rdpart_build/build-script/unwind/install
 
