@@ -27,6 +27,7 @@ using namespace std;
 
 //#define DEBUG_LINK
 //#define DEBUG_LANG
+//#define DEBUG_CC1AS
 
 
 #define has(x) has_option(OPT_##x)
@@ -38,7 +39,6 @@ static int const iConstLanguageCXX = 1;
 static int const iConstLanguageC = 2;
 static int const iConstLanguageASM = 3;
 static int const iConstLanguageObject = 4;
-static int const iConstLanguageASMCC1 = 5;
 
 
 
@@ -124,6 +124,7 @@ list<string> XClangOptions::getCC1Actions(void)
                 fs::path fileName(input);
                 fileName.replace_extension(extension);
                 opt_elment += fileName.string();
+                m_objects_files.push_back( fileName.string() );
             }
             else
             {
@@ -168,12 +169,6 @@ list<string> XClangOptions::getCC1Actions(void)
         }
         opt_elment =  m_config->getLLVMProgram(act) + " " + opt_elment;
         actions.push_back(opt_elment);
-        if( "ascpp" == act)
-        {
-            opt_elment =  m_config->getLLVMProgram("cc1as");
-            opt_elment += adjustCC1Options(iConstLanguageASMCC1);
-            actions.push_back(opt_elment);
-        }
     }
     return actions;
 }
@@ -380,7 +375,21 @@ string XClangOptions::adjustCC1Options(int lang) const
         {
             ret += " " + *it;
         }
-        return ret + " ";
+        if(not has(nostdinc))
+        {
+            for (auto it = m_config->m_stdinc.begin();it != m_config->m_stdinc.end();it++ )
+            {
+                ret += " " + *it;
+            }
+        }
+        if(not has(nostdincxx))
+        {
+            for (auto it = m_config->m_stdincxx.begin();it != m_config->m_stdincxx.end();it++ )
+            {
+                ret += " " + *it;
+            }
+        }
+       return ret + " ";
     }
     for (auto it = m_config->m_defaultcflags.begin();it != m_config->m_defaultcflags.end();it++ )
     {
@@ -417,9 +426,6 @@ string XClangOptions::adjustCC1Options(int lang) const
                 ret += " " + *it;
             }
         }
-    }
-    if ( iConstLanguageASM == lang)
-    {
     }
     ret += " ";
     return ret;

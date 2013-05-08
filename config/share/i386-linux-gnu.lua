@@ -23,12 +23,8 @@ xclang =
 	},
 	archascppflags =
 	{
-        "-target i386-pc-linux-gnu",
-	},
-	archcc1ascflags =
-	{
         "-integrated-as ",
-        "-trimple i386-pc-linux-gnu",
+        "-target i386-pc-linux-gnu",
 	},
 	archcflags =
 	{

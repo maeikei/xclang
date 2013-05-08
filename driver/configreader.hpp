@@ -72,13 +72,11 @@ namespace xclang
         
         map<string,string> m_llvm;
         vector<string> m_defaultasmcppcflags;
-        vector<string> m_defaultcc1ascflags;
         vector<string> m_defaultcflags;
         vector<string> m_defaultcxxflags;
         
         map<string,string> m_props;
         vector<string> m_archascppflags;
-        vector<string> m_archcc1ascflags;
         vector<string> m_archcflags;
         vector<string> m_archcxxflags;
         vector<string> m_stdinc;

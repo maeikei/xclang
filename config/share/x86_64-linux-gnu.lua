@@ -23,12 +23,11 @@ xclang =
 	},
 	archascppflags =
 	{
-        "-target i386-pc-linux-gnu",
-	},
-	archcc1ascflags =
-	{
+		"-D __linux__",
+		"-D __Linux__",
+        "-fexceptions",
         "-integrated-as ",
-        "-trimple i386-pc-linux-gnu",
+        "-target x86_64-pc-linux-gnu",
 	},
 	archcflags =
 	{
@@ -36,6 +35,7 @@ xclang =
         "-c -integrated-as ",
         "-target x86_64-pc-linux-gnu",
         "-B"..binutils_prefix,
+		"-D __linux__",
 		"-D __Linux__",
         "-fexceptions",
 		"-pthread",
