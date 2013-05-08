@@ -23,7 +23,9 @@
 
 /* See "Data Definitions for libgcc_s" in the Linux Standard Base.*/
 
+
 #if __has_include_next(<unwind.h>)
+
 /* Darwin and libunwind provide an unwind.h. If that's available, use
  * it. libunwind wraps some of its definitions in #ifdef _GNU_SOURCE,
  * so define that around the include.*/
@@ -60,21 +62,6 @@ extern "C" {
    symbols it declares, but this matches gcc's behavior and some programs
    depend on it */
 #pragma GCC visibility push(default)
-
-struct _Unwind_Context;
-typedef enum {
-  _URC_NO_REASON = 0,
-  _URC_FOREIGN_EXCEPTION_CAUGHT = 1,
-
-  _URC_FATAL_PHASE2_ERROR = 2,
-  _URC_FATAL_PHASE1_ERROR = 3,
-  _URC_NORMAL_STOP = 4,
-
-  _URC_END_OF_STACK = 5,
-  _URC_HANDLER_FOUND = 6,
-  _URC_INSTALL_CONTEXT = 7,
-  _URC_CONTINUE_UNWIND = 8
-} _Unwind_Reason_Code;
 
 
 #ifdef __arm__
@@ -122,3 +109,42 @@ _Unwind_Reason_Code _Unwind_Backtrace(_Unwind_Trace_Fn, void*);
 #endif
 
 #endif
+
+
+#ifndef __ARM_UNWIND_PATH__
+#define __ARM_UNWIND_PATH__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
+    /* It is a bit strange for a header to play with the visibility of the
+     symbols it declares, but this matches gcc's behavior and some programs
+     depend on it */
+#pragma GCC visibility push(default)
+    
+    struct _Unwind_Context;
+/*
+    typedef enum {
+        _URC_NO_REASON = 0,
+        _URC_FOREIGN_EXCEPTION_CAUGHT = 1,*/
+        
+    const int _URC_FATAL_PHASE2_ERROR__k = 2;
+    const int _URC_FATAL_PHASE1_ERROR__k = 3;
+    const int _URC_NORMAL_STOP__k = 4;
+    
+/*        _URC_END_OF_STACK = 5,
+        _URC_HANDLER_FOUND = 6,
+        _URC_INSTALL_CONTEXT = 7,
+        _URC_CONTINUE_UNWIND = 8
+    } _Unwind_Reason_Code;
+ */
+#define _URC_FATAL_PHASE2_ERROR static_cast<_Unwind_Reason_Code>(_URC_FATAL_PHASE2_ERROR__k)
+#define _URC_FATAL_PHASE1_ERROR static_cast<_Unwind_Reason_Code>(_URC_FATAL_PHASE1_ERROR__k)
+#define _URC_NORMAL_STOP static_cast<_Unwind_Reason_Code>(_URC_NORMAL_STOP__k)
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __ARM_UNWIND_PATH__*/

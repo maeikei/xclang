@@ -3,9 +3,9 @@ XCLANG_PATH = /Users/maeikei/workspace/xclang-dev/obj/InstallRoot/bin
 #target += x86_64-w64-mingw32
 #target += arm-linux-androideabi
 
-target += i386-linux-gnu
-target += x86_64-linux-gnu
-target += arm-linux-gnueabi
+#target += i386-linux-gnu
+#target += x86_64-linux-gnu
+#target += arm-linux-gnueabi
 target += arm-linux-gnueabihf
 
 .PHONY: $(target)

@@ -23,27 +23,34 @@ xclang =
 	},
 	archascppflags =
 	{
-        "-D __arm__",
-        "-march=armv7-a",
+
         "-mcpu=cortex-a9",
         "-mfloat-abi=hard",
         "-mfpu=vfpv3-d16",
         "-mthumb",
-        "-mtls-dialect=gnu",
+        "-target armv7a-pc-linux-gnueabihf",
+
+
+        "-D __arm__",
         "-D __ARM_EABI_UNWINDER__",
 		"-D __linux__",
 		"-D __Linux__",
         "-fexceptions",
         "-integrated-as ",
-        "-target arm-pc-linux-gnueabihf",
 	},
 	archcflags =
 	{
+
+        "-mcpu=cortex-a9",
+        "-mfloat-abi=hard",
+        "-mfpu=vfpv3-d16",
+        "-mthumb",
+        "-target armv7a-pc-linux-gnueabihf",
+
         "-D __arm__",
         "-D __ARM_EABI_UNWINDER__",
         "-fuse-init-array",
         "-c -integrated-as ",
-        "-target arm-pc-linux-gnueabihf",
         "-B"..binutils_prefix,
 		"-D __linux__",
 		"-D __Linux__",
@@ -258,3 +265,4 @@ link_shared_s = {
         platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
 	},
 }
+
