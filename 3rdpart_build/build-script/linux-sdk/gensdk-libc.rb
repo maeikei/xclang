@@ -27,7 +27,7 @@ $PACKAGES =
 		['main/e/eglibc','libc6_2.17-0ubuntu5_i386.deb'],
 		['main/e/eglibc','libc6-dev_2.17-0ubuntu5_i386.deb'],
 	],
-    arm64 =>
+    'arm64' =>
     [
         ['universe/g/gcc-4.7-arm64-cross','libgcc1-arm64-cross_4.7.3-1ubuntu1cross0.6_all.deb'],
         ['universe/g/gcc-4.7-arm64-cross','libgcc-4.7-dev-arm64-cross_4.7.3-1ubuntu1cross0.6_all.deb'],
@@ -73,6 +73,7 @@ $ARCHS=
 	'i386' => 'i386-linux-gnu',
 	'armel' => 'arm-linux-gnueabi',
 	'armhf' => 'arm-linux-gnueabihf',
+	'arm64' => 'aarch64-linux-gnu',
 }
 $ARCHS.each do |name,arch|
 	namedir= `find sdk -type d -name "#{name}"`.gsub(/\n/,"")
