@@ -17,6 +17,10 @@ FILE(GLOB HEADERS platform/arm-linux-gnueabi/xclang/include/*.h)
 install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/arm-linux-gnueabi/xclang/include)
 FILE(GLOB HEADERS platform/arm-linux-gnueabihf/xclang/include/*.h)
 install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/arm-linux-gnueabihf/xclang/include)
+FILE(GLOB HEADERS platform/aarch64-linux-gnu/xclang/include/*.h)
+install(FILES ${HEADERS} DESTINATION ${PROJECT_BINARY_DIR}/InstallRoot/platform/aarch64-linux-gnu/xclang/include)
+
+
 
 
 FILE(GLOB HEADERS platform/android/xclang/include/*.h)

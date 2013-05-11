@@ -23,13 +23,7 @@ xclang =
 	},
 	archascppflags =
 	{
-
-        "-mcpu=cortex-a57",
-        "-mfloat-abi=hard",
-        "-mfpu=vfpv3-d16",
-        "-mthumb",
         "-target aarch64-pc-linux-gnueabihf",
-
 
         "-D __arm__",
         "-D __ARM_EABI_UNWINDER__",
@@ -40,11 +34,6 @@ xclang =
 	},
 	archcflags =
 	{
-
-        "-mcpu=cortex-a57",
-        "-mfloat-abi=hard",
-        "-mfpu=vfpv3-d16",
-        "-mthumb",
         "-target aarch64-pc-linux-gnueabihf",
 
         "-D __arm__",

@@ -15,19 +15,30 @@ xclang =
 {
 	props =
 	{
-		triple		    = "i686-w64-mingw32",
 		objext		    = ".obj",
 		asmext		    = ".s",
 		defaultexe		= "a.exe",
 	},
+	archascppflags =
+	{
+        "-integrated-as ",
+        "-target i686-w64-pc-mingw32",
+	},
 	archcflags =
 	{
+        "-fuse-init-array",
 		"-D __MINGW__",
+        "-c -integrated-as ",
+        "-target i686-w64-pc-mingw32",
+        "-B"..binutils_prefix,
+        "-fexceptions",
+		"-pthread",
         "-D gnu_printf=printf",
         "-D gnu_scanf=scanf",
 	},
 	archcxxflags =
 	{
+        "-fcxx-exceptions",
 	},
 	stdinc =
 	{

@@ -20,15 +20,27 @@ xclang =
 		asmext		    = ".s",
 		defaultexe		= "a.exe",
 	},
+	archascppflags =
+	{
+        "-integrated-as ",
+        "-target x86_64-w64-pc-mingw32",
+	},
 	archcflags =
 	{
+        "-fuse-init-array",
+        "-c -integrated-as ",
 		"-D __MINGW__",
 		"-D __MINGW64__",
+        "-target x86_64-w64-pc-mingw32",
+        "-B"..binutils_prefix,
+        "-fexceptions",
+		"-pthread",
         "-D gnu_printf=printf",
         "-D gnu_scanf=scanf",
 	},
 	archcxxflags =
 	{
+        "-fcxx-exceptions",
 	},
 	stdinc =
 	{
