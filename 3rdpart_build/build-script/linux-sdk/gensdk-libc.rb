@@ -27,6 +27,14 @@ $PACKAGES =
 		['main/e/eglibc','libc6_2.17-0ubuntu5_i386.deb'],
 		['main/e/eglibc','libc6-dev_2.17-0ubuntu5_i386.deb'],
 	],
+    arm64 =>
+    [
+        ['universe/g/gcc-4.7-arm64-cross','libgcc1-arm64-cross_4.7.3-1ubuntu1cross0.6_all.deb'],
+        ['universe/g/gcc-4.7-arm64-cross','libgcc-4.7-dev-arm64-cross_4.7.3-1ubuntu1cross0.6_all.deb'],
+        ['universe/a/arm64-cross-toolchain-base','linux-libc-dev-arm64-cross_3.8.0-5.10cross0.6_all.deb'],
+        ['universe/a/arm64-cross-toolchain-base','libc6-arm64-cross_2.17-0ubuntu3cross0.6_all.deb'],
+        ['universe/a/arm64-cross-toolchain-base','libc6-dev-arm64-cross_2.17-0ubuntu3cross0.6_all.deb'],
+    ],
     'armel' =>
     [
         ['universe/g/gcc-4.7-armel-cross','libgcc1-armel-cross_4.7.3-1ubuntu1cross1.81_all.deb'],
