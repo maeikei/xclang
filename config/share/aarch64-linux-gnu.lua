@@ -4,8 +4,8 @@
 if nil == globalXClangHome then
 	globalXClangHome = "C:/xclang-dev/xclang-obj/InstallRoot"
 end
-binutils_prefix = globalXClangHome.."/binutils/arm-linux-gnueabihf/bin"
-platform_prefix = globalXClangHome.."/platform/arm-linux-gnueabihf"
+binutils_prefix = globalXClangHome.."/binutils/aarch64-linux-gnu/bin"
+platform_prefix = globalXClangHome.."/platform/aarch64-linux-gnu"
 
 
 
@@ -24,11 +24,11 @@ xclang =
 	archascppflags =
 	{
 
-        "-mcpu=cortex-a9",
+        "-mcpu=cortex-a57",
         "-mfloat-abi=hard",
         "-mfpu=vfpv3-d16",
         "-mthumb",
-        "-target armv7a-pc-linux-gnueabihf",
+        "-target aarch64-pc-linux-gnueabihf",
 
 
         "-D __arm__",
@@ -41,11 +41,11 @@ xclang =
 	archcflags =
 	{
 
-        "-mcpu=cortex-a9",
+        "-mcpu=cortex-a57",
         "-mfloat-abi=hard",
         "-mfpu=vfpv3-d16",
         "-mthumb",
-        "-target armv7a-pc-linux-gnueabihf",
+        "-target aarch64-pc-linux-gnueabihf",
 
         "-D __arm__",
         "-D __ARM_EABI_UNWINDER__",
@@ -66,9 +66,9 @@ xclang =
         "-isysroot "..platform_prefix,
         "-isystem "..platform_prefix,
         "-I "..platform_prefix.."/xclang/include",
-        "-I "..platform_prefix.."/usr/arm-linux-gnueabihf/include",
-        "-I "..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/include",
-        "-I "..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/include-fixed",
+        "-I "..platform_prefix.."/usr/aarch64-linux-gnu/include",
+        "-I "..platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/include",
+        "-I "..platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/include-fixed",
 	},
 	stdincxx =
 	{
@@ -104,9 +104,9 @@ link_exe = {
     },
 	beginobject =
 	{
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crt1.o",
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib//crti.o",
-        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtbegin.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib/crt1.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib//crti.o",
+        platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -119,8 +119,8 @@ link_exe = {
  	},
     stddirs =
 	{
-        "-L"..platform_prefix.."/usr/arm-linux-gnueabihf/lib",
-        "-L"..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7",
+        "-L"..platform_prefix.."/usr/aarch64-linux-gnu/lib",
+        "-L"..platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7",
 	},
     stdlibs =
 	{
@@ -132,8 +132,8 @@ link_exe = {
 	},
 	endobject =
 	{
-        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtend.o",
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
+        platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/crtend.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib/crtn.o",
 	},
 }
 ---------------------------------------------------
@@ -147,8 +147,8 @@ link_exe_s = {
     },
 	beginobject =
 	{
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crt1.o",
-        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtbegin.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib/crt1.o",
+        platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/crtbegin.o",
 	},
     stdxxdirs =
 	{
@@ -161,8 +161,8 @@ link_exe_s = {
 	},
     stddirs =
 	{
-        "-L"..platform_prefix.."/usr/arm-linux-gnueabihf/lib",
-        "-L"..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7",
+        "-L"..platform_prefix.."/usr/aarch64-linux-gnu/lib",
+        "-L"..platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7",
 	},
     stdlibs =
 	{
@@ -174,8 +174,8 @@ link_exe_s = {
 	},
 	endobject =
 	{
-        platform_prefix.."usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtend.o",
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
+        platform_prefix.."usr/lib/gcc-cross/aarch64-linux-gnu/4.7/crtend.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib/crtn.o",
 	},
 }
 
@@ -190,8 +190,8 @@ link_shared = {
     },
 	beginobject =
 	{
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crti.o",
-        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtbeginS.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib/crti.o",
+        platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/crtbeginS.o",
 	},
     stdxxdirs =
 	{
@@ -202,8 +202,8 @@ link_shared = {
 	},
     stddirs =
 	{
-        "-L"..platform_prefix.."/usr/arm-linux-gnueabihf/lib",
-        "-L"..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7",
+        "-L"..platform_prefix.."/usr/aarch64-linux-gnu/lib",
+        "-L"..platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7",
 	},
     stdlibs =
 	{
@@ -215,8 +215,8 @@ link_shared = {
 	},
 	endobject =
 	{
-        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtendS.o",
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
+        platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/crtendS.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib/crtn.o",
 	},
 }
 
@@ -231,8 +231,8 @@ link_shared_s = {
     },
 	beginobject =
 	{
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crti.o",
-        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtbeginS.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib/crti.o",
+        platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/crtbeginS.o",
 	},
     stdxxdirs =
 	{
@@ -243,8 +243,8 @@ link_shared_s = {
 	},
     stddirs =
 	{
-        "-L"..platform_prefix.."/usr/arm-linux-gnueabihf/lib",
-        "-L"..platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7",
+        "-L"..platform_prefix.."/usr/aarch64-linux-gnu/lib",
+        "-L"..platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7",
 	},
     stdlibs =
 	{
@@ -256,8 +256,8 @@ link_shared_s = {
 	},
 	endobject =
 	{
-        platform_prefix.."/usr/lib/gcc-cross/arm-linux-gnueabihf/4.7/crtendS.o",
-        platform_prefix.."/usr/arm-linux-gnueabihf/lib/crtn.o",
+        platform_prefix.."/usr/lib/gcc-cross/aarch64-linux-gnu/4.7/crtendS.o",
+        platform_prefix.."/usr/aarch64-linux-gnu/lib/crtn.o",
 	},
 }
 
