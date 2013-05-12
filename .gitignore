@@ -26,3 +26,7 @@
 3rdpart_build/build-script/unwind/objects
 3rdpart_build/build-script/unwind/install
 
+3rdpart_build/build-script/mingw-w64/mingw-w64
+3rdpart_build/build-script/mingw-w64/objects
+3rdpart_build/build-script/mingw-w64/install
+
